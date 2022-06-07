@@ -166,7 +166,7 @@ _The background thread must always be responsive to the XCP master within the de
 _Refer to the A2L/XCP standards for more information._
 
 _The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
-_This concerns, for example, host OS calls._
+_This concerns, for example, host OS calls_
 footnote:[The term 'host OS' means the OS where the FMU process is executed.
 This could even be the OS inside a virtual machine connected to the simulator.]
 _needed for creation of an own background thread, or for resolving variable addresses relative to the base address of the loaded FMU binary._
