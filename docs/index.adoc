@@ -172,13 +172,13 @@ This could even be the OS inside a virtual machine connected to the simulator.]
 _needed for creation of an own background thread, or for resolving variable addresses relative to the base address of the loaded FMU binary._
 _Note, that blocking OS calls should be avoided, because they may have an effect on other parts of the simulator outside the FMU._
 
-_<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MC tool)_
-_using a separate network channel, e.g. the IP stack of the host OS._
+_<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS._
 _Thus, the communication of the XCP service is not mixed with the simulated network communication of the ECU wrapped in the FMU._
-footnote:[The network communication of FMUs is described by another layered standard. The details of network communication are out of scope here.]
+footnote:[The network communication of FMUs is described by another layered standard.
+The details of network communication are out of scope here.]
 
-_<<XCP-Communication-via-V-ECU-COM-Stack>> shows an alternative design where the XCP slave communicates via the V-ECU COM stack as in a real ECU._
-_In this case, the simulator has to provide access to the simulated network communication for the MC tool._
+_<<XCP-Communication-via-V-ECU-COM-Stack>> shows an alternative design where the XCP slave communicates via the virtual ECU's COM stack as in a real ECU._
+_In this case, the simulator has to provide access to the simulated network communication for the MCD tool._
 _This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested._
 footnote:[The same design could be used to access a diagnostic service, if it is implemented by the ECU code inside the FMU.]
 ]
@@ -187,7 +187,7 @@ footnote:[The same design could be used to access a diagnostic service, if it is
 [#XCP-Communication-via-IP-Stack]
 image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 
-.Communication of XCP master and XCP slave via V-ECU COM stack
+.Communication of XCP master and XCP slave via virtual ECU's COM stack
 [#XCP-Communication-via-V-ECU-COM-Stack]
 image::images/XCP-Communication-via-V-ECU-COM-Stack.svg[width=80%, align="center"]
 
