@@ -150,13 +150,16 @@ The consumer of an FMU is responsible for keeping all occurrences of the IP addr
 
 === XCP Slave Implementation
 
-The XCP service shall be started during `fmi3ExitConfigurationMode` and shut down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+Preferably, the XCP service shall be started during `fmi3ExitConfigurationMode` and shut down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all build in OS and Basic Software services (including XCP) should follow normal power-up protocol.
+The XCP service must run after `fmi3EnterInitializationMode` at the latest.
 
-The XCP slave shall use the structural parameters `IPAddress` and `XcpPortNumber` (see <<figure-xcp-connection-parameters>>) to set up the communication connection for the XCP protocol.
+If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `IPAddress` and `XcpPortNumber` (see <<figure-xcp-connection-parameters>>), the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
 After leaving `Configuration Mode` the XCP slave shall be responsive for XCP commands.
 Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state of the FMU, for example, to set parameters before entering `Initialization Mode`.
 Note, that reading values of calculated variables, which depend on an initialization function is only possible after leaving the `Initialized` state with `fmi3ExitInitializationMode`.
+
+If the XCP service is not started during `Configuration Mode`, because the simulator does not support structural parameters and therefore does not enter `Configuration Mode`, it must be started in `fmi3EnterInitializationMode` at the latest. In this case, it is not possible to perform calibration before the simulation is running.
 
 _[The A2L/XCP standards allow to measure variables synchronously to different types of events._
 _These so called measurement rasters are either time-based, angular-based, or non-deterministic, and are identified by a unique raster ID._
