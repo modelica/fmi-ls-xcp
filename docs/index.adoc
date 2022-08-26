@@ -180,19 +180,19 @@ _Thus, the communication of the XCP service is not mixed with the simulated netw
 footnote:[The network communication of FMUs is described by another layered standard.
 The details of network communication are out of scope here.]
 
-_<<XCP-Communication-via-V-ECU-COM-Stack>> shows an alternative design where the XCP slave communicates via the virtual ECU's COM stack as in a real ECU._
+_<<XCP-Communication-via-Virtual-ECU-COM-Stack>> shows an alternative design where the XCP slave communicates via the COM stack of the virtual ECU as in a real ECU._
 _In this case, the simulator has to provide access to the simulated network communication for the MCD tool._
 _This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested._
 footnote:[The same design could be used to access a diagnostic service, if it is implemented by the ECU code inside the FMU.]
 ]
 
-.Direct communication of XCP master and XCP slave via IP stack of host OS
+.Direct communication of XCP master and XCP slave via the IP stack of the host OS
 [#XCP-Communication-via-IP-Stack]
 image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 
-.Communication of XCP master and XCP slave via virtual ECU's COM stack
-[#XCP-Communication-via-V-ECU-COM-Stack]
-image::images/XCP-Communication-via-V-ECU-COM-Stack.svg[width=80%, align="center"]
+.Communication of XCP master and XCP slave via the COM stack of the virtual ECU
+[#XCP-Communication-via-Virtual-ECU-COM-Stack]
+image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
 
 
 === Source Code FMUs
