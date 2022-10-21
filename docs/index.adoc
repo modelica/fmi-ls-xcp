@@ -102,6 +102,9 @@ For example, this concerns information how to build the final A2L file, if the F
 The `A2L` description depends on the FMU binary, for example, regarding memory addresses, and byte order.
 If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subfolders below `/extra/org.modelica.fmi.layered_XCP` following the same scheme as in the `/binaries` folder, see <<Structure of the FMU archive>>.
 
+Note, that these `A2L` files are not intended to be downloaded to the simulator platform.
+_[Any files that are required on the simulator shall be handled as defined by the FMI standard via the `/resource` folder.]_
+
 `A2L` files may have a considerable size.
 If size is a concern, it may be decided to supply just a single platform and `A2L` file with an FMU.
 
