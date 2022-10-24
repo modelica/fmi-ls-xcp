@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="generator" content="Asciidoctor 2.0.18">
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 <title>XCP and FMI 3.0</title>
 <style>
@@ -17,8 +17,8 @@
 <div id="header">
 <h1>XCP and FMI 3.0</h1>
 <div class="details">
-<span id="revnumber">version main-5dd815759798bc25a7f777e9c7824602cebc0610,</span>
-<span id="revdate">2022-09-27</span>
+<span id="revnumber">version main-313f71958bb8a02b4e77888d85a7cbb5a8e08383,</span>
+<span id="revdate">2022-10-24</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -169,6 +169,10 @@ For example, this concerns information how to build the final A2L file, if the F
 <div class="paragraph">
 <p>The <code>A2L</code> description depends on the FMU binary, for example, regarding memory addresses, and byte order.
 If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subfolders below <code>/extra/org.modelica.fmi.layered_XCP</code> following the same scheme as in the <code>/binaries</code> folder, see <a href="#_structure_of_the_fmu_archive">Section 2.1</a>.</p>
+</div>
+<div class="paragraph">
+<p>Note, that the <code>A2L</code> files placed under the <code>extra</code> directory are not accessible to the FMU at runtime.
+Any files that shall be accessible to the FMU at runtime must (also) be placed into the <code>resources</code> directory as defined by the FMI standard.</p>
 </div>
 <div class="paragraph">
 <p><code>A2L</code> files may have a considerable size.
@@ -351,7 +355,7 @@ On the other hand, plant models offering XCP access for parameter calibration ma
 <script>
 if (!hljs.initHighlighting.called) {
   hljs.initHighlighting.called = true
-  ;[].slice.call(document.querySelectorAll('pre.highlight > code')).forEach(function (el) { hljs.highlightBlock(el) })
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
 }
 </script>
 <script type="text/x-mathjax-config">
