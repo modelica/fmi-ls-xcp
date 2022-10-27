@@ -77,7 +77,7 @@ _The XCP/A2L approach can not only be used for virtual ECUs, but also for plant 
 
 === Structure of the FMU archive
 
-A2L description files and other files needed for XCP support will be placed in the `extra` directory under the reverse domain name controlled by the MAP FMI: `/extra/org.modelica.fmi-ls-xcp`.
+A2L description files and other files needed for XCP support are placed in the `extra` directory: `/extra/org.modelica.fmi-ls-xcp`.
 The directory structure is shown below.
 Details are described in the following sections.
 
