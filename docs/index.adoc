@@ -1,4 +1,4 @@
-XCP and FMI 3.0
+= XCP and FMI 3.0
 :sectnums:
 :sectnumlevels: 5
 :toc: left
