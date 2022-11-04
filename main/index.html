@@ -17,8 +17,8 @@
 <div id="header">
 <h1>XCP and FMI 3.0</h1>
 <div class="details">
-<span id="revnumber">version main-832c0701e6620d0c63e302c199581308b3965d63,</span>
-<span id="revdate">2022-10-28</span>
+<span id="revnumber">version main-5820d10a0e276d3456727da81cb3b86066965358,</span>
+<span id="revdate">2022-11-04</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -150,7 +150,7 @@ The standard also describes how the variable values are converted into human-rea
 <div class="sect2">
 <h3 id="_structure_of_the_fmu_archive">2.1. Structure of the FMU archive</h3>
 <div class="paragraph">
-<p>A2L description files and other files needed for XCP support are placed in the <code>extra</code> directory: <code>/extra/org.modelica.fmi-ls-xcp</code>.
+<p>A2L description files and other files needed for XCP support are placed in the <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-xcp</code>.
 The directory structure is shown below.
 Details are described in the following sections.</p>
 </div>
@@ -158,7 +158,7 @@ Details are described in the following sections.</p>
 <div class="content">
 <pre>documentation
    fmi-ls-xcp{.txt,.html}      // Informal description how to use XCP/A2L for this FMU (optional).
-extra/org.modelica.fmi-ls-xcp  // Contains files related to XCP/A2L
+extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
    &lt;modelIdentifier&gt;.a2l       // Variable description of a source code FMU (optional)
    x86_64-windows
       &lt;modelIdentifier&gt;.a2l    // Variable description for Windows on Intel 64-bit (optional)
@@ -182,7 +182,7 @@ For example, this concerns information how to build the final A2L file, if the F
 <h3 id="_a2l_description_files">2.3. A2L Description Files</h3>
 <div class="paragraph">
 <p>The A2L description depends on the FMU binary, for example, regarding memory addresses, and byte order.
-If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below <code>/extra/org.modelica.fmi-ls-xcp</code> following the same scheme as in the <code>binaries</code> directory, see <a href="#_structure_of_the_fmu_archive">Section 2.1</a>.</p>
+If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below <code>/extra/org.fmi-standard.fmi-ls-xcp</code> following the same scheme as in the <code>binaries</code> directory, see <a href="#_structure_of_the_fmu_archive">Section 2.1</a>.</p>
 </div>
 <div class="paragraph">
 <p>Note, that the A2L files placed under the <code>extra</code> directory are not accessible to the FMU at runtime.
@@ -225,14 +225,14 @@ Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose
 <div id="figure-xcp-connection-parameters" class="listingblock">
 <div class="title">XCP connection parameters</div>
 <div class="content">
-<pre>    org.modelica.fmi-ls-xcp.IPAddress
+<pre>    org.fmi-standard.fmi-ls-xcp.IPAddress
         Description:  "IP address or host name of the machine where the FMU binary is executed"
         Type:         String
         Causality:    structuralParameter
         Variability:  fixed
         Start:        "127.0.0.1"
 
-    org.modelica.fmi-ls-xcp.PortNumber
+    org.fmi-standard.fmi-ls-xcp.PortNumber
         Description:  "Port number where the XCP slave listens for XCP protocol commands"
         Type:         UInt16
         Causality:    structuralParameter
@@ -251,7 +251,7 @@ Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose
 If the FMU contains a virtual ECU with power-up control (K15), all build-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.</p>
 </div>
 <div class="paragraph">
-<p>If the simulator puts the FMU in <code>Configuration Mode</code> and sets the structural parameters <code>org.modelica.fmi-ls-xcp.IPAddress</code> and <code>org.modelica.fmi-ls-xcp.PortNumber</code> (see <a href="#figure-xcp-connection-parameters">XCP connection parameters</a>), the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
+<p>If the simulator puts the FMU in <code>Configuration Mode</code> and sets the structural parameters <code>org.fmi-standard.fmi-ls-xcp.IPAddress</code> and <code>org.fmi-standard.fmi-ls-xcp.PortNumber</code> (see <a href="#figure-xcp-connection-parameters">XCP connection parameters</a>), the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
 After leaving <code>Configuration Mode</code> the XCP slave must be responsive for XCP commands.
 Thus, it is possible for the XCP master to perform calibration during the <code>Instantiated</code> state, for example, to set parameters before entering <code>Initialization Mode</code>.
 Note, that reading values of calculated variables, which depend on an initialization function is only possible after leaving the <code>Initialized</code> state with <code>fmi3ExitInitializationMode</code>.</p>
@@ -303,7 +303,7 @@ In this case, it is not possible to perform calibration before the <code>Initial
 <div class="sect2">
 <h3 id="_source_code_fmus">2.6. Source Code FMUs</h3>
 <div class="paragraph">
-<p>For the special case when an FMU is delivered as target-independent source code (possibly with some libraries), a <code>raw A2L fragment</code> is placed directly into the <code>/extra/org.modelica.fmi-ls-xcp</code> directory.
+<p>For the special case when an FMU is delivered as target-independent source code (possibly with some libraries), a <code>raw A2L fragment</code> is placed directly into the <code>/extra/org.fmi-standard.fmi-ls-xcp</code> directory.
 The <code>raw A2L fragment</code> of a source code FMU is necessarily incomplete, because the details of the A2L description depend on the binary for the target platform, for example, regarding memory addresses, alignments, checksums, etc.</p>
 </div>
 <div class="paragraph">
