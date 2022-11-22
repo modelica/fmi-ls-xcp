@@ -56,7 +56,11 @@ There are alternative implementations depending on the use case and data availab
    The necessary information for an MCD tool is given in a description file which follows the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard (aka A2L, also ASAP2) and customarily carries the file extension `.a2l`.
  . An external XCP slave implementation accesses the memory of the virtual ECU to expose the XCP protocol to the MCD tool.
    In this case, the importer needs to provide such an XCP slave implementation and could use `fmi3IntermediateUpdate` calls to synchronize DAQ lists.
- . The importer might also use the A2L address, type, layout and scaling information to use direct memory access into the virtual ECU.
+
+Independent of the selected implementation approach, the XCP behavior as seen by an external MCD tool (XCP master) shall be the same (see <<Details>>).
+
+The importer might also use the A2L address, type, layout and scaling information to use direct memory access into the virtual ECU.
+As this approach does not use the standardized XCP protocol it is not further described in this layered standard.
 
 [quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC]]
 ____
