@@ -204,20 +204,32 @@ image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 [#XCP-Communication-via-Virtual-ECU-COM-Stack]
 image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
 
-
 === Source Code FMUs
 
-For the special case when an FMU is delivered as target-independent source code (possibly with some libraries), a `raw A2L fragment` is placed directly into the `/extra/org.fmi-standard.fmi-ls-xcp` directory.
-The `raw A2L fragment` of a source code FMU is necessarily incomplete, because the details of the A2L description depend on the binary for the target platform, for example, regarding memory addresses, alignments, checksums, etc.
+An FMU may be delivered as source code together with a `buildDescription.xml` file.
+This special case requires a common understanding of the A2L workflow between the FMU exporter and importer.
+In practice there are different flavors of the workflow depending on the specific use case.
 
-In the case of source code FMUs, the FMU exporter is responsible for providing the implementation of the XCP slave module.
-The XCP slave must be invoked in the FMU code according to the defined measurement raster and in the background as described in <<XCP Slave Implementation>>.
+The FMU exporter may describe the MEASUREMENTs, CHARACTERISTICs and related A2L elements of his application in an A2L file.
+The A2L description is placed directly into the folder `/extra/org.modelica.fmi-ls-xcp` if it is target-independent, or in target-specific subfolders otherwise (see <<Structure of the FMU archive>>).
 
-The FMU importer is responsible for building the FMU binary and creating the final A2L file by adjusting platform dependent information in the `raw A2L fragment`.
-This concerns memory addresses, alignments, checksums, `IF_DATA_XCP` elements, etc.
+The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or -external, see <<Rough Outline of the Approach>>).
 
-If additional information for the build process and A2L creation is required, it should be provided by the FMU exporter in `documentation/fmi-ls-xcp.{txt|html}`.
+* If the internal XCP slave implementation supports getting variable values by fixed, target-independent indices, the FMU exporter shall write these indices as fixed values to the ECU address fields in the A2L file.
+* If the internal XCP slave implementation works directly with memory addresses of variables, it is not possible to determine the memory addresses before building the binary.
+In this case, the FMU exporter shall provide SYMBOL_LINKs in the A2L file, which may be evaluated by the FMU importer or an A2L tool to determine the actual variable addresses.
+Refer to the ASAM MCD-2MC standard for more information on SYMBOL_LINKs.
+* For an FMU-external XCP slave implementation, the FMU exporter shall also provide SYMBOL_LINKs for the A2L variables of the FMU.
 
+The FMU importer has to consider the following cases:
+
+* If the FMU does not contain an XCP slave implementation (see <<XCP Protocol Settings>>), then the FMU importer must provide an own implementation.
+* If the imported A2L file contains fixed values for the ECU addresses, they shall not be modified.
+* If the imported A2L file contains SYMBOL_LINKs instead of fixed ECU addresses, the FMU importer (or an A2L tool) must evaluate the SYMBOL_LINK expressions to determine the actual variable addresses.
+
+The FMU importer is responsible that the target-specific information in the A2L file fits to the target platform for which a source code FMU is built.
+
+If additional information for the build process and A2L creation is required, it should be provided by the FMU exporter in documentation/fmi-ls-xcp.{txt|html}.
 
 === Variable Visibility
 
