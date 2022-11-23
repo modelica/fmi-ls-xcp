@@ -57,7 +57,7 @@ There are alternative implementations depending on the use case and data availab
  . An external XCP slave implementation accesses the memory of the virtual ECU to expose the XCP protocol to the MCD tool.
    In this case, the importer needs to provide such an XCP slave implementation and could use `fmi3IntermediateUpdate` calls to synchronize DAQ lists.
 
-Independent of the selected implementation approach, the XCP behavior as seen by an external MCD tool (XCP master) shall be the same (see <<Details>>).
+Independent of the selected implementation approach, the XCP behavior as seen by an external MCD tool (XCP master) shall be the same (see <<Common Concepts>>).
 
 The importer might also use the A2L address, type, layout and scaling information to use direct memory access into the virtual ECU.
 As this approach does not use the standardized XCP protocol it is not further described in this layered standard.
@@ -69,7 +69,10 @@ _If the XCP slave is implemented inside the FMU, it will most likely run in its 
 
 _The XCP/A2L approach can not only be used for virtual ECUs, but also for plant models, if the FMU exporter generates an appropriate A2L file.]_
 
-== Details
+== Layered Standard Manifest File
+#ToDo#
+
+== Common Concepts
 
 === Structure of the FMU archive
 
@@ -136,73 +139,8 @@ Typically, a certain range of ports is reserved for this purpose.
 The FMU importer is responsible for checking if any conflicts of the defined IP addresses and port numbers occur in the context of the simulated system.
 
 Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter.
-Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose two structural parameters which are used to configure the embedded XCP slave, see <<XCP Slave Implementation>>:
 
-.XCP connection parameters
-[[figure-xcp-connection-parameters]]
-----
-    org.fmi-standard.fmi-ls-xcp.IPAddress
-        Description:  "IP address or host name of the machine where the FMU binary is executed"
-        Type:         String
-        Causality:    structuralParameter
-        Variability:  fixed
-        Start:        "127.0.0.1"
-
-    org.fmi-standard.fmi-ls-xcp.PortNumber
-        Description:  "Port number where the XCP slave listens for XCP protocol commands"
-        Type:         UInt16
-        Causality:    structuralParameter
-        Variability:  fixed
-        Start:        <in the range of 32768 to 39999>
-----
-
-The importer of an FMU is responsible for keeping all occurrences of the IP address and port number consistent.
-
-=== XCP Slave Implementation
-
-Preferably, the XCP service shall be started during `fmi3ExitConfigurationMode` and shut down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
-If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
-
-If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi-standard.fmi-ls-xcp.IPAddress` and `org.fmi-standard.fmi-ls-xcp.PortNumber` (see <<figure-xcp-connection-parameters>>), the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
-After leaving `Configuration Mode` the XCP slave must be responsive for XCP commands.
-Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
-Note, that reading values of calculated variables, which depend on an initialization function is only possible after leaving the `Initialized` state with `fmi3ExitInitializationMode`.
-
-If the `Configuration Mode` was not entered, the XCP service must be started in `fmi3EnterInitializationMode` at the latest.
-In this case, it is not possible to perform calibration before the `Initialization Mode` is entered.
-
-_[The A2L/XCP standards allow to measure variables synchronously to different types of events._
-_These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (aka measurement raster)._
-_The XCP service must be invoked with the defined event channel number in the thread which is executed for an event._
-_Calibration and communication with the XCP master is typically performed in a background thread._
-_The background thread must always be responsive to the XCP master within the defined communication timeout._
-_Refer to the A2L/XCP standards for more information._
-
-_The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
-_This concerns, for example, host OS calls_
-footnote:[The term 'host OS' means the OS where the FMU process is executed.
-This could even be the OS inside a virtual machine connected to the simulator.]
-_needed for creation of an own background thread._
-_Note, that blocking OS calls should be avoided, because they may have an effect on other parts of the simulator outside the FMU._
-
-_<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS._
-_Thus, the communication of the XCP service is not mixed with the simulated network communication of the ECU wrapped in the FMU._
-footnote:[The network communication of FMUs is described by another layered standard.
-The details of network communication are out of scope here.]
-
-_<<XCP-Communication-via-Virtual-ECU-COM-Stack>> shows an alternative design where the XCP slave communicates via the COM stack of the virtual ECU as in a real ECU._
-_In this case, the simulator has to provide access to the simulated network communication for the MCD tool._
-_This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested._
-footnote:[The same design could be used to access a diagnostic service, if it is implemented by the ECU code inside the FMU.]
-]
-
-.Direct communication of XCP master and XCP slave via the IP stack of the host OS
-[#XCP-Communication-via-IP-Stack]
-image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
-
-.Communication of XCP master and XCP slave via the COM stack of the virtual ECU
-[#XCP-Communication-via-Virtual-ECU-COM-Stack]
-image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
+#ToDo# Link to specific section
 
 === Source Code FMUs
 
@@ -255,3 +193,103 @@ On the other hand, plant models offering XCP access for parameter calibration ma
 It is therefore necessary to synchronize XCP variable access (read and write) with the state of the FMU.
 _[For instance is time not linear in Model Exchange and Intermediate Variable Access might also introduce surprising measurements in Co-Simulation._
 _Appropriate care must be taken when to serve XCP master requests to ensure simulation and measurement integrity.]_
+
+== FMU with Integrated XCP Service Implementation
+
+#ToDo# Check introduction
+
+_[The A2L/XCP standards allow to measure variables synchronously to different types of events._
+_These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (aka measurement raster)._
+_The XCP service must be invoked with the defined event channel number in the thread which is executed for an event._
+_Calibration and communication with the XCP master is typically performed in a background thread._
+_The background thread must always be responsive to the XCP master within the defined communication timeout._
+_Refer to the A2L/XCP standards for more information._
+
+_The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
+_This concerns, for example, host OS calls_
+footnote:[The term 'host OS' means the OS where the FMU process is executed.
+This could even be the OS inside a virtual machine connected to the simulator.]
+_needed for creation of an own background thread._
+_Note, that blocking OS calls should be avoided, because they may have an effect on other parts of the simulator outside the FMU._
+
+_<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS._
+_Thus, the communication of the XCP service is not mixed with the simulated network communication of the ECU wrapped in the FMU._
+footnote:[The network communication of FMUs is described by another layered standard.
+The details of network communication are out of scope here.]
+
+_<<XCP-Communication-via-Virtual-ECU-COM-Stack>> shows an alternative design where the XCP slave communicates via the COM stack of the virtual ECU as in a real ECU._
+_In this case, the simulator has to provide access to the simulated network communication for the MCD tool._
+_This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested._
+footnote:[The same design could be used to access a diagnostic service, if it is implemented by the ECU code inside the FMU.]
+]
+
+.Direct communication of XCP master and XCP slave via the IP stack of the host OS
+[#XCP-Communication-via-IP-Stack]
+image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
+
+.Communication of XCP master and XCP slave via the COM stack of the virtual ECU
+[#XCP-Communication-via-Virtual-ECU-COM-Stack]
+image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
+
+=== XCP Protocol Settings in the Model Description
+
+#ToDo# Introduce section
+
+Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter.
+
+Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose two structural parameters which are used to configure the embedded XCP slave, see <<XCP Service Usage>>:
+
+.XCP connection parameters
+[[figure-xcp-connection-parameters]]
+----
+    org.fmi-standard.fmi-ls-xcp.IPAddress
+        Description:  "IP address or host name of the machine where the FMU binary is executed"
+        Type:         String
+        Causality:    structuralParameter
+        Variability:  fixed
+        Start:        "127.0.0.1"
+
+    org.fmi-standard.fmi-ls-xcp.PortNumber
+        Description:  "Port number where the XCP slave listens for XCP protocol commands"
+        Type:         UInt16
+        Causality:    structuralParameter
+        Variability:  fixed
+        Start:        <in the range of 32768 to 39999>
+----
+
+The importer of an FMU is responsible for keeping all occurrences of the IP address and port number consistent.
+
+=== XCP Service Usage
+
+Preferably, the XCP service shall be started during `fmi3ExitConfigurationMode` and shut down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
+
+If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi-standard.fmi-ls-xcp.IPAddress` and `org.fmi-standard.fmi-ls-xcp.PortNumber` (see <<figure-xcp-connection-parameters>>), the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
+After leaving `Configuration Mode` the XCP slave must be responsive for XCP commands.
+Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
+Note, that reading values of calculated variables, which depend on an initialization function is only possible after leaving the `Initialized` state with `fmi3ExitInitializationMode`.
+
+If the `Configuration Mode` was not entered, the XCP service must be started in `fmi3EnterInitializationMode` at the latest.
+In this case, it is not possible to perform calibration before the `Initialization Mode` is entered.
+
+=== Address resolution
+
+#ToDo# Formulate section
+
+== External XCP Service Implementation
+
+#ToDo# Introduce section
+
+#ToDo# Add image for this variant
+
+=== XCP Protocol Settings in the Model Description
+
+#ToDo# Describe the intermediate update variable for XCP rasters
+
+=== XCP Service Usage
+
+#ToDo# Describe when to start/stop the service
+
+=== Address resolution
+
+#ToDo# Formulate section
