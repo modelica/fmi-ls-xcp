@@ -217,8 +217,6 @@ _In this case, the simulator has to provide access to the simulated network comm
 _This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested._
 footnote:[The same design could be used to access a diagnostic service, if it is implemented by the ECU code inside the FMU.]
 
-#ToDo# Create images with drawio
-
 .Direct communication of XCP master and XCP slave via the IP stack of the host OS
 [#XCP-Communication-via-IP-Stack]
 image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
