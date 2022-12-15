@@ -199,8 +199,6 @@ This standard expressly does not restrict the relationship between both sets of 
 _[As a matter of fact, it is quite likely that the variables published in `modelDescription.xml` is a minimal set required for connectivity reasons._
 _The A2L file might publish a much larger set of variables and parameters that the user can selectively choose to measure or calibrate._
 
-_Note, that normally only variables in the memory segments owned by the main FMU binary `{.dll, .so}` are accessible by the XCP service, i.e. variables defined in source code modules and in statically linked libraries._
-_Accessing variables in the memory of indirectly loaded dynamic libraries requires a special implementation which is out-of-scope for this layered standard._
 _From the viewpoint of an MCD tool, the details of the variable access are transparent, i.e. this information is encapsulated in the A2L file.]_
 
 === Numeric Effects of XCP Access
@@ -239,6 +237,8 @@ image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 .Communication of XCP master and XCP slave via the COM stack of the virtual ECU
 [#XCP-Communication-via-Virtual-ECU-COM-Stack]
 image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
+
+#ToDo# Fix image "IP stack of the host OS" -> "XCP slave communicates via COM stack of virtual ECU"
 
 _The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
 _This concerns, for example, host OS calls_
@@ -288,7 +288,7 @@ Since an XCP slave is implemented inside the FMU, the FMU is responsible for sta
 Preferably, the FMU shall start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
-If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi-standard.fmi-ls-xcp.IPAddress` and `org.fmi-standard.fmi-ls-xcp.PortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
+If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi-standard.fmi-ls-xcp.ListenIpAddress` and `org.fmi-standard.fmi-ls-xcp.ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
 If the value of structural parameter `org.fmi-standard.fmi-ls-xcp.EnableXcpService` is `true`, the XCP slave must be responsive for XCP commands after leaving `Configuration Mode`.
 Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
 Note, that reading values of calculated variables, which depend on an initialization function, is only possible after leaving the `Initialized` state with `fmi3ExitInitializationMode`.
@@ -369,19 +369,25 @@ Since the external XCP slave can only make use of real addresses and in the case
 In this case, analogous to the use of an internal XCP slave, the importer or an external A2L tool is responsible for determining the actual variable addresses from the symbolic links.
 
 == Known Limitations of This Standard
-#ToDo# Write section
 
-* Page Handling (external)
-* Event synchronous measurement (external)
-* Multiple User DLLs
+Limitations for binary FMUs:
 
+* Normally only variables in the memory segments owned by the main FMU binary `{.dll, .so}` are accessible by the XCP service, i.e. variables defined in source code modules and in statically linked libraries.
+Accessing variables in the memory of indirectly loaded dynamic libraries requires a special implementation which is out-of-scope for this layered standard.
+
+Limitations for variant <<External XCP Service,External XCP Service>>:
+
+* This layered standard does not describe how the FMU can inform the importer about different memory segments it uses.
+Therefore, page handling is not supported in the case of an external XCP service.
+
+#ToDo# Elaborate a bit ??
+
+#ToDo# Are XCP Events from the FMU limitated or not? Is it described well enough to say it is "specified"?
 
 == General TODOs
 
 #ToDo# Check FMI interface independency +
-
 #ToDo# Was ist spezifisch für XCP Services, die den Host Stack benutzen? +
-#ToDo# Variablen überall umbenennen +
 #ToDo# Auch andere Gründe für Abschalten des internen XCP Service nennen, als nur dass man seinen eigenen verwenden möchte. +
 
 
