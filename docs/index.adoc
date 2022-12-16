@@ -33,8 +33,8 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 
 === Intend of this Document
 
-FMI 3.0 was extended also with virtual Electronic Control Units (virtual ECUs) in mind.
-Engineers can measure into ECUs using the XCP protocol and A2L variable descriptions:
+FMI 3.0 was extended also with having virtual Electronic Control Units (virtual ECUs) in mind.
+Measurements fom virtual ECUs can be read using the XCP protocol and A2L variable descriptions:
 
 [quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-1-xcp/[ASAM MCD-1 XCP]]
 ____
@@ -47,6 +47,7 @@ Several associate standards contain the transport layer definitions for CAN, Fle
 ____
 
 This layered standard describes how an FMU advertises its XCP capabilities to importers and MCD tools using the XCP protocol.
+Depending on the use case the rules and guidelines of this layered standard have to been implemented by the importers and FMU Authoring tools. MCD tools are not affected.
 
 === Rough Outline of the Approach
 
@@ -78,11 +79,23 @@ _The XCP/A2L approach can not only be used for virtual ECUs, but also for plant 
 === Structure of the FMU archive
 
 A2L description files and other files needed for XCP support are placed in the `extra` directory: `/extra/org.fmi-standard.fmi-ls-xcp`.
+As the extra directory is not given to the FMU at runtime another copy of the A2L files must be placed in the binaries folder following the architecture/plaform approach.
+Importers should preserve the structure of the binaries folder when unpacking the FMU and use the path name of the loadad dynamic library to compute the respective file name.
+
 The directory structure is shown below.
 Details are described in the following sections.
 
 [[figure-fmi-layered-XCP-directory-structure]]
 ----
+binaries
+   x86_64-windows
+      <modelIdentifier>.a2l    // copy of the file in the extra folder
+   x86-linux
+      <modelIdentifier>.a2l    // copy of the file in the extra folder
+   aarch32-linux
+      <modelIdentifier>.a2l    // copy of the file in the extra folder
+   x86_64-darwin
+      <modelIdentifier>.a2l    // copy of the file in the extra folder
 documentation
    fmi-ls-xcp{.txt,.html}      // Informal description how to use XCP/A2L for this FMU (optional).
 extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
@@ -105,10 +118,8 @@ For example, this concerns information how to build the final A2L file, if the F
 === A2L Description Files
 
 The A2L description depends on the FMU binary, for example, regarding memory addresses, and byte order.
-If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below `/extra/org.fmi-standard.fmi-ls-xcp` following the same scheme as in the `binaries` directory, see <<Structure of the FMU archive>>.
-
-Note, that the A2L files placed under the `extra` directory are not accessible to the FMU at runtime.
-Any files that shall be accessible to the FMU at runtime must (also) be placed into the `resources` directory as defined by the FMI standard.
+If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below `/extra/org.fmi-standard.fmi-ls-xcp` and in the binaries folder, see <<Structure of the FMU archive>>.
+For source code FMUs the importer is responsible to place the A2L file(s) from the extra folder to the proper runtime location.
 
 A2L files may have a considerable size.
 If size is a concern, it may be decided to supply just a single platform and A2L file with an FMU.
@@ -210,7 +221,7 @@ The `raw A2L fragment` of a source code FMU is necessarily incomplete, because t
 In the case of source code FMUs, the FMU exporter is responsible for providing the implementation of the XCP slave module.
 The XCP slave must be invoked in the FMU code according to the defined measurement grid and in the background as described in <<XCP Slave Implementation>>.
 
-The FMU importer is responsible for building the FMU binary and creating the final A2L file by adjusting platform dependent information in the `raw A2L fragment`.
+The FMU importer is responsible for building the FMU binary and creating the final A2L file (see <<Structure of the FMU archive>>) by adjusting platform dependent information in the `raw A2L fragment`.
 This concerns memory addresses, alignments, checksums, `IF_DATA_XCP` elements, etc.
 
 If additional information for the build process and A2L creation is required, it should be provided by the FMU exporter in `documentation/fmi-ls-xcp.{txt|html}`.
