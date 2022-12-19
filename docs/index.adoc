@@ -61,6 +61,7 @@ There are alternative implementations depending on the use case and data availab
    For further details see <<External XCP Service>>.
 
 _[It is also possible for an FMU to support both, internal and external XCP services._
+
 _The importer might also use the A2L address, type, layout and scaling information to use direct memory access into the virtual ECU._
 _As this approach does not use the standardized XCP protocol it is not further described in this layered standard.]_
 
@@ -80,7 +81,7 @@ _The XCP/A2L approach can not only be used for virtual ECUs, but also for plant 
 
 === How to Read This Document
 
-The core of this document is about how to describe and implement XCP support for FMUs, either by an FMU internal XCP slave implementation or an external XCP slave.
+This document is about how to describe and implement XCP support for FMUs, either by an FMU internal XCP slave implementation or an external XCP slave.
 To keep the descriptions brief and redundancy low, <<common-concepts,common concepts>>, which are used by both implementation types, are described once.
 
 The standard document is in HTML allowing use of in-document links.
@@ -99,13 +100,12 @@ Conventions used in this document:
 
 #ToDo# Write section +
 #ToDo# Define manifest +
-#ToDo# Structural Parameter as a part of the manifest file instead of the modelDescription???
 
 == Common Concepts
 
 Independent of the selected implementation approach (see <<Rough Outline of the Approach>>), the XCP behavior as seen by an external MCD tool (XCP master) shall be the same.
 The concepts defined in this chapter are common to both of the implementation approaches.
-The definitions that are specific to the particular implementation are defined in <<FMU with Integrated XCP Service>> and <<External XCP Service>>.
+The definitions that are specific to the particular implementation types are defined in <<FMU with Integrated XCP Service>> and <<External XCP Service>>.
 
 === Structure of the FMU archive
 
@@ -116,23 +116,24 @@ Details are described in the following sections.
 [#figure-fmi-layered-XCP-directory-structure]
 ----
 documentation
-   fmi-ls-xcp{.txt,.html}      // Informal description how to use XCP/A2L for this FMU (optional).
+   fmi-ls-xcp{.txt,.html}          // Informal description how to use XCP/A2L for this FMU (optional).
 extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
-   <modelIdentifier>.a2l       // Variable description of a source code FMU (optional)
+   fmi-ls-xcp.manifest             // The layered standard manifest file
+   <modelIdentifier>.a2l           // Variable description of a source code FMU (optional)
    x86_64-windows
-      <modelIdentifier>.a2l    // Variable description for Windows on Intel 64-bit (optional)
+      <modelIdentifier>.a2l        // Variable description for Windows on Intel 64-bit (optional)
    x86-linux
-      <modelIdentifier>.a2l    // Variable description for Linux on Intel 32-bit (optional)
+      <modelIdentifier>.a2l        // Variable description for Linux on Intel 32-bit (optional)
    aarch32-linux
-      <modelIdentifier>.a2l    // Variable description for Linux on ARM 32-bit (optional)
+      <modelIdentifier>.a2l        // Variable description for Linux on ARM 32-bit (optional)
    x86_64-darwin
-      <modelIdentifier>.a2l    // Variable description for macOS (optional)
+      <modelIdentifier>.a2l        // Variable description for macOS (optional)
 ----
 
 === Documentation
 
 When shipping an FMU with XCP/A2L support, it is recommended to provide the necessary information to the importer in the file `documentation/fmi-ls-xcp.{txt|html}`.
-For example, this concerns information how to build the final A2L file, if the FMU is delivered as source code.
+For example, this might concern additional information on how to build the final A2L file, if the FMU is delivered as source code.
 
 === A2L Description Files
 
@@ -147,7 +148,7 @@ ____
 The A2L description depends on the FMU binary, for example, regarding memory addresses, and byte order.
 If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below `/extra/org.fmi-standard.fmi-ls-xcp` following the same scheme as in the `binaries` directory, see <<Structure of the FMU archive>>.
 
-Note, that the A2L files placed under the `extra` directory are not accessible to the FMU at runtime.
+Note that the A2L files placed under the `extra` directory are not accessible to the FMU at runtime.
 Any files that shall be accessible to the FMU at runtime must (also) be placed into the `resources` directory as defined by the FMI standard.
 
 A2L files may have a considerable size.
@@ -171,8 +172,9 @@ The requirement for the port number is, that it must be unique on the machine wh
 Typically, a certain range of ports is reserved for this purpose.
 The FMU importer is responsible for checking if any conflicts of the defined IP addresses and port numbers occur in the context of the simulated system.
 
-Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter.
-For more information about how to configure and handle the XCP server using the different alternatives (internal/external XCP server), see <<FMU with Integrated XCP Service>> and <<External XCP Service>>, respectively.
+In the case of an internal XCP service, it is sometimes necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter.
+For more information about how to configure and handle the XCP server, see <<configure-internal-xcp-server-settings>>.
+In the case of an external XCP service the connection settings are under the control of the importer.
 
 === Source Code FMUs
 
@@ -216,7 +218,7 @@ _Appropriate care must be taken when to serve XCP master requests to ensure simu
 == FMU with Integrated XCP Service
 
 If the XCP slave is implemented in the FMU, the FMU is responsible for handling the communication protocol with the XCP master.
-The following sections describe how to configure the internal XCP slave.
+The following sections describe how to configure and handle the internal XCP slave.
 
 The FMU states that it contains an internal XCP slave implementation with the `containsXcpSlave` attribute in the `fmi-ls-xcp.manifest` file.
 
@@ -238,21 +240,23 @@ image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 [#XCP-Communication-via-Virtual-ECU-COM-Stack]
 image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
 
-#ToDo# Fix image "IP stack of the host OS" -> "XCP slave communicates via COM stack of virtual ECU"
-
 _The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
 _This concerns, for example, host OS calls_
 footnote:[The term 'host OS' means the OS where the FMU process is executed.
 This could even be the OS inside a virtual machine connected to the simulator.]
 _needed for creation of an own background thread._
-_Note, that blocking OS calls should be avoided, because they may have an effect on other parts of the simulator outside the FMU.]_
+_Note that blocking OS calls should be avoided, because they may have an effect on other parts of the simulator outside the FMU.]_
 
 [#configure-internal-xcp-server-settings]
-=== Configure the XCP Protocol Settings
+=== Configuring the XCP Protocol Settings
 
-Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter in the A2L file (see <<XCP Protocol Settings>>). Furthermore, if the FMU additionally supports an external XCP service, it must be possible to deactivate the internal implementation.
+#ToDo# Was ist spezifisch für XCP Services, die den Host Stack benutzen? +
 
-Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose three structural parameters which are used to configure the embedded XCP slave (see <<internal-xcp-service-operation>>):
+Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter in the A2L file (see <<XCP Protocol Settings>>).
+Furthermore, it might be valuable for the user to have the possibility to deactivate the internal XCP service to avoid certain problems with the environment, e.g. with anti-virus software or firewalls or when running the FMU in a container.
+The importer might also want to use an external XCP service even when an internal XCP service is available.
+
+Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose three structural parameters which are used to configure the embedded XCP slave (see <<starting-internal-xcp-service>>):
 
 .XCP Configuration Parameters
 [#figure-xcp-configuration-parameters]
@@ -281,8 +285,8 @@ Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose
 
 The importer of an FMU is responsible for keeping all occurrences of the IP address and port number consistent.
 
-[#internal-xcp-service-operation]
-=== XCP Service Operation
+[#starting-internal-xcp-service]
+=== Starting and Stopping the XCP Service
 
 Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.
 Preferably, the FMU shall start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
@@ -291,7 +295,7 @@ If the FMU contains a virtual ECU with power-up control (K15), all built-in OS a
 If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi-standard.fmi-ls-xcp.ListenIpAddress` and `org.fmi-standard.fmi-ls-xcp.ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
 If the value of structural parameter `org.fmi-standard.fmi-ls-xcp.EnableXcpService` is `true`, the XCP slave must be responsive for XCP commands after leaving `Configuration Mode`.
 Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
-Note, that reading values of calculated variables, which depend on an initialization function, is only possible after leaving the `Initialized` state with `fmi3ExitInitializationMode`.
+Note that reading values of calculated variables, which depend on an initialization function, is only possible after leaving the `Initialized` state with `fmi3ExitInitializationMode`.
 
 If `org.fmi-standard.fmi-ls-xcp.EnableXcpService` is `false`, the internal XCP service must not be started and no XCP operations must be performed by the FMU during simulation.
 
@@ -306,14 +310,14 @@ _In this case the default value of the `start` attribute of variable `org.fmi-st
 
 Dependent on the FMU format and the XCP slave implementation inside the FMU, dealing with memory addresses of variables in the A2L file differs.
 
-If the FMU is in binary format, i.e. it is shipped with a shared library, the FMU exporter must provide values for the ECU addresses inside the A2L file and the XCP slave inside the FMU is responsible for resolving the physical addresses from the address fields.
+If the FMU is in binary format, i.e. it is shipped with a shared library, the FMU exporter must provide values for the ECU addresses inside the A2L file and the XCP slave inside the FMU is responsible for resolving the physical addresses from the address field values.
 _[These address field values can be either real addresses or fixed target-independent indices that are used by the XCP slave implementation for getting variables during runtime.]_
 
 If the FMU is only shipped with source code, it is not possible to determine the memory addresses before building the binary, i.e. real addresses cannot be provided by the exporter in the A2L file.
 In this case the address field values in the A2L file must be either fixed target-independent indices, which allow the FMU to resolve the addresses at runtime, or the A2L file only contains symbolic links (`SYMBOL_LINK`).
 In the latter case, the importer or an external A2L tool is responsible for determining the actual variable addresses from the symbolic links.
 These addresses must be relative to the base address of the built FMU binary.
-Refer to the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard for more information on symbolic links.
+Refer to the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard for more information on symbolic links and automatic address update.
 
 _[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbolic links in the source code FMU case, attribute `canUseExternalXcpService` in the `fmi-ls-xcp.manifest` file must be set to `false` (see <<address-resolution-external>>).]_
 
@@ -323,11 +327,11 @@ An FMU might support XCP but does not bring along its own XCP slave implementati
 In this case the FMU importer must provide its own implementation of an XCP slave.
 
 It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `canUseExternalXcpService = true`).
-In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation. See <<internal-xcp-service-operation>> on how to deactivate the internal XCP service.
+In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation. See <<starting-internal-xcp-service>> on how to deactivate the internal XCP service.
 
-_[Note that the FMU must set at least one of the attributes `containsXcpSlave` or `canUseExternalXcpService` to make use of this layered standard.]_
+_[Note that the FMU must set at least one of the attributes `containsXcpSlave` or `canUseExternalXcpService` to `true` to make use of this layered standard.]_
 
-Although the XCP behavior for an internal and an external service is the same from the perspective of the XCP master, the operation of the external XCP service differs from the internal in some points that are described in this chapter.
+Although the XCP behavior for an internal and an external service is the same from the perspective of the XCP master, the operation of the external XCP service differs from the internal one in some points that are described in this chapter.
 
 _[<<XCP-Communication-external-Slave>> shows a design where the XCP slave is implemented by the importer outside of the FMU._
 _In this variant the XCP communication uses the IP stack of the host OS analogous to the design in <<XCP-Communication-via-IP-Stack>>.]_
@@ -337,7 +341,10 @@ _In this variant the XCP communication uses the IP stack of the host OS analogou
 image::images/XCP-Communication-external-Slave.svg[width=80%, align="center"]
 
 [#configure-external-xcp-server-settings]
-=== Configure the XCP Protocol Settings
+=== Configuring the XCP Protocol Settings
+
+For an external XCP service no structural parameters are needed, because the importer has to configure the XCP service.
+The importer should allow the user to set IP address and port number analogous to the variant with an internal XCP service.
 
 When an external XCP service is used, the importer is the one who has to make XCP service calls and who is responsible for creating events for its XCP service.
 However, in contrast to the FMU in the approach with an internal XCP slave, the importer does not necessarily have the knowledge about the inner structure of the virtual ECU and therefore it is not able to create specific events e.g. one event for each task.
@@ -345,13 +352,13 @@ However, in contrast to the FMU in the approach with an internal XCP slave, the 
 This means, by default, the importer can only make XCP calls at certain points in time disregarding specific task-related XCP events, e.g. at communication points in Co-Simulation.
 The importer must create an event channel for this basic measurement raster and must write the corresponding event definition to the `IF_DATA XCP` section in the A2L file.
 
-If the FMU announces that it makes use of the intermediate update callback function (attribute `providesIntermediateUpdate = true` of the Co-Simulation element), the importer may also create another event for the intermediate update raster and call the XCP service in each `fmi3IntermediateUpdateCallback` with the event channel number of this event.
+If a Co-Simulation FMU announces that it makes use of the intermediate update callback function (attribute `providesIntermediateUpdate = true` of the Co-Simulation element), the importer may also create another event for the intermediate update raster and call the XCP service in each `fmi3IntermediateUpdateCallback` with the event channel number of this event.
 
 Furthermore, if the FMU contains clocks, the importer might also provide the user with the ability to create separate XCP events for each clock.
 In this case the simulator is responsible for handling the mapping between clock and XCP event and must call the XCP service with the corresponding event channel when the associated clock is ticking.
 
-[#external-xcp-service-operation]
-=== XCP Service Operation
+[#starting-external-xcp-service]
+=== Starting and Stopping the XCP Service
 
 Since the XCP slave is implemented outside the FMU, the importer is responsible for starting and stopping the external XCP service.
 _[Preferably, the start-up is performed sometime during the `Instantiated` state of the FMU to allow the XCP master to set parameters before entering `Initialization Mode`.]_
@@ -370,6 +377,10 @@ In this case, analogous to the use of an internal XCP slave, the importer or an 
 
 == Known Limitations of This Standard
 
+General limitations:
+
+* This standard forbids the use of the `including mechanism` of additional A2L files to simplify complete extraction and copying of the A2L file to a location where it is accessible by the MCD tool.
+
 Limitations for binary FMUs:
 
 * Normally only variables in the memory segments owned by the main FMU binary `{.dll, .so}` are accessible by the XCP service, i.e. variables defined in source code modules and in statically linked libraries.
@@ -381,14 +392,3 @@ Limitations for variant <<External XCP Service,External XCP Service>>:
 Therefore, page handling is not supported in the case of an external XCP service.
 
 #ToDo# Elaborate a bit ??
-
-#ToDo# Are XCP Events from the FMU limitated or not? Is it described well enough to say it is "specified"?
-
-== General TODOs
-
-#ToDo# Check FMI interface independency +
-#ToDo# Was ist spezifisch für XCP Services, die den Host Stack benutzen? +
-#ToDo# Auch andere Gründe für Abschalten des internen XCP Service nennen, als nur dass man seinen eigenen verwenden möchte. +
-
-
-#ToDo# Use key word "automatic address update" according to XCP standard
