@@ -1,4 +1,4 @@
-= XCP and FMI 3.0
+= Layered Standard for XCP
 :sectnums:
 :sectnumlevels: 5
 :toc: left
@@ -13,10 +13,10 @@
 :nofooter:
 :favicon: images/favicon.ico
 :revdate: unreleased
-:revnumber: 3.0
+:revnumber: 1.0
 :icons: font
 
-This layered standard defines, based on FMI 3.0, how to describe and implement XCP support for FMUs.
+Based on FMI 3.0, this layered standard defines how to describe and implement XCP support for FMUs.
 
 {empty} +
 {empty}
