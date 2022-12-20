@@ -98,8 +98,30 @@ Conventions used in this document:
 [#common-concepts]
 == Layered Standard Manifest File
 
-#ToDo# Write section +
-#ToDo# Define manifest +
+This layered standard defines additional capability flags in the layered standard manifest file.
+<<fmi-ls-xcp-manifest>> shows the content of `fmi-ls-xcp.manifest`.
+
+.fmi-ls-xcp element.
+[#fmi-ls-xcp-manifest]
+image::docs/images/schema/fmi-ls-xcp.png[width=60%, align="center"]
+
+.`fmi-ls-xcp` attribute details.
+[[table-schema-fmi-ls-xcp-attributes]]
+[cols="1,3",options="header"]
+|====
+|Attribute
+|Description
+
+|`version`
+| Version of this layered standard the FMU complies with.
+
+|`containsXcpSlave`
+| If `true`, the FMU contains an own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
+
+|`supportsExternalXcpService`
+| If `true`, the FMU allows the importer to access its memory via an external XCP service. See <<External XCP Service>>.
+
+|====
 
 == Common Concepts
 
@@ -232,13 +254,13 @@ _In this case, the simulator has to provide access to the simulated network comm
 _This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested._
 footnote:[The same design could be used to access a diagnostic service, if it is implemented by the ECU code inside the FMU.]
 
-.Direct communication of XCP master and XCP slave via the IP stack of the host OS
+.Direct communication of XCP master and XCP slave via the IP stack of the host OS.
 [#XCP-Communication-via-IP-Stack]
-image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
+image::docs/images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 
-.Communication of XCP master and XCP slave via the COM stack of the virtual ECU
+.Communication of XCP master and XCP slave via the COM stack of the virtual ECU.
 [#XCP-Communication-via-Virtual-ECU-COM-Stack]
-image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
+image::docs/images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
 
 _The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
 _This concerns, for example, host OS calls_
@@ -249,8 +271,6 @@ _Note that blocking OS calls should be avoided, because they may have an effect 
 
 [#configure-internal-xcp-server-settings]
 === Configuring the XCP Protocol Settings
-
-#ToDo# Was ist spezifisch für XCP Services, die den Host Stack benutzen? +
 
 Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter in the A2L file (see <<XCP Protocol Settings>>).
 Furthermore, it might be valuable for the user to have the possibility to deactivate the internal XCP service to avoid certain problems with the environment, e.g. with anti-virus software or firewalls or when running the FMU in a container.
@@ -319,26 +339,26 @@ In the latter case, the importer or an external A2L tool is responsible for dete
 These addresses must be relative to the base address of the built FMU binary.
 Refer to the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard for more information on symbolic links and automatic address update.
 
-_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbolic links in the source code FMU case, attribute `canUseExternalXcpService` in the `fmi-ls-xcp.manifest` file must be set to `false` (see <<address-resolution-external>>).]_
+_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbolic links in the source code FMU case, attribute `supportsExternalXcpService` in the `fmi-ls-xcp.manifest` file must be set to `false` (see <<address-resolution-external>>).]_
 
 == External XCP Service
 
 An FMU might support XCP but does not bring along its own XCP slave implementation (attribute `containsXcpSlave = false` in the `fmi-ls-xcp.manifest` file).
 In this case the FMU importer must provide its own implementation of an XCP slave.
 
-It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `canUseExternalXcpService = true`).
+It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `supportsExternalXcpService = true`).
 In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation. See <<starting-internal-xcp-service>> on how to deactivate the internal XCP service.
 
-_[Note that the FMU must set at least one of the attributes `containsXcpSlave` or `canUseExternalXcpService` to `true` to make use of this layered standard.]_
+_[Note that the FMU must set at least one of the attributes `containsXcpSlave` and `supportsExternalXcpService` to `true` to make use of this layered standard.]_
 
 Although the XCP behavior for an internal and an external service is the same from the perspective of the XCP master, the operation of the external XCP service differs from the internal one in some points that are described in this chapter.
 
 _[<<XCP-Communication-external-Slave>> shows a design where the XCP slave is implemented by the importer outside of the FMU._
 _In this variant the XCP communication uses the IP stack of the host OS analogous to the design in <<XCP-Communication-via-IP-Stack>>.]_
 
-.Communication of XCP master and external XCP slave via the IP stack of the host OS
+.Communication of XCP master and external XCP slave via the IP stack of the host OS.
 [#XCP-Communication-external-Slave]
-image::images/XCP-Communication-external-Slave.svg[width=80%, align="center"]
+image::docs/images/XCP-Communication-external-Slave.svg[width=80%, align="center"]
 
 [#configure-external-xcp-server-settings]
 === Configuring the XCP Protocol Settings
@@ -388,7 +408,5 @@ Accessing variables in the memory of indirectly loaded dynamic libraries require
 
 Limitations for variant <<External XCP Service,External XCP Service>>:
 
-* This layered standard does not describe how the FMU can inform the importer about different memory segments it uses.
+* This layered standard does not describe how the importer can determine the different memory segments within the built FMU.
 Therefore, page handling is not supported in the case of an external XCP service.
-
-#ToDo# Elaborate a bit ??
