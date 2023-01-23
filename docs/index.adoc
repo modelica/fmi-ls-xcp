@@ -103,7 +103,7 @@ This layered standard defines additional capability flags in the layered standar
 
 .fmi-ls-xcp element.
 [#fmi-ls-xcp-manifest]
-image::docs/images/schema/fmi-ls-xcp.png[width=60%, align="center"]
+image::images/schema/fmi-ls-xcp.png[width=60%, align="center"]
 
 .`fmi-ls-xcp` attribute details.
 [[table-schema-fmi-ls-xcp-attributes]]
@@ -256,11 +256,11 @@ footnote:[The same design could be used to access a diagnostic service, if it is
 
 .Direct communication of XCP master and XCP slave via the IP stack of the host OS.
 [#XCP-Communication-via-IP-Stack]
-image::docs/images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
+image::images/XCP-Communication-via-IP-Stack.svg[width=80%, align="center"]
 
 .Communication of XCP master and XCP slave via the COM stack of the virtual ECU.
 [#XCP-Communication-via-Virtual-ECU-COM-Stack]
-image::docs/images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
+image::images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg[width=80%, align="center"]
 
 _The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected._
 _This concerns, for example, host OS calls_
@@ -358,7 +358,7 @@ _In this variant the XCP communication uses the IP stack of the host OS analogou
 
 .Communication of XCP master and external XCP slave via the IP stack of the host OS.
 [#XCP-Communication-external-Slave]
-image::docs/images/XCP-Communication-external-Slave.svg[width=80%, align="center"]
+image::images/XCP-Communication-external-Slave.svg[width=80%, align="center"]
 
 [#configure-external-xcp-server-settings]
 === Configuring the XCP Protocol Settings
