@@ -37,8 +37,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<xs:element name="fmi-ls-xcp">
 		<xs:complexType>
 			<xs:attribute name="version" type="xs:normalizedString" use="required"/>
-			<xs:attribute name="containsXcpSlave" type="xs:boolean" default="true"/>
-			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" default="true"/>
+			<xs:attribute name="containsXcpService" type="xs:boolean" default="false"/>
+			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" default="false"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

@@ -70,5 +70,5 @@ function Export-Schema() {
 Clear-Gen
 Get-XSDDiagram
 
-Export-Schema fmi-ls-xcp 3 -schema fmi-ls-xcp.manifest
+Export-Schema fmi-ls-xcp 3 -schema fmi-ls-xcp.xsd
 
