@@ -86,7 +86,7 @@ _As this approach does not use the standardized XCP protocol it is not further d
 _[This layered standard will have no effect on the FMU interface, nor the C-API behavior._
 _If the XCP slave is implemented inside the FMU, it is recommended that it runs in its own thread and leaves the rest of the operation of the FMU unaffected._
 
-_The A2L/XCP standards allow to measure variables synchronously to different types of events._
+_The A2L/XCP standards allow to measure and calibrate variables synchronously to different types of events._
 _These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (aka measurement raster)._
 _The XCP service must be invoked with the defined event channel number in the thread which is executed for an event._
 _Calibration and communication with the XCP master is typically performed in a background thread._
@@ -182,7 +182,8 @@ All format versions of the A2L standard are allowed and it is the responsibility
 
 This standard forbids the use of the `including mechanism` of additional A2L files to simplify complete extraction and copying of the A2L file to a location where it is accessible by the MCD tool.
 
-The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or external, see <<Rough Outline of the Approach>>) and on the FMU format (binary or source code FMU). See <<address-resolution-internal>> and <<address-resolution-external>>, respectively, for detailed information about address resolution.
+The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or external, see <<Rough Outline of the Approach>>) and on the FMU format (binary or source code FMU).
+See <<address-resolution-internal>> and <<address-resolution-external>>, respectively, for detailed information about address resolution.
 
 === XCP Protocol Settings
 
@@ -348,7 +349,8 @@ An FMU might support XCP but does not bring along its own XCP slave implementati
 In this case the FMU importer must provide its own implementation of an XCP slave.
 
 It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `supportsExternalXcpService = true`).
-In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation. See <<starting-internal-xcp-service>> on how to deactivate the internal XCP service.
+In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation.
+See <<starting-internal-xcp-service>> on how to deactivate the internal XCP service.
 
 _[Note that the FMU must set at least one of the attributes `containsXcpService` or `supportsExternalXcpService` to `true` to make use of this layered standard.]_
 
@@ -368,7 +370,7 @@ For an external XCP service no structural parameters for the XCP configuration a
 _[The importer should allow the user to set IP address and port number analogous to the variant with an internal XCP service.]_
 
 When an external XCP service is used, the importer is the one who has to make XCP service calls and who is responsible for creating events for its XCP service.
-However, in contrast to the FMU in the approach with an internal XCP slave, the importer does not necessarily have the knowledge about the inner structure of the virtual ECU and therefore it is not able to create specific events e.g. one event for each task.
+However, in contrast to the FMU in the approach with an internal XCP slave, the importer does not necessarily have the knowledge about the inner structure of the virtual ECU and therefore it is not able to create specific events, e.g. one event for each task.
 
 This means, by default, the importer can only make XCP calls at certain points in time disregarding specific task-related XCP events, e.g. at communication points in Co-Simulation.
 The importer must create an event channel for this basic measurement raster and must write the corresponding event definition to the `IF_DATA XCP` section in the A2L file.
