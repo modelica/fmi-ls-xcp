@@ -196,7 +196,7 @@ Typically, a certain range of ports is reserved for this purpose.
 The FMU importer is responsible for checking if any conflicts of the defined IP addresses and port numbers occur in the context of the simulated system.
 
 In the case of an internal XCP service, it is sometimes necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter.
-For more information about how to configure and handle the XCP server, see <<configure-internal-xcp-server-settings>>.
+For more information about how to configure and handle the XCP service, see <<configure-internal-xcp-service-settings>>.
 In the case of an external XCP service the connection settings are under the control of the importer.
 
 === Source Code FMUs
@@ -271,7 +271,7 @@ This could even be the OS inside a virtual machine connected to the simulator.]
 _needed for creation of an own background thread._
 _Note that blocking OS calls should be avoided, because they may have an effect on other parts of the simulator outside the FMU.]_
 
-[#configure-internal-xcp-server-settings]
+[#configure-internal-xcp-service-settings]
 === Configuring the XCP Protocol Settings
 
 Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter in the A2L file (see <<XCP Protocol Settings>>).
@@ -363,7 +363,7 @@ _In this variant the XCP communication uses the IP stack of the host OS analogou
 [#XCP-Communication-external-Slave]
 image::images/XCP-Communication-external-Slave.svg[width=80%, align="center"]
 
-[#configure-external-xcp-server-settings]
+[#configure-external-xcp-service-settings]
 === Configuring the XCP Protocol Settings
 
 For an external XCP service no structural parameters for the XCP configuration are needed, because the importer has the entire control over the XCP service and is responsible for its configuration.
