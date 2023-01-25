@@ -7,6 +7,22 @@ on:
     branches: [ main ]
 
 jobs:
+  generate-schema-figures:
+    runs-on: windows-2022
+    steps:
+
+    - uses: actions/checkout@v3
+    
+    - run: |
+        PowerShell -ExecutionPolicy Bypass -Command ./generate_figures.ps1
+
+    - name: Create ZIP archive
+      uses: actions/upload-artifact@v3
+      with:
+        name: schema-figures
+        path: docs/images/schema/*.png
+        if-no-files-found: error
+
   build-ls-xcp:
     name: Build Layered Standard XCP 
 
