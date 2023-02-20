@@ -99,29 +99,54 @@ _The XCP/A2L approach can not only be used for virtual ECUs, but also for plant 
 == Layered Standard Manifest File
 
 This layered standard defines additional capability flags in the layered standard manifest file.
-<<fmi-ls-xcp-manifest>> shows the content of `fmi-ls-xcp.manifest`.
+<<fmi-ls-xcp-manifest>> shows the content of `fmi-ls-manifest.xml`.
 
-.fmi-ls-xcp element.
+.Manifest element.
 [#fmi-ls-xcp-manifest]
-image::images/schema/fmi-ls-xcp.png[width=60%, align="center"]
+image::images/schema/Manifest.png[width=60%, align="center"]
 
-.`fmi-ls-xcp` attribute details.
+.`Manifest` attribute details.
 [[table-schema-fmi-ls-xcp-attributes]]
-[cols="1,3",options="header"]
+[cols="1,1,1,2",options="header"]
 |====
 |Attribute
+|Namespace
+|Value
 |Description
 
+|`name`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `org.fmi-standard.fmi-ls-xcp`
+| Name of the layered standard in reverse domain name notation.
+
 |`version`
-| Version of this layered standard the FMU complies with.
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `1.0.0`
+| Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
+
+|`description`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `Layered Standard for XCP`
+| String with a brief description of the layered standard that is suitable for display to users.
 
 |`containsXcpService`
+| 
+| `true` or `false`
 | If `true`, the FMU contains an own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
 
 |`supportsExternalXcpService`
+| 
+| `true` or `false`
 | If `true`, the FMU allows the importer to access its memory via an external XCP service. See <<External XCP Service>>.
 
 |====
+
+An example of a manifest file for this layered standard is shown below:
+
+[source, xml]
+----
+include::docs/examples/fmi_ls_xcp_manifest_example.xml[]
+----
 
 == Common Concepts
 
@@ -140,7 +165,7 @@ Details are described in the following sections.
 documentation
    fmi-ls-xcp{.txt,.html}          // Informal description how to use XCP/A2L for this FMU (optional).
 extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
-   fmi-ls-xcp.manifest             // The layered standard manifest file
+   fmi-ls-manifest.xml             // The layered standard manifest file
    <modelIdentifier>.a2l           // Variable description of a source code FMU (optional)
    x86_64-windows
       <modelIdentifier>.a2l        // Variable description for Windows on Intel 64-bit (optional)
@@ -244,7 +269,7 @@ _Appropriate care must be taken when to serve XCP master requests to ensure simu
 If the XCP slave is implemented in the FMU, the FMU is responsible for handling the communication protocol with the XCP master.
 The following sections describe how to configure and handle the internal XCP slave.
 
-The FMU states that it contains an internal XCP slave implementation with the `containsXcpService` attribute in the `fmi-ls-xcp.manifest` file.
+The FMU states that it contains an internal XCP slave implementation with the `containsXcpService` attribute in the `fmi-ls-manifest.xml` file.
 
 _[<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS._
 _Thus, the communication of the XCP service is not mixed with the simulated network communication of the ECU wrapped in the FMU._
@@ -341,11 +366,11 @@ In the latter case, the importer or an external A2L tool is responsible for dete
 These addresses must be relative to the base address of the built FMU binary.
 Refer to the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard for more information on symbol links and automatic address update.
 
-_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute `supportsExternalXcpService` in the `fmi-ls-xcp.manifest` file must be set to `false` (see <<address-resolution-external>>).]_
+_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute `supportsExternalXcpService` in the `fmi-ls-manifest.xml` file must be set to `false` (see <<address-resolution-external>>).]_
 
 == External XCP Service
 
-An FMU might support XCP but does not bring along its own XCP slave implementation (attribute `containsXcpService = false` in the `fmi-ls-xcp.manifest` file).
+An FMU might support XCP but does not bring along its own XCP slave implementation (attribute `containsXcpService = false` in the `fmi-ls-manifest.xml` file).
 In this case the FMU importer must provide its own implementation of an XCP slave.
 
 It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `supportsExternalXcpService = true`).
@@ -419,3 +444,8 @@ Limitations for variant <<External XCP Service,External XCP Service>>:
 
 * This layered standard does not describe how the importer can determine the different memory segments within the built FMU.
 Therefore, page handling is not supported in the case of an external XCP service.
+
+[bibliography]
+== References
+
+- [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html

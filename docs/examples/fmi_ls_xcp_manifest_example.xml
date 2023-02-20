@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest
+	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
+	fmi-ls:name="org.fmi-standard.fmi-ls-xcp"
+	fmi-ls:version="1.0.0"
+	fmi-ls:description="Layered Standard for XCP"
+	containsXcpService="true"
+	supportsExternalXcpService="true"/>
