@@ -36,7 +36,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</xs:annotation>
 	<xs:element name="Manifest">
 		<xs:complexType>
-			<xs:attributeGroup ref="fmi-ls:root-attributes"/>
+			<xs:attribute ref="fmi-ls:name" use="required" fixed="org.fmi-standard.fmi-ls-xcp"/>
+			<xs:attribute ref="fmi-ls:version" use="required"/>
+			<xs:attribute ref="fmi-ls:description" use="required" fixed="Layered Standard for XCP"/>
 			<xs:attribute name="containsXcpService" type="xs:boolean" use="required"/>
 			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" use="required"/>
 		</xs:complexType>
