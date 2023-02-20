@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="fmi-ls-manifest.xsd"/>
 	<xs:annotation>
 		<xs:documentation>
 Copyright(c) 2023 Modelica Association Project "FMI".
@@ -33,11 +34,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
         </xs:documentation>
 	</xs:annotation>
-	<xs:element name="fmi-ls-xcp">
+	<xs:element name="Manifest">
 		<xs:complexType>
-			<xs:attribute name="version" type="xs:normalizedString" use="required"/>
-			<xs:attribute name="containsXcpService" type="xs:boolean" default="false"/>
-			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" default="false"/>
+			<xs:attributeGroup ref="fmi-ls:root-attributes"/>
+			<xs:attribute name="containsXcpService" type="xs:boolean" use="required"/>
+			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" use="required"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

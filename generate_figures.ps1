@@ -9,7 +9,7 @@ function Clear-Gen() {
 	if (Test-Path $generatorDir){
 		Remove-Item -Recurse $generatorDir
 	}
-	Remove-Item $pngOutDir\*
+	Remove-Item $pngOutDir\*.png
 }
 
 function Get-XSDDiagram() {
@@ -70,5 +70,5 @@ function Export-Schema() {
 Clear-Gen
 Get-XSDDiagram
 
-Export-Schema fmi-ls-xcp 3 -schema fmi-ls-xcp.xsd
+Export-Schema Manifest 3 -schema fmi-ls-xcp-manifest.xsd
 
