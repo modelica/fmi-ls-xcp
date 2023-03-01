@@ -132,7 +132,7 @@ image::images/schema/Manifest.png[width=60%, align="center"]
 |`containsXcpService`
 | 
 | `true` or `false`
-| If `true`, the FMU contains an own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
+| If `true`, the FMU contains its own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
 
 |`supportsExternalXcpService`
 | 
