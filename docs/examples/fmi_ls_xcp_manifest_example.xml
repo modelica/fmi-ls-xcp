@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Manifest
+<fmiLayeredStandardManifest
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardXcpManifest.xsd"
 	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
-	fmi-ls:name="org.fmi-standard.fmi-ls-xcp"
-	fmi-ls:version="1.0.0"
-	fmi-ls:description="Layered Standard for XCP"
+	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
+	fmi-ls:fmi-ls-version="1.0.0"
+	fmi-ls:fmi-ls-description="Layered Standard for XCP"
 	containsXcpService="true"
 	supportsExternalXcpService="true"/>

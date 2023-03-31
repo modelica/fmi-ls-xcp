@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fmi-standard.org/fmi-ls-manifest" elementFormDefault="qualified" attributeFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="fmi3LayeredStandardManifest.xsd"/>
 	<xs:annotation>
 		<xs:documentation>
 Copyright(c) 2023 Modelica Association Project "FMI".
@@ -33,13 +34,25 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
         </xs:documentation>
 	</xs:annotation>
-	<xs:attribute name="name" type="xs:normalizedString"/>
-	<xs:attribute name="version">
-		<xs:simpleType>
-			<xs:restriction base="xs:normalizedString">
-				<xs:pattern value="[1-9][0-9]*[.](0|[1-9][0-9]*)([.](0|[1-9][0-9]*))?"/>
-			</xs:restriction>
-		</xs:simpleType>
-	</xs:attribute>
-	<xs:attribute name="description" type="xs:normalizedString"/>
+	<xs:element name="fmiLayeredStandardManifest">
+		<xs:complexType>
+			<xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-xcp"/>
+			<xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
+			<xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard for XCP"/>
+			<xs:attribute name="containsXcpService" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						If true, the FMU contains an own XCP slave implementation.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						If true, the FMU allows the importer to access its memory via an external XCP service.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
