@@ -99,13 +99,9 @@ _The XCP/A2L approach can not only be used for virtual ECUs, but also for plant 
 == Layered Standard Manifest File
 
 This layered standard defines additional capability flags in the layered standard manifest file.
-<<fmi-ls-xcp-manifest>> shows the content of `fmi-ls-manifest.xml`.
+<<table-schema-fmi-ls-xcp-attributes>> shows the content of `fmi-ls-manifest.xml`.
 
-.Manifest element.
-[#fmi-ls-xcp-manifest]
-image::images/schema/Manifest.png[width=60%, align="center"]
-
-.`Manifest` attribute details.
+.`fmiLayeredStandardManifest` attribute details.
 [[table-schema-fmi-ls-xcp-attributes]]
 [cols="1,1,1,2",options="header"]
 |====
@@ -114,17 +110,17 @@ image::images/schema/Manifest.png[width=60%, align="center"]
 |Value
 |Description
 
-|`name`
+|`fmi-ls-name`
 | `\http://fmi-standard.org/fmi-ls-manifest`
 | `org.fmi-standard.fmi-ls-xcp`
 | Name of the layered standard in reverse domain name notation.
 
-|`version`
+|`fmi-ls-version`
 | `\http://fmi-standard.org/fmi-ls-manifest`
 | `1.0.0`
 | Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
 
-|`description`
+|`fmi-ls-description`
 | `\http://fmi-standard.org/fmi-ls-manifest`
 | `Layered Standard for XCP`
 | String with a brief description of the layered standard that is suitable for display to users.
