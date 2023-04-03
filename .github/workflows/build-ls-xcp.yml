@@ -7,24 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  generate-schema-figures:
-    runs-on: windows-2022
-    steps:
-
-    - uses: actions/checkout@v3
-    
-    - run: |
-        PowerShell -ExecutionPolicy Bypass -Command ./generate_figures.ps1
-
-    - name: Create ZIP archive
-      uses: actions/upload-artifact@v3
-      with:
-        name: schema-figures
-        path: docs/images/schema/*.png
-        if-no-files-found: error
-
   build-ls-xcp:
-    name: Build Layered Standard XCP 
+    name: Build Layered Standard XCP
 
     runs-on: ubuntu-18.04
 
@@ -33,7 +17,7 @@ jobs:
       uses: actions/checkout@v2
     - name: prepare
       run: mkdir build
-    - name: build layered standard XCP 
+    - name: build layered standard XCP
       uses: avattathil/asciidoctor-action@master
       with:
         program: "asciidoctor -D build --backend=html5 --attribute=revnumber=${GITHUB_REF#refs/heads/}-$GITHUB_SHA --attribute=revdate=$(date +%F) docs/index.adoc"
