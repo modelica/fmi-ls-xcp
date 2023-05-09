@@ -17,8 +17,8 @@
 <div id="header">
 <h1>Layered Standard for XCP</h1>
 <div class="details">
-<span id="revnumber">version main-56a2ad1ca92b79a436e6b6a06ae020bcbe06eb3d,</span>
-<span id="revdate">2023-01-25</span>
+<span id="revnumber">version main-b54007f88f9a0f25f09c88467f1fcf2c75483645,</span>
+<span id="revdate">2023-05-09</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -58,6 +58,7 @@
 </ul>
 </li>
 <li><a href="#_known_limitations_of_this_standard">6. Known Limitations of This Standard</a></li>
+<li><a href="#_references">References</a></li>
 </ul>
 </div>
 </div>
@@ -193,41 +194,65 @@ For further details see <a href="#_external_xcp_service">Section 5</a>.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This layered standard defines additional capability flags in the layered standard manifest file.
-<a href="#fmi-ls-xcp-manifest">Figure 1</a> shows the content of <code>fmi-ls-xcp.manifest</code>.</p>
-</div>
-<div id="fmi-ls-xcp-manifest" class="imageblock text-center">
-<div class="content">
-<img src="images/schema/fmi-ls-xcp.png" alt="fmi ls xcp" width="60%">
-</div>
-<div class="title">Figure 1. fmi-ls-xcp element.</div>
+<a href="#table-schema-fmi-ls-xcp-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
 </div>
 <table id="table-schema-fmi-ls-xcp-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. <code>fmi-ls-xcp</code> attribute details.</caption>
+<caption class="title">Table 1. <code>fmiLayeredStandardManifest</code> attribute details.</caption>
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Namespace</th>
+<th class="tableblock halign-left valign-top">Value</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>version</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Version of this layered standard the FMU complies with.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.fmi-standard.fmi-ls-xcp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the layered standard in reverse domain name notation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1.0.0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version of the layered standard. This layered standard uses semantic versioning, as defined in <a href="#PW13">[PW13]</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered Standard for XCP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String with a brief description of the layered standard that is suitable for display to users.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>containsXcpService</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the FMU contains an own XCP slave implementation. See <a href="#_fmu_with_integrated_xcp_service">Section 4</a>.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> or <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the FMU contains its own XCP slave implementation. See <a href="#_fmu_with_integrated_xcp_service">Section 4</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>supportsExternalXcpService</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> or <code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the FMU allows the importer to access its memory via an external XCP service. See <a href="#_external_xcp_service">Section 5</a>.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>An example of a manifest file for this layered standard is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">Unresolved directive in index.adoc - include::docs/examples/fmi_ls_xcp_manifest_example.xml[]</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -250,7 +275,7 @@ Details are described in the following sections.</p>
 <pre>documentation
    fmi-ls-xcp{.txt,.html}          // Informal description how to use XCP/A2L for this FMU (optional).
 extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
-   fmi-ls-xcp.manifest             // The layered standard manifest file
+   fmi-ls-manifest.xml             // The layered standard manifest file
    &lt;modelIdentifier&gt;.a2l           // Variable description of a source code FMU (optional)
    x86_64-windows
       &lt;modelIdentifier&gt;.a2l        // Variable description for Windows on Intel 64-bit (optional)
@@ -393,15 +418,15 @@ On the other hand, plant models offering XCP access for parameter calibration ma
 The following sections describe how to configure and handle the internal XCP slave.</p>
 </div>
 <div class="paragraph">
-<p>The FMU states that it contains an internal XCP slave implementation with the <code>containsXcpService</code> attribute in the <code>fmi-ls-xcp.manifest</code> file.</p>
+<p>The FMU states that it contains an internal XCP slave implementation with the <code>containsXcpService</code> attribute in the <code>fmi-ls-manifest.xml</code> file.</p>
 </div>
 <div class="paragraph">
-<p><em>[<a href="#XCP-Communication-via-IP-Stack">Figure 2</a> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS.</em>
+<p><em>[<a href="#XCP-Communication-via-IP-Stack">Figure 1</a> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS.</em>
 <em>Thus, the communication of the XCP service is not mixed with the simulated network communication of the ECU wrapped in the FMU.</em>
 <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div class="paragraph">
-<p><em><a href="#XCP-Communication-via-Virtual-ECU-COM-Stack">Figure 3</a> shows an alternative design where the XCP slave communicates via the COM stack of the virtual ECU as in a real ECU.</em>
+<p><em><a href="#XCP-Communication-via-Virtual-ECU-COM-Stack">Figure 2</a> shows an alternative design where the XCP slave communicates via the COM stack of the virtual ECU as in a real ECU.</em>
 <em>In this case, the simulator has to provide access to the simulated network communication for the MCD tool.</em>
 <em>This design may be chosen if the XCP slave implementation is already part of a level-3 ECU code to be tested.</em>
 <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
@@ -410,13 +435,13 @@ The following sections describe how to configure and handle the internal XCP sla
 <div class="content">
 <img src="images/XCP-Communication-via-IP-Stack.svg" alt="XCP Communication via IP Stack" width="80%">
 </div>
-<div class="title">Figure 2. Direct communication of XCP master and XCP slave via the IP stack of the host OS.</div>
+<div class="title">Figure 1. Direct communication of XCP master and XCP slave via the IP stack of the host OS.</div>
 </div>
 <div id="XCP-Communication-via-Virtual-ECU-COM-Stack" class="imageblock text-center">
 <div class="content">
 <img src="images/XCP-Communication-via-Virtual-ECU-COM-Stack.svg" alt="XCP Communication via Virtual ECU COM Stack" width="80%">
 </div>
-<div class="title">Figure 3. Communication of XCP master and XCP slave via the COM stack of the virtual ECU.</div>
+<div class="title">Figure 2. Communication of XCP master and XCP slave via the COM stack of the virtual ECU.</div>
 </div>
 <div class="paragraph">
 <p><em>The implementation of the XCP slave inside the FMU shall only use calls of the host OS, which leave the behavior of the FMU unaffected.</em>
@@ -506,7 +531,7 @@ These addresses must be relative to the base address of the built FMU binary.
 Refer to the <a href="https://www.asam.net/standards/detail/mcd-2-mc/">ASAM MCD-2 MC</a> standard for more information on symbol links and automatic address update.</p>
 </div>
 <div class="paragraph">
-<p><em>[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute <code>supportsExternalXcpService</code> in the <code>fmi-ls-xcp.manifest</code> file must be set to <code>false</code> (see <a href="#address-resolution-external">Section 5.3</a>).]</em></p>
+<p><em>[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute <code>supportsExternalXcpService</code> in the <code>fmi-ls-manifest.xml</code> file must be set to <code>false</code> (see <a href="#address-resolution-external">Section 5.3</a>).]</em></p>
 </div>
 </div>
 </div>
@@ -515,7 +540,7 @@ Refer to the <a href="https://www.asam.net/standards/detail/mcd-2-mc/">ASAM MCD-
 <h2 id="_external_xcp_service">5. External XCP Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An FMU might support XCP but does not bring along its own XCP slave implementation (attribute <code>containsXcpService = false</code> in the <code>fmi-ls-xcp.manifest</code> file).
+<p>An FMU might support XCP but does not bring along its own XCP slave implementation (attribute <code>containsXcpService = false</code> in the <code>fmi-ls-manifest.xml</code> file).
 In this case the FMU importer must provide its own implementation of an XCP slave.</p>
 </div>
 <div class="paragraph">
@@ -530,14 +555,14 @@ See <a href="#starting-internal-xcp-service">Section 4.2</a> on how to deactivat
 <p>Although the XCP behavior for an internal and an external service is the same from the perspective of the XCP master, the operation of the external XCP service differs from the internal one in some points that are described in this chapter.</p>
 </div>
 <div class="paragraph">
-<p><em>[<a href="#XCP-Communication-external-Slave">Figure 4</a> shows a design where the XCP slave is implemented by the importer outside of the FMU.</em>
-<em>In this variant the XCP communication uses the IP stack of the host OS analogous to the design in <a href="#XCP-Communication-via-IP-Stack">Figure 2</a>.]</em></p>
+<p><em>[<a href="#XCP-Communication-external-Slave">Figure 3</a> shows a design where the XCP slave is implemented by the importer outside of the FMU.</em>
+<em>In this variant the XCP communication uses the IP stack of the host OS analogous to the design in <a href="#XCP-Communication-via-IP-Stack">Figure 1</a>.]</em></p>
 </div>
 <div id="XCP-Communication-external-Slave" class="imageblock text-center">
 <div class="content">
 <img src="images/XCP-Communication-external-Slave.svg" alt="XCP Communication external Slave" width="80%">
 </div>
-<div class="title">Figure 4. Communication of XCP master and external XCP slave via the IP stack of the host OS.</div>
+<div class="title">Figure 3. Communication of XCP master and external XCP slave via the IP stack of the host OS.</div>
 </div>
 <div class="sect2">
 <h3 id="configure-external-xcp-service-settings">5.1. Configuring the XCP Protocol Settings</h3>
@@ -625,6 +650,18 @@ Accessing variables in the memory of indirectly loaded dynamic libraries require
 <li>
 <p>This layered standard does not describe how the importer can determine the different memory segments within the built FMU.
 Therefore, page handling is not supported in the case of an external XCP service.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="PW13"></a>[PW13] Preston-Werner, T. (2013): <strong>Semantic Versioning 2.0.0</strong>.  <a href="https://semver.org/spec/v2.0.0.html" class="bare">https://semver.org/spec/v2.0.0.html</a></p>
 </li>
 </ul>
 </div>
