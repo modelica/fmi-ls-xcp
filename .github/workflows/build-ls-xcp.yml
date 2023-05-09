@@ -10,11 +10,11 @@ jobs:
   build-ls-xcp:
     name: Build Layered Standard XCP
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: prepare
       run: mkdir build
     - name: build layered standard XCP
@@ -24,7 +24,7 @@ jobs:
     - name: copy images
       run: tar cfC - docs images | tar xfC - build
     - name: archive layered standard XCP
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: FMI-LS-XCP
         path: build/*
