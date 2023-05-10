@@ -1,0 +1,27 @@
+<ModelVariables>
+
+  <Boolean name="org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService"
+           valueReference="1"
+           causality="structuralParameter"
+           variability="fixed"
+           start="true"
+           description="Determines whether the internal XCP service shall be started.">
+  </Boolean>
+
+  <String name="org.fmi-standard.fmi-ls-xcp.ListenIpAddress"
+          valueReference="2"
+          causality="structuralParameter"
+          variability="fixed"
+          description="IP address where the XCP slave listens for XCP protocol commands.">
+    <Start value="127.0.0.1"/>
+  </String>
+
+  <UInt16 name="org.fmi-standard.fmi-ls-xcp.ListenPortNumber"
+          valueReference="3"
+          causality="structuralParameter"
+          variability="fixed"
+          start="32768"
+          description="Port number where the XCP slave listens for XCP protocol commands.">
+  </UInt16>
+
+</ModelVariables>
