@@ -231,7 +231,7 @@ The A2L file might be fragmentary as the details of the A2L description depend o
 Especially the real addresses are not known until the FMU binary is built.
 For information on how to deal with memory addresses refer to <<address-resolution-internal>> or <<address-resolution-external>>, respectively.
 
-The A2L description is placed directly into the folder `/extra/org.modelica.fmi-ls-xcp` if it is target-independent, or in target-specific subfolders otherwise (see <<Structure of the FMU archive>>).
+The A2L description is placed directly into the folder `/extra/org.fmi-standard.fmi-ls-xcp` if it is target-independent, or in target-specific subfolders otherwise (see <<Structure of the FMU archive>>).
 
 The FMU importer is responsible for ensuring that the target-specific information in the A2L file fits to the target platform for which a source code FMU is built.
 
