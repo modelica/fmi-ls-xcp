@@ -141,7 +141,7 @@ An example of a manifest file for this layered standard is shown below:
 
 [source, xml]
 ----
-include::docs/examples/fmi_ls_xcp_manifest_example.xml[]
+include::examples/fmi_ls_xcp_manifest_example.xml[]
 ----
 
 == Common Concepts
