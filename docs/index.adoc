@@ -304,21 +304,21 @@ Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose
 .XCP Configuration Parameters
 [#figure-xcp-configuration-parameters]
 ----
-   org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService
+   org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService
         Description:  "Determines whether the internal XCP service shall be started."
         Type:         Boolean
         Causality:    structuralParameter
         Variability:  fixed
         Start:        "true"
 
-    org.fmi-standard.fmi-ls-xcp.ListenIpAddress
+    org.fmi_standard.fmi_ls_xcp.ListenIpAddress
         Description:  "IP address where the XCP slave listens for XCP protocol commands."
         Type:         String
         Causality:    structuralParameter
         Variability:  fixed
         Start:        "127.0.0.1"
 
-    org.fmi-standard.fmi-ls-xcp.ListenPortNumber
+    org.fmi_standard.fmi_ls_xcp.ListenPortNumber
         Description:  "Port number where the XCP slave listens for XCP protocol commands."
         Type:         UInt16
         Causality:    structuralParameter
@@ -335,18 +335,18 @@ Since an XCP slave is implemented inside the FMU, the FMU is responsible for sta
 Preferably, the FMU shall start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
-If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi-standard.fmi-ls-xcp.ListenIpAddress` and `org.fmi-standard.fmi-ls-xcp.ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
-If the value of structural parameter `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` is `true`, the XCP slave must be responsive for XCP commands after leaving `Configuration Mode`.
+If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi_standard.fmi_ls_xcp.ListenIpAddress` and `org.fmi_standard.fmi_ls_xcp.ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
+If the value of structural parameter `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` is `true`, the XCP slave must be responsive for XCP commands after leaving `Configuration Mode`.
 Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
 Note that reading values of calculated variables, which depend on an initialization function, is only possible after entering the `Initialized` super state with `fmi3ExitInitializationMode`.
 
-If `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` is `false`, the internal XCP service must not be started and no XCP operations must be performed by the FMU during simulation.
+If `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` is `false`, the internal XCP service must not be started and no XCP operations must be performed by the FMU during simulation.
 
-If `Configuration Mode` was not entered and the value of structural parameter `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
+If `Configuration Mode` was not entered and the value of structural parameter `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
 In this case, it is not possible to perform calibration before `Initialization Mode` is entered or to configure the XCP connection settings.
 
 _[If the importer does not support `Configuration Mode` it is not able to control whether or not the internal XCP service shall be started._
-_In this case the default value of the `start` attribute of variable `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` determines if the XCP service is started.]_
+_In this case the default value of the `start` attribute of variable `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` determines if the XCP service is started.]_
 
 [#address-resolution-internal]
 === Memory Address Resolution
