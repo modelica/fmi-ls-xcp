@@ -42,14 +42,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<xs:attribute name="containsXcpService" type="xs:boolean" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">
-						If true, the FMU contains an own XCP slave implementation.
+						If true, the FMU provides its own XCP slave implementation.
 					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" use="required">
+			<xs:attribute name="supportsDirectMemoryAccessViaA2L" type="xs:boolean" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">
-						If true, the FMU allows the importer to access its memory via an external XCP service.
+						If true, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer.
 					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>

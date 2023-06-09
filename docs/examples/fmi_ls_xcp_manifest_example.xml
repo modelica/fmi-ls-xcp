@@ -7,4 +7,4 @@
 	fmi-ls:fmi-ls-version="1.0.0"
 	fmi-ls:fmi-ls-description="Layered Standard for XCP"
 	containsXcpService="true"
-	supportsExternalXcpService="true"/>
+	supportsDirectMemoryAccessViaA2L="true"/>

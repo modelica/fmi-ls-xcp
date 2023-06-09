@@ -6,8 +6,7 @@
 :toclevels: 5
 :xrefstyle: short
 :docinfo: shared
-:docinfodir: docs
-:stylesheet: docs/fmi-spec.css
+:stylesheet: fmi-spec.css
 :stem: latexmath
 :source-highlighter: highlightjs
 :nofooter:
@@ -128,12 +127,12 @@ This layered standard defines additional capability flags in the layered standar
 |`containsXcpService`
 | 
 | `true` or `false`
-| If `true`, the FMU contains its own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
+| If `true`, the FMU provides its own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
 
-|`supportsExternalXcpService`
+|`supportsDirectMemoryAccessViaA2L`
 | 
 | `true` or `false`
-| If `true`, the FMU allows the importer to access its memory via an external XCP service. See <<External XCP Service>>.
+| If `true`, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer. See <<External XCP Service>>.
 
 |====
 
@@ -362,18 +361,18 @@ In the latter case, the importer or an external A2L tool is responsible for dete
 These addresses must be relative to the base address of the built FMU binary.
 Refer to the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard for more information on symbol links and automatic address update.
 
-_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute `supportsExternalXcpService` in the `fmi-ls-manifest.xml` file must be set to `false` (see <<address-resolution-external>>).]_
+_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute `supportsDirectMemoryAccessViaA2L` in the `fmi-ls-manifest.xml` file must be set to `false` (see <<address-resolution-external>>).]_
 
 == External XCP Service
 
 An FMU might support XCP but does not bring along its own XCP slave implementation (attribute `containsXcpService = false` in the `fmi-ls-manifest.xml` file).
 In this case the FMU importer must provide its own implementation of an XCP slave.
 
-It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `supportsExternalXcpService = true`).
+It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `supportsDirectMemoryAccessViaA2L = true`).
 In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation.
 See <<starting-internal-xcp-service>> on how to deactivate the internal XCP service.
 
-_[Note that the FMU must set at least one of the attributes `containsXcpService` or `supportsExternalXcpService` to `true` to make use of this layered standard.]_
+_[Note that the FMU must set at least one of the attributes `containsXcpService` or `supportsDirectMemoryAccessViaA2L` to `true` to make use of this layered standard.]_
 
 Although the XCP behavior for an internal and an external service is the same from the perspective of the XCP master, the operation of the external XCP service differs from the internal one in some points that are described in this chapter.
 
