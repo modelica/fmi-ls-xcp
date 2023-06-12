@@ -125,12 +125,12 @@ This layered standard defines additional capability flags in the layered standar
 | String with a brief description of the layered standard that is suitable for display to users.
 
 |`containsXcpService`
-| 
+|
 | `true` or `false`
 | If `true`, the FMU provides its own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
 
 |`supportsDirectMemoryAccessViaA2L`
-| 
+|
 | `true` or `false`
 | If `true`, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer. See <<External XCP Service>>.
 
@@ -266,7 +266,7 @@ The following sections describe how to configure and handle the internal XCP sla
 
 The FMU states that it contains an internal XCP slave implementation with the `containsXcpService` attribute in the `fmi-ls-manifest.xml` file.
 
-_[<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g. the IP stack of the host OS._
+_[<<XCP-Communication-via-IP-Stack>> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g., the IP stack of the host OS._
 _Thus, the communication of the XCP service is not mixed with the simulated network communication of the ECU wrapped in the FMU._
 footnote:[The network communication of FMUs is described by another layered standard.
 The details of network communication are out of scope here.]
@@ -294,58 +294,107 @@ _Note that blocking OS calls should be avoided, because they may have an effect 
 [#configure-internal-xcp-service-settings]
 === Configuring the XCP Protocol Settings
 
-Sometimes it is necessary for the FMU importer to override the default IP address and/or port number which was assigned by the FMU exporter in the A2L file (see <<XCP Protocol Settings>>).
-Furthermore, it might be valuable for the user to have the possibility to deactivate the internal XCP service to avoid certain problems with the environment, e.g. with anti-virus software or firewalls or when running the FMU in a container.
+To avoid collisions in a simulation system with several XCP services, it can be necessary for the FMU importer to override the default port number the FMU listens on, which was assigned by the FMU exporter in the XCP slave implementation and in the A2L file (see <<XCP Protocol Settings>>).
+
+Besides the listen port number, the user may also want to change or restrict the listen IP address, which is the IP address of the network interface to which the socket of the XCP service is bound and where it is listening for XCP client commands.
+In most cases, the listen IP address will be set to `INADDR_ANY`, i.e., `0.0.0.0`, allowing connections from any available network interface.
+However, it is possible to restrict the XCP service to, e.g., only allow local connections by setting the listen IP address to `127.0.0.1`.
+
+Furthermore, it might be valuable for the user to have the possibility to deactivate the internal XCP service to avoid certain problems with the environment, e.g., with anti-virus software or firewalls or when running the FMU in a container.
 The importer might also want to use an external XCP service even when an internal XCP service is available.
 
-Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose three structural parameters with pre-defined names in the `modelDescription.xml`, which are used to configure the embedded XCP slave (see <<starting-internal-xcp-service>>):
+Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose the following variables with pre-defined names in the `modelDescription.xml`, which are used to configure the embedded XCP slave (see <<starting-internal-xcp-service>>):
 
-.XCP Configuration Parameters
+.XCP Configuration Variables
 [#figure-xcp-configuration-parameters]
 ----
-   org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService
-        Description:  "Determines whether the internal XCP service shall be started."
-        Type:         Boolean
-        Causality:    structuralParameter
-        Variability:  fixed
-        Start:        "true"
+   org.fmi_standard.fmi_ls_xcp.EnableXcpService
+        Description:       "Determines whether the XCP service provided by the FMU shall be started."
+        Type:              Boolean
+        Start:             "true"
+        Requirement Type:  Mandatory
 
-    org.fmi_standard.fmi_ls_xcp.ListenIpAddress
-        Description:  "IP address where the XCP slave listens for XCP protocol commands."
-        Type:         String
-        Causality:    structuralParameter
-        Variability:  fixed
-        Start:        "127.0.0.1"
+   org.fmi_standard.fmi_ls_xcp.TcpListenPortNumber
+        Description:       "TCP port number where the XCP slave listens for XCP protocol commands."
+        Type:              Int32
+        Start:             <in an agreed range of ports, e.g., 32768 to 39999>
+        Requirement Type:  Mandatory, if org.fmi_standard.fmi_ls_xcp.UdpListenPortNumber is not provided
 
-    org.fmi_standard.fmi_ls_xcp.ListenPortNumber
-        Description:  "Port number where the XCP slave listens for XCP protocol commands."
-        Type:         UInt16
-        Causality:    structuralParameter
-        Variability:  fixed
-        Start:        <in an agreed range of ports, e.g. 32768 to 39999>
+   org.fmi_standard.fmi_ls_xcp.UdpListenPortNumber
+        Description:       "UDP port number where the XCP slave listens for XCP protocol commands."
+        Type:              Int32
+        Start:             <in an agreed range of ports, e.g., 32768 to 39999>
+        Requirement Type:  Mandatory, if org.fmi_standard.fmi_ls_xcp.TcpListenPortNumber is not provided
+
+   org.fmi_standard.fmi_ls_xcp.TcpListenIpAddress
+        Description:       "TCP IP address where the XCP slave listens for XCP protocol commands."
+        Type:              String
+        Start:             "0.0.0.0"
+        Requirement Type:  Mandatory, if org.fmi_standard.fmi_ls_xcp.UdpListenIpAddress is not provided
+
+   org.fmi_standard.fmi_ls_xcp.UdpListenIpAddress
+        Description:       "UDP IP address where the XCP slave listens for XCP protocol commands."
+        Type:              String
+        Start:             "0.0.0.0"
+        Requirement Type:  Mandatory, if org.fmi_standard.fmi_ls_xcp.TcpListenIpAddress is not provided
 ----
 
-The importer of an FMU is responsible for keeping all occurrences of the IP address and port number consistent.
+All variables must be defined as scalars with one of the following `causality`/`variability` combinations:
+
+* **fixed structuralParameter (FMI 3 only):**
+If the FMU defines the variables as `structuralParameters`, the XCP configuration can be changed during `Configuration Mode`.
+When the XCP service is started in `fmi3ExitConfigurationMode`, it is configured and running before the simulation starts, i.e. before `Initialization Mode` is entered.
+For FMI 3, this is the most flexible variant and should be preferred over the other variants.
+
+* **fixed parameter:**
+If the FMU defines the variables as `parameters`, the FMU signals that it does not support `Configuration Mode`.
+For FMI 3, this means, the XCP service is started at the latest when `Initialization Mode` is entered.
+In case of FMI 2, the FMU should preferably start the XCP service in the `fmi2SetupExperiment` function.
+This allows for configuring the XCP service with the configuration parameters and ensuring that the service is running before the simulation starts.
+This is the preferred variant for FMI 2.
+
+* **constant output:**
+If the FMU is restricted to a fixed XCP configuration, it shall at least announce its configuration to the outside.
+This could be done via `constant outputs` that can be used in another model.
+With this variant the importer will not be able to deactivate the XCP service or to change the port number, which can lead to collisions when several FMUs are imported.
+
+* **fixed/tunable calculatedParameter:**
+This variant is similar to **constant output**.
+The FMU does not allow its XCP configuration to be changed directly, but it announces its configuration via `calculatedParameters` that depend on other `parameters`.
+With this variant the importer has no direct influence on activating or deactivating the XCP service or changing the port number, which can lead to collisions when several FMUs are imported.
+
+_[The variables above do not necessarily have to share the same `causality`/`variability` combination._
+_However, e.g., a mixture of `structuralParameters` and `parameters` is not sensible._
+_If `Configuration Mode` is supported, then `structuralParameters` should be used._
+_On the other hand, an FMU could have parts of its XCP configuration fixed while leaving others configurable._
+_In this case, a combination of, e.g., `structuralParameters` and `constant outputs` could make sense.]_
+
+The importer of an FMU is responsible for keeping all occurrences of the port number consistent, i.e., in both the FMU configuration and in the A2L file.
 
 [#starting-internal-xcp-service]
 === Starting and Stopping the XCP Service
 
 Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.
-Preferably, the FMU shall start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+
+*Using FMI 3*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
-If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi_standard.fmi_ls_xcp.ListenIpAddress` and `org.fmi_standard.fmi_ls_xcp.ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
-If the value of structural parameter `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` is `true`, the XCP slave must be responsive for XCP commands after leaving `Configuration Mode`.
+If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenIpAddress` and `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
+
+If the value of structural parameter `org.fmi_standard.fmi_ls_xcp.EnableXcpService` is `true`, the XCP slave must be responsive for XCP commands after leaving `Configuration Mode`.
 Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
 Note that reading values of calculated variables, which depend on an initialization function, is only possible after entering the `Initialized` super state with `fmi3ExitInitializationMode`.
 
-If `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` is `false`, the internal XCP service must not be started and no XCP operations must be performed by the FMU during simulation.
+If `org.fmi_standard.fmi_ls_xcp.EnableXcpService` is `false`, the internal XCP service must not be started and no XCP operations must be performed by the FMU during simulation.
 
-If `Configuration Mode` was not entered and the value of structural parameter `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
+If `Configuration Mode` was not entered and the value of variable `org.fmi_standard.fmi_ls_xcp.EnableXcpService` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
 In this case, it is not possible to perform calibration before `Initialization Mode` is entered or to configure the XCP connection settings.
 
-_[If the importer does not support `Configuration Mode` it is not able to control whether or not the internal XCP service shall be started._
-_In this case the default value of the `start` attribute of variable `org.fmi_standard.fmi_ls_xcp.EnableInternalXcpService` determines if the XCP service is started.]_
+*Using FMI 2*, the FMU shall preferably expose its XCP configuration variables as `parameters` and start the XCP service during `fmi2SetupExperiment` and shut it down during `fmi2Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+The importer is responsible for setting the parameters before `fmi2SetupExperiment` is called.
+
+_[If the FMU does not expose its XCP configuration variables as `structuralParameters` using FMI 3, or as `parameters` using FMI 2, the importer will not have control over whether the internal XCP service should be started._
+_In this case the default value of the `start` attribute of variable `org.fmi_standard.fmi_ls_xcp.EnableXcpService` determines if the XCP service is started.]_
 
 [#address-resolution-internal]
 === Memory Address Resolution
@@ -390,9 +439,9 @@ For an external XCP service no structural parameters for the XCP configuration a
 _[The importer should allow the user to set IP address and port number analogous to the variant with an internal XCP service.]_
 
 When an external XCP service is used, the importer is the one who has to make XCP service calls and who is responsible for creating events for its XCP service.
-However, in contrast to the FMU in the approach with an internal XCP slave, the importer does not necessarily have the knowledge about the inner structure of the virtual ECU and therefore it is not able to create specific events, e.g. one event for each task.
+However, in contrast to the FMU in the approach with an internal XCP slave, the importer does not necessarily have the knowledge about the inner structure of the virtual ECU and therefore it is not able to create specific events, e.g., one event for each task.
 
-This means, by default, the importer can only make XCP calls at certain points in time disregarding specific task-related XCP events, e.g. at communication points in Co-Simulation.
+This means, by default, the importer can only make XCP calls at certain points in time disregarding specific task-related XCP events, e.g., at communication points in Co-Simulation.
 The importer must create an event channel for this basic measurement raster and must write the corresponding event definition to the `IF_DATA XCP` section in the A2L file.
 
 _[The importer is responsible for matching the `IF_DATA XCP` section in the A2L file to the implementation of the XCP service._
