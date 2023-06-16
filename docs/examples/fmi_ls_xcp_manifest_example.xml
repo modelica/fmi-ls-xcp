@@ -5,6 +5,6 @@
 	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
 	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
 	fmi-ls:fmi-ls-version="1.0.0"
-	fmi-ls:fmi-ls-description="Layered Standard for XCP"
+	fmi-ls:fmi-ls-description="Layered standard based on FMI 2 and FMI 3 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."
 	containsXcpService="true"
 	supportsDirectMemoryAccessViaA2L="true"/>

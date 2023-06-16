@@ -15,7 +15,7 @@
 :revnumber: 1.0
 :icons: font
 
-Based on FMI 2 and FMI 3, this layered standard defines how to describe and implement XCP support for FMUs.
+Based on FMI 2 and FMI 3, this layered standard defines how to describe and implement XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.
 
 {empty} +
 {empty}
@@ -121,7 +121,7 @@ This layered standard defines additional capability flags in the layered standar
 
 |`fmi-ls-description`
 | `\http://fmi-standard.org/fmi-ls-manifest`
-| `Layered Standard for XCP`
+| `Layered standard based on FMI 2 and FMI 3 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.`
 | String with a brief description of the layered standard that is suitable for display to users.
 
 |`containsXcpService`
