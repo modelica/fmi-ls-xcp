@@ -127,12 +127,15 @@ This layered standard defines additional capability flags in the layered standar
 |`containsXcpService`
 |
 | `true` or `false`
-| If `true`, the FMU provides its own XCP slave implementation. See <<FMU with Integrated XCP Service>>.
+| If `true`, the FMU provides its own XCP slave implementation.
+See <<FMU with Integrated XCP Service>>.
 
 |`supportsDirectMemoryAccessViaA2L`
 |
 | `true` or `false`
-| If `true`, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer. See <<External XCP Service>>.
+| If `true`, the FMU allows direct memory access from the outside via its A2L file.
+In most cases this mechanism will be used by an external XCP service provided by the importer.
+See <<External XCP Service>>.
 
 |====
 
@@ -375,7 +378,7 @@ The configuration variables for the IP address and port are duplicated for both 
 The FMU shall only provide the corresponding variables for the protocols it supports.
 If the value of variable `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenPortNumber` is set to `-1`, the XCP service must not use the corresponding protocol.
 
-_[Without knowing the concrete XCP slave implementation the integrator cannot know if the different protocols can be used in parallel or only exclusively._
+_[Without knowing the concrete XCP slave implementation the importer cannot know if the different protocols can be used in parallel or only exclusively._
 _The FMU decides which protocol it uses in the case the XCP service is not multi-session capable and both port variables have a valid port value._
 _This information may also be provided in the `documentation` directory inside the FMU.]_
 
@@ -420,7 +423,7 @@ In the latter case, the importer or an external A2L tool is responsible for dete
 These addresses must be relative to the base address of the built FMU binary.
 Refer to the https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC] standard for more information on symbol links and automatic address update.
 
-_[Note that, if the FMU exporter does not use real addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute `supportsDirectMemoryAccessViaA2L` in the `fmi-ls-manifest.xml` file must be set to `false` (see <<address-resolution-external>>).]_
+_[Note that, if the FMU exporter does not use real (offset) addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute `supportsDirectMemoryAccessViaA2L` in the `fmi-ls-manifest.xml` file must be set to `false` (see <<address-resolution-external>>).]_
 
 == External XCP Service
 
