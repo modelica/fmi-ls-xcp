@@ -211,8 +211,8 @@ See <<address-resolution-internal>> and <<address-resolution-external>>, respect
 The A2L description shall include `IF_DATA XCP` elements to help MCD tools to connect and interact with the XCP service of the FMU more reliably and without user interaction.
 Parts of the `IF_DATA XCP` description depend on the machine where the FMU binary is executed, for example, the IP address and port.
 
-The default IP address assigned by the FMU exporter shall be `localhost`, i.e. `127.0.0.1`, which fits in many cases.
-The requirement for the port number is, that it must be unique on the machine where the FMU binary is executed.
+The default IP address assigned by the FMU exporter should be `localhost`, i.e. `127.0.0.1`, which fits in many cases.
+The requirement for the port number is that it must be unique on the machine where the FMU binary is executed.
 Typically, a certain range of ports is reserved for this purpose.
 The FMU importer is responsible for checking if any conflicts of the defined IP addresses and port numbers occur in the context of the simulated system.
 
