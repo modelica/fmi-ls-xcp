@@ -98,7 +98,7 @@ The XCP/A2L approach can not only be used for virtual ECUs, but also for plant m
 This layered standard defines additional capability flags in the layered standard manifest file.
 <<table-schema-fmi-ls-xcp-attributes>> shows the content of `fmi-ls-manifest.xml`.
 
-.`fmiLayeredStandardManifest` Attribute Details.
+.Attribute Details.
 [[table-schema-fmi-ls-xcp-attributes]]
 [cols="1,1,1,2",options="header"]
 |====
