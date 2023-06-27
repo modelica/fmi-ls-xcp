@@ -6,7 +6,7 @@ This repository contains a current prototype draft for the FMI Layered
 Standard XCP (fmi-ls-xcp) based on the upcoming
 [Functional Mock-up Interface][FMI] 3.0 standard for the exchange of
 simulation models. Note that this draft is being worked on actively,
-and thus are subject to change without notice.
+and thus is subject to change without notice.
 
 This is currently not normative, nor is this document to be considered
 officially endorsed by the Modelica Association or other involved
