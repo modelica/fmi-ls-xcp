@@ -345,7 +345,7 @@ In this case, it is not possible to perform calibration before `Initialization M
 If the importer does not support `Configuration Mode`, it is not able to control whether or not the internal XCP service shall be started.
 In this case the default value of the `start` attribute of variable `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` determines if the XCP service is started.
 
-_[Note that it is not possible to manually change the `start` value for `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` to change the behavior of the internal XCP service._
+_[Note that it is not possible to manually change the `start` value for `org.fmi-standard.fmi-ls-xcp.EnableInternalXcpService` in modelDescription.xml to change the behavior of the internal XCP service._
 _The `start` value merely reflects the default behavior coded into the FMU.]_
 
 [#address-resolution-internal]
@@ -395,7 +395,7 @@ However, in contrast to the FMU with an internal XCP support, the importer does 
 
 This means, by default, the importer can only make XCP calls at certain points in time, e.g., at communication points in Co-Simulation, ignoring specific task-related XCP events.
 The importer is responsible for matching the `IF_DATA XCP` section in the A2L file to the implementation of the XCP service.
-If necessary, the `IF_DATA XCP` section must be added or replaced in the A2L file delivered with the FMU, before making it available ot the MCD tool.
+If necessary, the `IF_DATA XCP` section must be added or replaced in the A2L file delivered with the FMU, before making it available to the MCD tool.
 For example, the importer can create an event channel for a basic measurement raster and write the corresponding event definition into the `IF_DATA XCP` section of the A2L file.
 
 If a Co-Simulation FMU announces that it makes use of the intermediate update callback function (attribute `providesIntermediateUpdate = true` of the Co-Simulation element), the importer may also create another event for the intermediate update raster and call the XCP service in each `fmi3IntermediateUpdateCallback` with the event channel number of this event.
