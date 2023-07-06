@@ -38,18 +38,18 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		<xs:complexType>
 			<xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-xcp"/>
 			<xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
-			<xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard for XCP"/>
+			<xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered standard based on FMI 2 and FMI 3 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."/>
 			<xs:attribute name="containsXcpService" type="xs:boolean" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">
-						If true, the FMU contains an own XCP slave implementation.
+						If true, the FMU provides its own XCP slave implementation.
 					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="supportsExternalXcpService" type="xs:boolean" use="required">
+			<xs:attribute name="supportsDirectMemoryAccessViaA2L" type="xs:boolean" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">
-						If true, the FMU allows the importer to access its memory via an external XCP service.
+						If true, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer.
 					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
