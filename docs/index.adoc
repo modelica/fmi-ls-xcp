@@ -15,7 +15,10 @@
 :revnumber: 1.0
 :icons: font
 
-Based on FMI 2 and FMI 3, this layered standard defines how to describe and implement XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.
+Based on FMI 2.0 and FMI 3.0, this layered standard defines how to describe and implement XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.
+
+_[Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions._
+_For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.]_
 
 {empty} +
 {empty}
@@ -119,7 +122,7 @@ This layered standard defines additional capability flags in the layered standar
 
 |`fmi-ls-description`
 | `\http://fmi-standard.org/fmi-ls-manifest`
-| `Layered standard based on FMI 2 and FMI 3 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.`
+| `Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.`
 | String with a brief description of the layered standard that is suitable for display to users.
 
 |`containsXcpService`
@@ -150,7 +153,7 @@ Independent of the selected implementation approach (see <<Rough Outline of the 
 The concepts defined in this chapter are common to both of the implementation approaches.
 The definitions that are specific to the particular implementation types are defined in <<FMU with Integrated XCP Service>> and <<External XCP Service>>.
 
-=== Structure of the FMU archive
+=== Structure of the FMU Archive
 
 A2L description files and other files needed for XCP support are placed in the `extra` directory: `/extra/org.fmi-standard.fmi-ls-xcp`.
 The directory structure is analogous to the `binaries` directory structure and is shown below.
@@ -351,17 +354,17 @@ Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose
 
 All variables must be defined as scalars with one of the following `causality`/`variability` combinations:
 
-* **fixed structuralParameter (FMI 3 only):**
+* **fixed structuralParameter (FMI 3.0 only):**
 If the FMU defines the variables as `structuralParameters`, the XCP configuration can be changed during `Configuration Mode`.
 When the XCP service is started in `fmi3ExitConfigurationMode`, it is configured and running before the simulation starts, i.e., before `Initialization Mode` is entered.
-For FMI 3, this is the most flexible variant and should be preferred over the other variants.
+For FMI 3.0, this is the most flexible variant and should be preferred over the other variants.
 
 * **fixed parameter:**
 If the FMU defines the variables as `parameters`, the FMU signals that it does not support `Configuration Mode`.
-For FMI 3, this means, the XCP service is started at the latest when `Initialization Mode` is entered.
-In case of FMI 2, the FMU should preferably start the XCP service in the `fmi2SetupExperiment` function.
+For FMI 3.0, this means, the XCP service is started at the latest when `Initialization Mode` is entered.
+In case of FMI 2.0, the FMU should preferably start the XCP service in the `fmi2SetupExperiment` function.
 This allows for configuring the XCP service with the configuration parameters and ensuring that the service is running before the simulation starts.
-This is the preferred variant for FMI 2.
+This is the preferred variant for FMI 2.0.
 
 * **constant output:**
 If the FMU is restricted to a fixed XCP configuration, it shall at least announce its configuration to the outside.
@@ -394,7 +397,7 @@ The importer of an FMU is responsible for keeping all occurrences of the port nu
 
 Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.
 
-*Using FMI 3*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+*Using FMI 3.0*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
 If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenIpAddress` and `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
@@ -409,10 +412,10 @@ If both parameters are `false` the XCP service must not be started at all.
 If `Configuration Mode` was not entered and the value of variable `org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
 In this case, it is not possible to perform calibration before `Initialization Mode` is entered or to configure the XCP connection settings.
 
-*Using FMI 2*, the FMU shall preferably expose its XCP configuration variables as `parameters` and start the XCP service during the first call of `fmi2SetupExperiment` and shut it down during `fmi2Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+*Using FMI 2.0*, the FMU shall preferably expose its XCP configuration variables as `parameters` and start the XCP service during the first call of `fmi2SetupExperiment` and shut it down during `fmi2Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 The importer is responsible for calling `fmi2SetupExperiment` at least once and setting the parameters before `fmi2SetupExperiment` is called.
 
-If the FMU does not expose its XCP configuration variables as `structuralParameters` using FMI 3, or as `parameters` using FMI 2, the importer will not have control over whether the internal XCP service should be started.
+If the FMU does not expose its XCP configuration variables as `structuralParameters` using FMI 3.0, or as `parameters` using FMI 2.0, the importer will not have control over whether the internal XCP service should be started.
 In this case, the default value of the `start` attribute of variable `org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip` determines if the XCP service is started.
 
 _[Note that it is not possible to manually change the `start` value for `org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip` in the `modelDescription.xml` file to change the behavior of the internal XCP service._
