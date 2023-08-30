@@ -388,9 +388,9 @@ _In this case, a combination of, e.g., `structuralParameters` and `constant outp
 The configuration variables are duplicated for both transport layers, TCP and UDP, as it is technically possible to have an XCP slave that uses TCP and UDP channels in parallel.
 The FMU shall only provide the corresponding variables for the protocols it supports.
 
-_[Without knowing the concrete XCP slave implementation the importer cannot know if the different protocols can be used in parallel or only exclusively._
-_The FMU decides which protocol it uses in the case the XCP service is not multi-session capable and both of the variables `org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip` are set to `true`._
-_This information may also be provided in the `documentation` directory inside the FMU.]_
+Without knowing the concrete XCP slave implementation the importer cannot know if the different protocols can be used in parallel or only exclusively.
+In the case the XCP service is not multi-session capable and both of the variables `org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip` are set to `true`, the FMU must return an error in the corresponding setter function and provide a meaningful error message.
+This information may also be provided in the `documentation` directory inside the FMU.
 
 The importer of an FMU is responsible for keeping all occurrences of the port number consistent, i.e., in both the FMU configuration and in the A2L file.
 
