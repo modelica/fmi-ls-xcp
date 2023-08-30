@@ -140,6 +140,8 @@ See <<External XCP Service>>.
 
 |====
 
+The FMU must set at least one of the attributes `containsXcpService` or `supportsDirectMemoryAccessViaA2L` to `true` to comply with this layered standard.
+
 An example of a manifest file for this layered standard is shown below:
 
 [source, xml]
@@ -445,8 +447,6 @@ In this case the FMU importer must provide its own implementation of an XCP slav
 It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute `supportsDirectMemoryAccessViaA2L = true`).
 In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation.
 See <<starting-internal-xcp-service>> on how to deactivate the internal XCP service.
-
-_[Note that the FMU must set at least one of the attributes `containsXcpService` or `supportsDirectMemoryAccessViaA2L` to `true` to make use of this layered standard.]_
 
 Although the XCP behavior for an internal and an external service is the same from the perspective of the MCD tool (XCP master), the operation of the external XCP service differs from the internal one in some points that are described in this chapter.
 
