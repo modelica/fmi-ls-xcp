@@ -30,7 +30,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
 
 
-The FMI specification is released under the CC-BY-SA (Creative Common
+The FMI Layered Standard for XCP is released under the CC-BY-SA (Creative Common
 Attribution ShareAlike 4.0 International):
 
 
