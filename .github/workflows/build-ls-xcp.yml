@@ -3,6 +3,8 @@ name: Build Layered Standard XCP
 on:
   push:
     branches-ignore: [ 'temp/*' ]
+    tags:
+      - '*'
   pull_request:
     branches: [ main ]
 
