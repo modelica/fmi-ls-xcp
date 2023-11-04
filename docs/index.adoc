@@ -506,6 +506,16 @@ Limitations for binary FMUs:
 * Normally only variables in the memory segments owned by the main FMU binary `{.dll, .so}` are accessible by the XCP service, i.e., variables defined in source code modules and in statically linked libraries.
 Accessing variables in the memory of indirectly loaded dynamic libraries requires a special implementation which is out-of-scope for this layered standard.
 
+== Contributors 
+
+- Christian Bertsch, Robert Bosch GmbH, Germany
+- Matthias Blesken, dSPACE GmbH, Germany
+- Cl&#225;udio Gomes, Aarhus University, Denmark
+- Andreas Junghanns, Synopsys, Germany
+- Pierre R. Mai, PMSF IT Consulting, Germany
+- Torsten Sommer, Dassault Syst&#232;mes, Germany
+- Patrick T&#228;uber, dSPACE GmbH, Germany
+
 [bibliography]
 == References
 
