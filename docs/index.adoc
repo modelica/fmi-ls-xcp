@@ -310,51 +310,57 @@ However, it is possible to restrict the XCP service to, e.g., only allow local c
 Furthermore, it is likely valuable for the user to have the possibility to deactivate the internal XCP service to avoid certain problems with the environment, e.g., with anti-virus software or firewalls or when running the FMU in a container.
 The importer might also want to use an external XCP service even when an internal XCP service is available.
 
-Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose the following variables with pre-defined names in the `modelDescription.xml` file, which are used to configure the embedded XCP slave (see <<starting-internal-xcp-service>>):
+Therefore, if the XCP slave is embedded in the virtual ECU, the FMU should expose the following variables with pre-defined names in the `modelDescription.xml` file, which are used to configure the embedded XCP slave (see <<starting-internal-xcp-service>>):
 
 .XCP Configuration Variables
 [#figure-xcp-configuration-parameters]
 ----
    org.fmi_standard.fmi_ls_xcp.EnableXcpOnTcpIp
-        Description:       "Determines whether the TCP instance of the XCP service provided
-                            by the FMU shall be started."
-        Type:              Boolean
-        Start:             "true"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using TCP
+        Description:         "Determines whether the TCP instance of the XCP service provided
+                              by the FMU shall be started."
+        Type:                Boolean
+        Example Start Value: "true"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+        If not present:      Defaults to true, i.e. if the XCP slave supports TCP it will be started.
 
    org.fmi_standard.fmi_ls_xcp.EnableXcpOnUdpIp
-        Description:       "Determines whether the UDP instance of the XCP service provided
-                            by the FMU shall be started."
-        Type:              Boolean
-        Start:             "false"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using UDP
+        Description:         "Determines whether the UDP instance of the XCP service provided
+                              by the FMU shall be started."
+        Type:                Boolean
+        Example Start Value: "false"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+        If not present:      Defaults to true, i.e. if the XCP slave supports UDP it will be started.
 
    org.fmi_standard.fmi_ls_xcp.TcpListenPortNumber
-        Description:       "TCP port number where the XCP slave listens for XCP protocol commands."
-        Type:              UInt16/Integer
-        Start:             <in an agreed range of ports, e.g., 32768 to 39999>
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using TCP
+        Description:         "TCP port number where the XCP slave listens for XCP protocol commands."
+        Type:                UInt16/Integer
+        Example Start Value: <in an agreed range of ports, e.g., 32768 to 39999>
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 
    org.fmi_standard.fmi_ls_xcp.UdpListenPortNumber
-        Description:       "UDP port number where the XCP slave listens for XCP protocol commands."
-        Type:              UInt16/Integer
-        Start:             <in an agreed range of ports, e.g., 32768 to 39999>
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using UDP
+        Description:         "UDP port number where the XCP slave listens for XCP protocol commands."
+        Type:                UInt16/Integer
+        Example Start Value: <in an agreed range of ports, e.g., 32768 to 39999>
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 
    org.fmi_standard.fmi_ls_xcp.TcpListenIpAddress
-        Description:       "TCP IP address where the XCP slave listens for XCP protocol commands."
-        Type:              String
-        Start:             "0.0.0.0"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using TCP
+        Description:         "TCP IP address where the XCP slave listens for XCP protocol commands."
+        Type:                String
+        Example Start Value: "0.0.0.0"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 
    org.fmi_standard.fmi_ls_xcp.UdpListenIpAddress
-        Description:       "UDP IP address where the XCP slave listens for XCP protocol commands."
-        Type:              String
-        Start:             "0.0.0.0"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using UDP
+        Description:         "UDP IP address where the XCP slave listens for XCP protocol commands."
+        Type:                String
+        Example Start Value: "0.0.0.0"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 ----
 
-All variables must be defined as scalars with one of the following `causality`/`variability` combinations:
+All variables that are defined must be defined as scalars with one of the following `causality`/`variability` combinations:
 
 * **fixed structuralParameter (FMI 3.0 only):**
 If the FMU defines the variables as `structuralParameters`, the XCP configuration can be changed during `Configuration Mode`.
