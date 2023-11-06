@@ -399,7 +399,7 @@ The importer of an FMU is responsible for keeping all occurrences of the port nu
 
 Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.
 
-*Using FMI 3.0*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+*Using FMI 3.0*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during the first `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
 If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenIpAddress` and `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
@@ -413,6 +413,8 @@ If both parameters are `false` the XCP service must not be started at all.
 
 If `Configuration Mode` was not entered and the value of variable `org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
 In this case, it is not possible to perform calibration before `Initialization Mode` is entered or to configure the XCP connection settings.
+
+If the importer re-enters `Configuration Mode` and reconfigures the parameters it is up to the FMU if it reacts to the parameter change or not.
 
 *Using FMI 2.0*, the FMU shall preferably expose its XCP configuration variables as `parameters` and start the XCP service during the first call of `fmi2SetupExperiment` and shut it down during `fmi2Terminate` if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 The importer is responsible for calling `fmi2SetupExperiment` at least once and setting the parameters before `fmi2SetupExperiment` is called.
