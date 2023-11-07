@@ -399,7 +399,7 @@ The importer of an FMU is responsible for keeping all occurrences of the port nu
 
 Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.
 
-*Using FMI 3.0*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during the first `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+*Using FMI 3.0*, the FMU shall preferably expose its XCP configuration variables (see <<figure-xcp-configuration-parameters>>) as `structuralParameters` and start the XCP service during the first invocation of `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
 If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenIpAddress` and `org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenPortNumber`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
