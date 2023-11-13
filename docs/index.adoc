@@ -512,8 +512,11 @@ Accessing variables in the memory of indirectly loaded dynamic libraries require
 - Matthias Blesken, dSPACE GmbH, Germany
 - Cl&#225;udio Gomes, Aarhus University, Denmark
 - Andreas Junghanns, Synopsys, Germany
+- Ulrich Kiffmeier, dSPACE GmbH, Germany
 - Pierre R. Mai, PMSF IT Consulting, Germany
+- Benedikt Menne, dSPACE GmbH, Germany
 - Torsten Sommer, Dassault Syst&#232;mes, Germany
+- Markus S&#252;vern, dSPACE GmbH, Germany
 - Patrick T&#228;uber, dSPACE GmbH, Germany
 
 [bibliography]
