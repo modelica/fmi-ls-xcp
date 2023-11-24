@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard for XCP</h1>
 <div class="details">
-<span id="revnumber">version c9cadf6,</span>
-<span id="revdate">2023-11-07</span>
+<span id="revnumber">version fb4749c,</span>
+<span id="revdate">2023-11-24</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -1051,52 +1051,58 @@ However, it is possible to restrict the XCP service to, e.g., only allow local c
 The importer might also want to use an external XCP service even when an internal XCP service is available.</p>
 </div>
 <div class="paragraph">
-<p>Therefore, if the XCP slave is embedded in the virtual ECU, the FMU shall expose the following variables with pre-defined names in the <code>modelDescription.xml</code> file, which are used to configure the embedded XCP slave (see <a href="#starting-internal-xcp-service">Section 4.2</a>):</p>
+<p>Therefore, if the XCP slave is embedded in the virtual ECU, the FMU should expose the following variables with pre-defined names in the <code>modelDescription.xml</code> file, which are used to configure the embedded XCP slave (see <a href="#starting-internal-xcp-service">Section 4.2</a>):</p>
 </div>
 <div id="figure-xcp-configuration-parameters" class="listingblock">
 <div class="title">XCP Configuration Variables</div>
 <div class="content">
 <pre>   org.fmi_standard.fmi_ls_xcp.EnableXcpOnTcpIp
-        Description:       "Determines whether the TCP instance of the XCP service provided
-                            by the FMU shall be started."
-        Type:              Boolean
-        Start:             "true"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using TCP
+        Description:         "Determines whether the TCP instance of the XCP service provided
+                              by the FMU shall be started."
+        Type:                Boolean
+        Example Start Value: "true"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+        If not present:      Defaults to true, i.e. if the XCP slave supports TCP it will be started.
 
    org.fmi_standard.fmi_ls_xcp.EnableXcpOnUdpIp
-        Description:       "Determines whether the UDP instance of the XCP service provided
-                            by the FMU shall be started."
-        Type:              Boolean
-        Start:             "false"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using UDP
+        Description:         "Determines whether the UDP instance of the XCP service provided
+                              by the FMU shall be started."
+        Type:                Boolean
+        Example Start Value: "false"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+        If not present:      Defaults to true, i.e. if the XCP slave supports UDP it will be started.
 
    org.fmi_standard.fmi_ls_xcp.TcpListenPortNumber
-        Description:       "TCP port number where the XCP slave listens for XCP protocol commands."
-        Type:              UInt16/Integer
-        Start:             &lt;in an agreed range of ports, e.g., 32768 to 39999&gt;
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using TCP
+        Description:         "TCP port number where the XCP slave listens for XCP protocol commands."
+        Type:                UInt16/Integer
+        Example Start Value: &lt;in an agreed range of ports, e.g., 32768 to 39999&gt;
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 
    org.fmi_standard.fmi_ls_xcp.UdpListenPortNumber
-        Description:       "UDP port number where the XCP slave listens for XCP protocol commands."
-        Type:              UInt16/Integer
-        Start:             &lt;in an agreed range of ports, e.g., 32768 to 39999&gt;
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using UDP
+        Description:         "UDP port number where the XCP slave listens for XCP protocol commands."
+        Type:                UInt16/Integer
+        Example Start Value: &lt;in an agreed range of ports, e.g., 32768 to 39999&gt;
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 
    org.fmi_standard.fmi_ls_xcp.TcpListenIpAddress
-        Description:       "TCP IP address where the XCP slave listens for XCP protocol commands."
-        Type:              String
-        Start:             "0.0.0.0"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using TCP
+        Description:         "TCP IP address where the XCP slave listens for XCP protocol commands."
+        Type:                String
+        Example Start Value: "0.0.0.0"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.
 
    org.fmi_standard.fmi_ls_xcp.UdpListenIpAddress
-        Description:       "UDP IP address where the XCP slave listens for XCP protocol commands."
-        Type:              String
-        Start:             "0.0.0.0"
-        Requirement Type:  Mandatory, if the FMU provides an XCP service using UDP</pre>
+        Description:         "UDP IP address where the XCP slave listens for XCP protocol commands."
+        Type:                String
+        Example Start Value: "0.0.0.0"
+        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+        If not present:      Defaults to the protocol data values found in the relevant A2L file.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>All variables must be defined as scalars with one of the following <code>causality</code>/<code>variability</code> combinations:</p>
+<p>All variables that are defined must be defined as scalars with one of the following <code>causality</code>/<code>variability</code> combinations:</p>
 </div>
 <div class="ulist">
 <ul>
