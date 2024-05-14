@@ -587,7 +587,7 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard for XCP</h1>
 <div class="details">
-<span id="revnumber">version 865ab80,</span>
+<span id="revnumber">version 333b0a0,</span>
 <span id="revdate">2024-05-14</span>
 </div>
 <div id="toc" class="toc2">
@@ -1149,7 +1149,7 @@ The FMU shall only provide the corresponding variables for the protocols it supp
 </div>
 <div class="paragraph">
 <p>Without knowing the concrete XCP slave implementation the importer cannot know if the different protocols can be used in parallel or only exclusively.
-In the case the XCP service is not multi-session capable and both of the variables <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> are set to <code>true</code>, the FMU must return an error in the corresponding setter function and provide a meaningful error message.
+In case the XCP service is not multi-session capable and both of the variables <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> are set to <code>true</code>, the FMU must return an error and provide a meaningful error message when exiting <code>Configuration Mode</code>.
 This information may also be provided in the <code>documentation</code> directory inside the FMU.</p>
 </div>
 <div class="paragraph">
