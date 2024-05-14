@@ -158,7 +158,8 @@ The definitions that are specific to the particular implementation types are def
 === Structure of the FMU Archive
 
 A2L description files and other files needed for XCP support are placed in the `extra` directory: `/extra/org.fmi-standard.fmi-ls-xcp`.
-The directory structure is analogous to the `binaries` directory structure and is shown below.
+The directory structure is analogous to the `binaries` directory structure, specific to the FMI version.
+The structure for an FMI 3.0 FMU is shown below.
 Details are described in the following sections.
 
 [#figure-fmi-layered-XCP-directory-structure]
