@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.22">
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 <title>Layered Standard for XCP</title>
 <style>
@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard for XCP</h1>
 <div class="details">
-<span id="revnumber">version 4e2eea0,</span>
-<span id="revdate">2023-12-20</span>
+<span id="revnumber">version 865ab80,</span>
+<span id="revdate">2024-05-14</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -1162,7 +1162,7 @@ This information may also be provided in the <code>documentation</code> director
 <p>Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.</p>
 </div>
 <div class="paragraph">
-<p><strong>Using FMI 3.0</strong>, the FMU shall preferably expose its XCP configuration variables (see <a href="#figure-xcp-configuration-parameters">XCP Configuration Variables</a>) as <code>structuralParameters</code> and start the XCP service during the first invocation of <code>fmi3ExitConfigurationMode</code> and shut it down during <code>fmi3Terminate</code>, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+<p><strong>Using FMI 3.0</strong>, the FMU should preferably expose its XCP configuration variables (see <a href="#figure-xcp-configuration-parameters">XCP Configuration Variables</a>) as <code>structuralParameters</code> and start the XCP service during the first invocation of <code>fmi3ExitConfigurationMode</code> and shut it down during <code>fmi3Terminate</code>, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.</p>
 </div>
 <div class="paragraph">
@@ -1185,7 +1185,7 @@ In this case, it is not possible to perform calibration before <code>Initializat
 <p>If the importer re-enters <code>Configuration Mode</code> and reconfigures the parameters it is up to the FMU if it reacts to the parameter change or not.</p>
 </div>
 <div class="paragraph">
-<p><strong>Using FMI 2.0</strong>, the FMU shall preferably expose its XCP configuration variables as <code>parameters</code> and start the XCP service during the first call of <code>fmi2SetupExperiment</code> and shut it down during <code>fmi2Terminate</code> if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+<p><strong>Using FMI 2.0</strong>, the FMU should preferably expose its XCP configuration variables as <code>parameters</code> and start the XCP service during the first call of <code>fmi2SetupExperiment</code> and shut it down during <code>fmi2Terminate</code> if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 The importer is responsible for calling <code>fmi2SetupExperiment</code> at least once and setting the parameters before <code>fmi2SetupExperiment</code> is called.</p>
 </div>
 <div class="paragraph">
