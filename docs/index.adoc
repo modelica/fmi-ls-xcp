@@ -38,7 +38,7 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 FMI 3.0 was extended also with virtual Electronic Control Units (virtual ECUs) in mind.
 Engineers can measure into ECUs using the XCP protocol and A2L variable descriptions:
 
-[quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-1-xcp/[ASAM MCD-1 XCP]]
+[quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-1-xcp]
 ____
 The ASAM MCD-1 XCP (Universal Measurement and Calibration Protocol) standard defines a bus-independent, master-slave communication protocol to connect ECUs with calibration systems.
 XCP is short for Universal Measurement and Calibration Protocol.
