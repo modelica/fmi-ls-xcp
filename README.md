@@ -3,7 +3,7 @@
 [![Build Specification](https://github.com/modelica/fmi-ls-xcp/actions/workflows/build-ls-xcp.yml/badge.svg)](https://github.com/modelica/fmi-ls-xcp/actions/workflows/build-ls-xcp.yml)
 
 This repository contains a current prototype draft for the FMI Layered
-Standard XCP (fmi-ls-xcp) based on the upcoming
+Standard XCP (fmi-ls-xcp) based on the 
 [Functional Mock-up Interface][FMI] 3.0 standard for the exchange of
 simulation models. Note that this draft is being worked on actively,
 and thus is subject to change without notice.
