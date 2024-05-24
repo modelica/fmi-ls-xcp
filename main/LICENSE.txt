@@ -30,8 +30,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
 
 
-The FMI Layered Standard for XCP is released under the CC-BY-SA (Creative Common
-Attribution ShareAlike 4.0 International):
+The FMI Layered Standard for XCP (fmi-ls-xcp) is released under the CC-BY-SA
+(Creative Common Attribution ShareAlike 4.0 International):
 
 
 Attribution-ShareAlike 4.0 International
