@@ -186,7 +186,7 @@ For example, this might concern additional information on how to build the final
 
 === A2L Description Files
 
-[quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-2-mc/[ASAM MCD-2 MC]]
+[quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-2-mc]
 ____
 ASAM MCD-2 MC (aka ASAP2) defines the description format of the internal ECU variables used in measurement and calibration.
 Measurement & calibration systems (MC-systems) require this description for both the parameterization of scalar constants, curves and maps of the ECU software and for recording the system's response via measurement variables during real-time testing.
