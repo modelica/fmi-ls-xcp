@@ -528,7 +528,7 @@ Accessing variables in the memory of indirectly loaded dynamic libraries require
 - Markus S&#252;vern, dSPACE GmbH, Germany
 - Patrick T&#228;uber, dSPACE GmbH, Germany
 
-Contributions to this layered standard to the FMI standard are covered by the [Corporate Contributors License Agreement (CCLA)](https://github.com/modelica/fmi-standard.org/blob/main/static/assets/FMI_CCLA_v1.0_2016_06_21.pdf) of the Modelica Association Project FMI.
+Contributions to this layered standard to the FMI standard are covered by the https://github.com/modelica/fmi-standard.org/blob/main/static/assets/FMI_CCLA_v1.0_2016_06_21.pdf[Corporate Contributors License Agreement (CCLA)] of the Modelica Association Project FMI.
 
 [bibliography]
 == References
