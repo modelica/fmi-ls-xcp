@@ -151,7 +151,7 @@ include::examples/fmi_ls_xcp_manifest_example.xml[]
 
 == Common Concepts
 
-Independent of the selected implementation approach (see <<Rough Outline of the Approach>>), the XCP behavior as seen by an external MCD tool (XCP master) shall be the same.
+Independent of the selected implementation approach (see <<Outline of the Approach>>), the XCP behavior as seen by an external MCD tool (XCP master) shall be the same.
 The concepts defined in this chapter are common to both of the implementation approaches.
 The definitions that are specific to the particular implementation types are defined in <<FMU with Integrated XCP Service>> and <<External XCP Service>>.
 
@@ -195,7 +195,7 @@ The standard also describes how the variable values are converted into human-rea
 ____
 
 The A2L description depends on the FMU binary, for example, regarding memory addresses, and byte order.
-If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below `/extra/org.fmi-standard.fmi-ls-xcp` following the same scheme as in the `binaries` directory, see <<Structure of the FMU archive>>.
+If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below `/extra/org.fmi-standard.fmi-ls-xcp` following the same scheme as in the `binaries` directory, see <<Structure of the FMU Archive>>.
 It is highly advisable that all A2L files in the FMU use the same XCP configuration, i.e., the same protocol (TCP/UDP), the same ports, and so on.
 
 Note that the A2L files placed under the `extra` directory are not accessible to the FMU at runtime.
@@ -210,7 +210,7 @@ All format versions of the A2L standard are allowed and it is the responsibility
 
 This layered standard forbids the use of the `including mechanism` of additional A2L files to simplify complete extraction and copying of the A2L file to a location where it is accessible by the MCD tool.
 
-The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or external, see <<Rough Outline of the Approach>>) and on the FMU format (binary or source code FMU).
+The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or external, see <<Outline of the Approach>>) and on the FMU format (binary or source code FMU).
 See <<address-resolution-internal>> and <<address-resolution-external>>, respectively, for detailed information about address resolution.
 
 === XCP Protocol Settings
@@ -238,7 +238,7 @@ The A2L file is necessarily incomplete as the details of the A2L description dep
 For example, the real addresses and memory segments are not known until the FMU binary is built.
 For information on how to deal with memory addresses refer to <<address-resolution-internal>> or <<address-resolution-external>>, respectively.
 
-The A2L description is placed directly into the folder `/extra/org.fmi-standard.fmi-ls-xcp` if it is target-independent, or in target-specific subfolders otherwise (see <<Structure of the FMU archive>>).
+The A2L description is placed directly into the folder `/extra/org.fmi-standard.fmi-ls-xcp` if it is target-independent, or in target-specific subfolders otherwise (see <<Structure of the FMU Archive>>).
 
 The FMU importer is responsible for ensuring that the target-specific information in the A2L file is adapted to the target platform for which a source code FMU is built, before making the A2L file available to the MCD tool.
 
