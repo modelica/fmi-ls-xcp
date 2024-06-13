@@ -1,0 +1,14 @@
+tasks:
+  - name: Generate HTML
+    command: docker run --rm -it -v $PWD/docs:/documents/ asciidoctor/docker-asciidoctor asciidoctor -B /documents/ -b html5 --failure-level WARN -v index.adoc
+  
+  - name: Serve HTML
+    command: python -m http.server 8000 --directory docs
+
+ports:
+  - port: 8000
+    onOpen: open-preview
+
+vscode:
+  extensions:
+    - asciidoctor.asciidoctor-vscode
