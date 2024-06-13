@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (fmi-ls-xcp)</h1>
 <div class="details">
-<span id="revnumber">version 957cc2d,</span>
-<span id="revdate">2024-06-11</span>
+<span id="revnumber">version d59bb4b,</span>
+<span id="revdate">2024-06-13</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -845,7 +845,7 @@ See <a href="#_external_xcp_service">Section 5</a>.</p></td>
 <h2 id="_common_concepts">3. Common Concepts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Independent of the selected implementation approach (see <a href="#Rough Outline of the Approach">[Rough Outline of the Approach]</a>), the XCP behavior as seen by an external MCD tool (XCP master) shall be the same.
+<p>Independent of the selected implementation approach (see <a href="#_outline_of_the_approach">Section 1.3</a>), the XCP behavior as seen by an external MCD tool (XCP master) shall be the same.
 The concepts defined in this chapter are common to both of the implementation approaches.
 The definitions that are specific to the particular implementation types are defined in <a href="#_fmu_with_integrated_xcp_service">Section 4</a> and <a href="#_external_xcp_service">Section 5</a>.</p>
 </div>
@@ -900,7 +900,7 @@ The standard also describes how the variable values are converted into human-rea
 </div>
 <div class="paragraph">
 <p>The A2L description depends on the FMU binary, for example, regarding memory addresses, and byte order.
-If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below <code>/extra/org.fmi-standard.fmi-ls-xcp</code> following the same scheme as in the <code>binaries</code> directory, see <a href="#Structure of the FMU archive">[Structure of the FMU archive]</a>.
+If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below <code>/extra/org.fmi-standard.fmi-ls-xcp</code> following the same scheme as in the <code>binaries</code> directory, see <a href="#_structure_of_the_fmu_archive">Section 3.1</a>.
 It is highly advisable that all A2L files in the FMU use the same XCP configuration, i.e., the same protocol (TCP/UDP), the same ports, and so on.</p>
 </div>
 <div class="paragraph">
@@ -921,7 +921,7 @@ If size is a concern, it may be decided to supply just a single platform and A2L
 <p>This layered standard forbids the use of the <code>including mechanism</code> of additional A2L files to simplify complete extraction and copying of the A2L file to a location where it is accessible by the MCD tool.</p>
 </div>
 <div class="paragraph">
-<p>The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or external, see <a href="#Rough Outline of the Approach">[Rough Outline of the Approach]</a>) and on the FMU format (binary or source code FMU).
+<p>The handling of address information in the A2L file depends on the selected implementation approach for the XCP slave (FMU-internal or external, see <a href="#_outline_of_the_approach">Section 1.3</a>) and on the FMU format (binary or source code FMU).
 See <a href="#address-resolution-internal">Section 4.3</a> and <a href="#address-resolution-external">Section 5.3</a>, respectively, for detailed information about address resolution.</p>
 </div>
 </div>
@@ -957,7 +957,7 @@ For example, the real addresses and memory segments are not known until the FMU 
 For information on how to deal with memory addresses refer to <a href="#address-resolution-internal">Section 4.3</a> or <a href="#address-resolution-external">Section 5.3</a>, respectively.</p>
 </div>
 <div class="paragraph">
-<p>The A2L description is placed directly into the folder <code>/extra/org.fmi-standard.fmi-ls-xcp</code> if it is target-independent, or in target-specific subfolders otherwise (see <a href="#Structure of the FMU archive">[Structure of the FMU archive]</a>).</p>
+<p>The A2L description is placed directly into the folder <code>/extra/org.fmi-standard.fmi-ls-xcp</code> if it is target-independent, or in target-specific subfolders otherwise (see <a href="#_structure_of_the_fmu_archive">Section 3.1</a>).</p>
 </div>
 <div class="paragraph">
 <p>The FMU importer is responsible for ensuring that the target-specific information in the A2L file is adapted to the target platform for which a source code FMU is built, before making the A2L file available to the MCD tool.</p>
