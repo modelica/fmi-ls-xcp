@@ -313,6 +313,122 @@ The importer might also want to use an external XCP service even when an interna
 
 Therefore, if the XCP slave is embedded in the virtual ECU, the FMU should expose the following variables with pre-defined names in the `modelDescription.xml` file, which are used to configure the embedded XCP slave (see <<starting-internal-xcp-service>>):
 
+Enable XCP on TCP:: Determines whether the TCP instance of the XCP service provided
++
+[cols="1h,4"]
+|===
+|Annotation          |`org.fmi-standard.fmi-ls-xcp.EnableXcpOnTcpIp`
+|Type                |`Boolean` 
+|Example Start Value |`true`
+|Requirement Type    |Should be supplied, if the FMU provides an XCP service using TCP.
+|If not present      |Defaults to `true`, i.e. if the XCP slave supports TCP it will be started.
+|===
+
+//   org.fmi_standard.fmi_ls_xcp.EnableXcpOnTcpIp
+//        Description:         "Determines whether the TCP instance of the XCP service provided
+//                              by the FMU shall be started."
+//        Type:                Boolean
+//        Example Start Value: "true"
+//        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+//        If not present:      Defaults to true, i.e. if the XCP slave supports TCP it will be started.
+
+Enable XCP on UDP:: Determines whether the UDP instance of the XCP service provided by the FMU shall be started.
++
+[cols="1h,4"]
+|===
+|Annotation          |`org.fmi-standard.fmi-ls-xcp.EnableXcpOnUdpIp`
+|Type                |`Boolean` 
+|Example Start Value |`false`
+|Requirement Type    |Should be supplied, if the FMU provides an XCP service using UDP.
+|If not present      |Defaults to `true`, i.e. if the XCP slave supports UDP it will be started.
+|===
+
+//   org.fmi_standard.fmi_ls_xcp.EnableXcpOnUdpIp
+//        Description:         "Determines whether the UDP instance of the XCP service provided
+//                              by the FMU shall be started."
+//        Type:                Boolean
+//        Example Start Value: "false"
+//        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+//        If not present:      Defaults to true, i.e. if the XCP slave supports UDP it will be started.
+
+TCP listen port number:: TCP port number where the XCP slave listens for XCP protocol commands.
++
+[cols="1h,4"]
+|===
+|Annotation          |`org.fmi-standard.fmi-ls-xcp.TcpListenPortNumber`
+|Type                |`UInt16` / `Integer` 
+|Example Start Value |In an agreed range of ports, e.g., `32768` to `39999`.
+|Requirement Type    |Should be supplied, if the FMU provides an XCP service using TCP.
+|If not present      |Defaults to the protocol data values found in the relevant A2L file.
+|===
+
+//   org.fmi_standard.fmi_ls_xcp.TcpListenPortNumber
+//        Description:         "TCP port number where the XCP slave listens for XCP protocol commands."
+//        Type:                UInt16/Integer
+//        Example Start Value: <in an agreed range of ports, e.g., 32768 to 39999>
+//        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+//        If not present:      Defaults to the protocol data values found in the relevant A2L file.
+
+UDP listen port number:: UDP port number where the XCP slave listens for XCP protocol commands.
++
+[cols="1h,4"]
+|===
+|Annotation          |`org.fmi-standard.fmi-ls-xcp.UdpListenPortNumber` 
+|Type                |`UInt16` / `Integer` 
+|Example Start Value |In an agreed range of ports, e.g., `32768` to `39999`.
+|Requirement Type    |Should be supplied, if the FMU provides an XCP service using UDP.
+|If not present      |Defaults to the protocol data values found in the relevant A2L file.
+|===
+
+//   org.fmi_standard.fmi_ls_xcp.UdpListenPortNumber
+//        Description:         "UDP port number where the XCP slave listens for XCP protocol commands."
+//        Type:                UInt16/Integer
+//        Example Start Value: <in an agreed range of ports, e.g., 32768 to 39999>
+//        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+//        If not present:      Defaults to the protocol data values found in the relevant A2L file.
+
+TCP listen IP address:: IP address where the XCP slave listens for XCP protocol commands.
++
+[cols="1h,4"]
+|===
+|Annotation          |`org.fmi-standard.fmi-ls-xcp.TcpListenIpAddress`
+|Type                |`String` 
+|Example Start Value |`0.0.0.0`.
+|Requirement Type    |Should be supplied, if the FMU provides an XCP service using TCP.
+|If not present      |Defaults to the protocol data values found in the relevant A2L file.
+|===
+
+//   org.fmi_standard.fmi_ls_xcp.TcpListenIpAddress
+//        Description:         "TCP IP address where the XCP slave listens for XCP protocol commands."
+//        Type:                String
+//        Example Start Value: "0.0.0.0"
+//        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
+//        If not present:      Defaults to the protocol data values found in the relevant A2L file.
+
+UDP listen IP address:: IP address where the XCP slave listens for XCP protocol commands.
++
+[cols="1h,4"]
+|===
+|Annotation          |`org.fmi-standard.fmi-ls-xcp.UdpListenIpAddress`
+|Type                |`String` 
+|Example Start Value |`0.0.0.0`.
+|Requirement Type    |Should be supplied, if the FMU provides an XCP service using UDP.
+|If not present      |Defaults to the protocol data values found in the relevant A2L file.
+|===
+
+//   org.fmi_standard.fmi_ls_xcp.UdpListenIpAddress
+//        Description:         "UDP IP address where the XCP slave listens for XCP protocol commands."
+//        Type:                String
+//        Example Start Value: "0.0.0.0"
+//        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
+//        If not present:      Defaults to the protocol data values found in the relevant A2L file.
+
+Example:
+[source, xml]
+----
+include::examples/annotations.xml[tags=ConfigurationVariables]
+----
+
 .XCP Configuration Variables
 [#figure-xcp-configuration-parameters]
 ----

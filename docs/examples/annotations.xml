@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription fmiVersion="3.0" modelName="XCPVariables">
+	<CoSimulation modelIdentifier="XCPVariables">
+	</CoSimulation>
+	<ModelVariables>
+		
+        <Float64 name="time" valueReference="0" description="independent variable time" causality="independent" variability="continuous"/>
+
+<!-- tag::ConfigurationVariables[] -->
+<Boolean name="XCP_ENABLE_UDP" valueReference="1" causality="structuralParameter" variability="fixed" start="false">
+    <Annotations>
+        <Annotation name="org.fmi-standard.fmi-ls-xcp.EnableXcpOnUdpIp"/>
+    </Annotations>
+</Boolean>
+
+<Boolean name="XCP_ENABLE_UDP" valueReference="2" causality="structuralParameter" variability="fixed" start="true">
+    <Annotations>
+        <Annotation name="org.fmi-standard.fmi-ls-xcp.EnableXcpOnUdpIp"/>
+    </Annotations>
+</Boolean>
+
+<String name="XCP_TCP_ADDRESS" valueReference="3" causality="output" variability="constant">
+    <Annotations>
+        <Annotation name="org.fmi-standard.fmi-ls-xcp.TcpListenIpAddress"/>
+    </Annotations>
+    <Start value="0.0.0.0"/>
+</String>
+
+<String name="XCP_UDP_ADDRESS" valueReference="4" causality="output" variability="constant">
+    <Annotations>
+        <Annotation name="org.fmi-standard.fmi-ls-xcp.UdpListenIpAddress"/>
+    </Annotations>
+    <Start value="0.0.0.0"/>
+</String>
+
+<UInt16 name="XCP_TCP_PORT" valueReference="5" causality="structuralParameter" variability="fixed" start="2344">
+    <Annotations>
+        <Annotation name="org.fmi-standard.fmi-ls-xcp.TcpListenPortNumber"/>
+    </Annotations>
+</UInt16>
+
+<UInt16 name="XCP_UDP_PORT" valueReference="6" causality="structuralParameter" variability="fixed" start="2344">
+    <Annotations>
+        <Annotation name="org.fmi-standard.fmi-ls-xcp.UdpListenPortNumber"/>
+    </Annotations>
+</UInt16>
+<!-- end::ConfigurationVariables[] -->
+
+	</ModelVariables>
+	<ModelStructure>
+		<Output valueReference="14"/>
+		<InitialUnknown valueReference="2"/>
+	</ModelStructure>
+</fmiModelDescription>
