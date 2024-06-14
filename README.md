@@ -21,7 +21,7 @@ the [FMI][] standard.
 - `schema` -- XSD schema for this FMI Layered
 
 ## Copyright and License
-Code and documentation copyright (C) 2008-2011 the MODELISAR consortium and 2012-2024 the Modelica Association Project FMI.
+Code and documentation copyright (C) 2023-2024 The Modelica Association Project FMI.
 Code released under the [2-Clause BSD License].
 Docs released under [Attribution-ShareAlike 4.0 International].
 
