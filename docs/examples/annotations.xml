@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fmiModelDescription fmiVersion="3.0" modelName="XCPVariables">
+
 	<CoSimulation modelIdentifier="XCPVariables">
 	</CoSimulation>
+
 	<ModelVariables>
 		
         <Float64 name="time" valueReference="0" description="independent variable time" causality="independent" variability="continuous"/>
@@ -45,10 +47,9 @@
     </Annotations>
 </UInt16>
 <!-- end::ConfigurationVariables[] -->
-
 	</ModelVariables>
+
 	<ModelStructure>
-		<Output valueReference="14"/>
-		<InitialUnknown valueReference="2"/>
 	</ModelStructure>
+
 </fmiModelDescription>
