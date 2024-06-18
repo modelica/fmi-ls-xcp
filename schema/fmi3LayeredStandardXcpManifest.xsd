@@ -37,7 +37,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<xs:element name="fmiLayeredStandardManifest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="access" minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="Access" minOccurs="1" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:attribute name="identifier" type="xs:string" use="required">
 						    <xs:annotation>
@@ -46,7 +46,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						    	</xs:documentation>
 						    </xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="containsXcpService" type="xs:boolean" use="required">
+						<xs:attribute name="containsXCPService" type="xs:boolean" use="required">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
 									If true, the FMU provides its own XCP slave implementation.
@@ -60,45 +60,45 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="EnableXcpOnTcpIpVariable" type="xs:string" use="optional">
+						<xs:attribute name="variableEnableXCPOverTCP" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the EnableXcpOnTcpIp configuration capability. If not supplied, no such variable exists.
+									If supplied, specifies the name of the FMU variable that provides the EnableXCPOverTCP configuration capability. If not supplied, no such variable exists.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="EnableXcpOnUdpIpVariable" type="xs:string" use="optional">
+						<xs:attribute name="variableEnableXCPOverUDP" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the EnableXcpOnUcpIp configuration capability. If not supplied, no such variable exists.
+									If supplied, specifies the name of the FMU variable that provides the EnableXCPOverUDP configuration capability. If not supplied, no such variable exists.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="TcpListenPortNumberVariable" type="xs:string" use="optional">
+						<xs:attribute name="variableTCPListenPortNumber" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the TcpListenPortNumber configuration capability. If not supplied, no such variable exists.
+									If supplied, specifies the name of the FMU variable that provides the TCPListenPortNumber configuration capability. If not supplied, no such variable exists.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="UdpListenPortNumberVariable" type="xs:string" use="optional">
+						<xs:attribute name="variableUDPListenPortNumber" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the UdpListenPortNumber configuration capability. If not supplied, no such variable exists.
+									If supplied, specifies the name of the FMU variable that provides the UDPListenPortNumber configuration capability. If not supplied, no such variable exists.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="TcpListenIpAddressVariable" type="xs:string" use="optional">
+						<xs:attribute name="variableTCPListenIPAddress" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the TcpListenIpAddress configuration capability. If not supplied, no such variable exists.
+									If supplied, specifies the name of the FMU variable that provides the TCPListenIPAddress configuration capability. If not supplied, no such variable exists.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="UdpListenIpAddressVariable" type="xs:string" use="optional">
+						<xs:attribute name="variableUDPListenIPAddress" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the UdpListenIpAddress configuration capability. If not supplied, no such variable exists.
+									If supplied, specifies the name of the FMU variable that provides the UDPListenIPAddress configuration capability. If not supplied, no such variable exists.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
