@@ -36,23 +36,78 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</xs:annotation>
 	<xs:element name="fmiLayeredStandardManifest">
 		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="access" minOccurs="1" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="identifier" type="xs:string" use="required">
+						    <xs:annotation>
+						    	<xs:documentation xml:lang="en">
+						    		Identifier used to construct the A2L file name.
+						    	</xs:documentation>
+						    </xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="containsXcpService" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If true, the FMU provides its own XCP slave implementation.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="supportsDirectMemoryAccessViaA2L" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If true, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="EnableXcpOnTcpIpVariable" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If supplied, specifies the name of the FMU variable that provides the EnableXcpOnTcpIp configuration capability. If not supplied, no such variable exists.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="EnableXcpOnUdpIpVariable" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If supplied, specifies the name of the FMU variable that provides the EnableXcpOnUcpIp configuration capability. If not supplied, no such variable exists.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="TcpListenPortNumberVariable" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If supplied, specifies the name of the FMU variable that provides the TcpListenPortNumber configuration capability. If not supplied, no such variable exists.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="UdpListenPortNumberVariable" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If supplied, specifies the name of the FMU variable that provides the UdpListenPortNumber configuration capability. If not supplied, no such variable exists.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="TcpListenIpAddressVariable" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If supplied, specifies the name of the FMU variable that provides the TcpListenIpAddress configuration capability. If not supplied, no such variable exists.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="UdpListenIpAddressVariable" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									If supplied, specifies the name of the FMU variable that provides the UdpListenIpAddress configuration capability. If not supplied, no such variable exists.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
 			<xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-xcp"/>
 			<xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
 			<xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."/>
-			<xs:attribute name="containsXcpService" type="xs:boolean" use="required">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">
-						If true, the FMU provides its own XCP slave implementation.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="supportsDirectMemoryAccessViaA2L" type="xs:boolean" use="required">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">
-						If true, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
