@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (fmi-ls-xcp)</h1>
 <div class="details">
-<span id="revnumber">version c20a6c7,</span>
-<span id="revdate">2024-06-14</span>
+<span id="revnumber">version 714906a,</span>
+<span id="revdate">2024-06-18</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -860,7 +860,7 @@ Details are described in the following sections.</p>
 <div id="figure-fmi-layered-XCP-directory-structure" class="listingblock">
 <div class="content">
 <pre>documentation
-   fmi-ls-xcp{.txt,.html}          // Informal description how to use XCP/A2L for this FMU (optional).
+   fmi-ls-xcp.{txt|html}           // Informal description how to use XCP/A2L for this FMU (optional).
 extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
    fmi-ls-manifest.xml             // The layered standard manifest file
    &lt;modelIdentifier&gt;.a2l           // Variable description of a source code FMU (optional)
@@ -912,7 +912,7 @@ Any files that shall be accessible to the FMU at runtime must (also) be placed i
 If size is a concern, it may be decided to supply just a single platform and A2L file with an FMU.</p>
 </div>
 <div class="paragraph">
-<p>The root name of the A2L file shall be identical to the model identifier and is case sensitive, i.e., a variable description named <code>&lt;modelIdentifier&gt;.a2l</code> is associated with an FMU binary named <code>&lt;modelIdentifier&gt;.{dll,so}</code>.</p>
+<p>The root name of the A2L file shall be identical to the model identifier and is case sensitive, i.e., a variable description named <code>&lt;modelIdentifier&gt;.a2l</code> is associated with an FMU binary named <code>&lt;modelIdentifier&gt;.{dll|so}</code>.</p>
 </div>
 <div class="paragraph">
 <p>All format versions of the A2L standard are allowed and it is the responsibility of the MCD tool to handle each format version correctly.</p>
@@ -1314,7 +1314,7 @@ Therefore, this constellation is not applicable to this layered standard and the
 <div class="ulist">
 <ul>
 <li>
-<p>Normally only variables in the memory segments owned by the main FMU binary <code>{.dll, .so}</code> are accessible by the XCP service, i.e., variables defined in source code modules and in statically linked libraries.
+<p>Normally only variables in the memory segments owned by the main FMU binary <code>&lt;modelIdendifier&gt;.{dll|so}</code> are accessible by the XCP service, i.e., variables defined in source code modules and in statically linked libraries.
 Accessing variables in the memory of indirectly loaded dynamic libraries requires a special implementation which is out-of-scope for this layered standard.</p>
 </li>
 </ul>
