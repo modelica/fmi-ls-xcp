@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (fmi-ls-xcp)</h1>
 <div class="details">
-<span id="revnumber">version 714906a,</span>
-<span id="revdate">2024-06-18</span>
+<span id="revnumber">version 9f958ae,</span>
+<span id="revdate">2024-06-19</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -852,7 +852,8 @@ The definitions that are specific to the particular implementation types are def
 <div class="sect2">
 <h3 id="_structure_of_the_fmu_archive">3.1. Structure of the FMU Archive</h3>
 <div class="paragraph">
-<p>A2L description files and other files needed for XCP support are placed in the <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-xcp</code>.
+<p>A2L description files and other files needed for XCP support are placed in <code>/extra/org.fmi-standard.fmi-ls-xcp</code>.
+<em>[This allows these files to be added and modified after the FMU has been created without affecting any checksums.]</em>
 The directory structure is analogous to the <code>binaries</code> directory structure, specific to the FMI version.
 The structure for an FMI 3.0 FMU is shown below.
 Details are described in the following sections.</p>
