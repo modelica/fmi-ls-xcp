@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest" elementFormDefault="qualified" attributeFormDefault="qualified">
-	<xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="fmi3LayeredStandardManifest.xsd"/>
+	<xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="https://raw.githubusercontent.com/modelica/fmi-standard/v3.0.1/schema/fmi3LayeredStandardManifest.xsd"/>
 	<xs:annotation>
 		<xs:documentation>
 Copyright(c) 2023-2024 Modelica Association Project FMI.
@@ -37,68 +37,70 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<xs:element name="fmiLayeredStandardManifest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Access" minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="Interface" minOccurs="1" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="identifier" type="xs:string" use="required">
+						<xs:sequence>
+							<xs:element name="Variable" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">
+												Name of the variable. Must be a valid variable name as defined in the modelDescription.xml
+												of the FMU.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="role" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">
+												Role of the variable. Must be a valid role as defined in the enumeration and the specification.
+											</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="XCPServiceTCPEnable"/>
+												<xs:enumeration value="XCPServiceTCPPort"/>
+												<xs:enumeration value="XCPServiceTCPListenAddress"/>
+												<xs:enumeration value="XCPServiceUDPEnable"/>
+												<xs:enumeration value="XCPServiceUDPPort"/>
+												<xs:enumeration value="XCPServiceUDPListenAddress"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="description" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									Optional human-readable description of the interface being defined.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="definition" type="xs:anyURI" use="required">
 						    <xs:annotation>
 						    	<xs:documentation xml:lang="en">
-						    		Identifier used to construct the A2L file name.
+						    		This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L
+						    		definition file for this interface. It may not contain any dot-segments (i.e. complete path segments
+						    		of `.` or `..`). It is resolved to an absolute URI using a base URI as follows:
+						    		For any source FMU implementation this is resolved against the manifest file as the base URI,
+						    		for binary FMU implementations this is resolved against the corresponding target sub-directory
+						    		of the layered standard `extra` directory as the base URI.
 						    	</xs:documentation>
 						    </xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="containsXCPService" type="xs:boolean" use="required">
+						<xs:attribute name="containsXCPService" type="xs:boolean" default="false">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If true, the FMU provides its own XCP slave implementation.
+									If true, this interface of the FMU provides its own XCP slave implementation.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="supportsDirectMemoryAccessViaA2L" type="xs:boolean" use="required">
+						<xs:attribute name="supportsDirectMemoryAccess" type="xs:boolean" default="false">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">
-									If true, the FMU allows direct memory access from the outside via its A2L file. In most cases this mechanism will be used by an external XCP service provided by the importer.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="variableEnableXCPOverTCP" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the EnableXCPOverTCP configuration capability. If not supplied, no such variable exists.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="variableEnableXCPOverUDP" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the EnableXCPOverUDP configuration capability. If not supplied, no such variable exists.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="variableTCPListenPortNumber" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the TCPListenPortNumber configuration capability. If not supplied, no such variable exists.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="variableUDPListenPortNumber" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the UDPListenPortNumber configuration capability. If not supplied, no such variable exists.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="variableTCPListenIPAddress" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the TCPListenIPAddress configuration capability. If not supplied, no such variable exists.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="variableUDPListenIPAddress" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">
-									If supplied, specifies the name of the FMU variable that provides the UDPListenIPAddress configuration capability. If not supplied, no such variable exists.
+									If true, this interface of the FMU allows direct memory access from the outside via its definition file.
+									In most cases this mechanism will be used by an external XCP service provided by the importer.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
