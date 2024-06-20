@@ -33,7 +33,7 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 
 == Introduction
 
-=== Intent of This Document
+=== Intent of this Document
 
 FMI 3.0 was extended also with virtual Electronic Control Units (virtual ECUs) in mind.
 Engineers can measure into ECUs using the XCP protocol and A2L variable descriptions:
@@ -50,7 +50,7 @@ ____
 
 This layered standard describes how an FMU advertises its XCP capabilities to importers and MCD (**M**easurement - **C**alibration - **D**iagnostics) tools using the XCP protocol.
 
-=== How to Read This Document
+=== How to Read this Document
 
 This document is about how to describe and implement XCP support for FMUs, either by an FMU with integrated XCP service or how to use an external XCP service to access data inside the FMU.
 To keep the descriptions brief and redundancy low, <<common-concepts,common concepts>>, which are used by both implementation types, are described once.
@@ -502,7 +502,7 @@ In the binary FMU case, the A2L file must contain real addresses, which are rela
 Since the external XCP slave can only make use of real addresses and in the case of source code FMUs there are no real addresses available yet, the A2l file must contain linker symbol links (`SYMBOL_LINK`).
 In this case, analogous to the use of an internal XCP slave, the importer or an external A2L tool is responsible for determining the actual variable addresses from the symbol links.
 
-== Known Limitations of This Standard
+== Known Limitations of this Standard
 
 General limitations:
 
