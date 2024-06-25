@@ -511,6 +511,8 @@ General limitations:
 * If the FMU contains target-specific binaries _and_ target-specific source code for the same platform, the corresponding A2L files cannot be assigned uniquely.
 Therefore, this constellation is not applicable to this layered standard and the FMU exporter must decide between source code and binary files for this platform.
 
+* If the manifest attribute `supportsDirectMemoryAccessViaA2L` is set to `true` and an external XCP service is used, the importer must not instantiate the FMU more than once because a variable in the A2L file has only one associated memory address.
+
 Limitations for binary FMUs:
 
 * Normally only variables in the memory segments owned by the main FMU binary `<modelIdendifier>.{dll|so}` are accessible by the XCP service, i.e., variables defined in source code modules and in statically linked libraries.
