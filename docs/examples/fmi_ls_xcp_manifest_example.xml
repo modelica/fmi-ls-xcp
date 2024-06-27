@@ -24,4 +24,8 @@
     <Interface definition="vECU4Both.a2l" description="Internal vECU 4 with dual XCP and direct memory access, no control over XCP"
         containsXCPService="true"
         supportsDirectMemoryAccess="true"/>
+    <Interface definition="vME.a2l" types="ModelExchange" description="Applicable definition solely for ModelExchange"
+        supportsDirectMemoryAccess="true"/>
+    <Interface definition="vCSSE.a2l" types="CoSimulation ScheduledExecution" description="Applicable definition for CS and SE"
+        supportsDirectMemoryAccess="true"/>
 </fmiLayeredStandardManifest>

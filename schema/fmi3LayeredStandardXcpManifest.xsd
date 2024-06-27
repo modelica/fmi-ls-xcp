@@ -77,6 +77,27 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
+						<xs:attribute name="types">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									Optional attribute to restrict the applicability of the interface being defined to certain
+									FMU interface types. The value is provided as a list of interface type names to which this
+									interface applies. If the attribute is not provided, the interface applies to all available
+									FMU interface types.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:list>
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:enumeration value="CoSimulation"/>
+											<xs:enumeration value="ModelExchange"/>
+											<xs:enumeration value="ScheduledExecution"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:list>
+							</xs:simpleType>
+						</xs:attribute>
 						<xs:attribute name="definition" type="xs:anyURI" use="required">
 						    <xs:annotation>
 						    	<xs:documentation xml:lang="en">

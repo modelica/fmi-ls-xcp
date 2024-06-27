@@ -149,6 +149,13 @@ Each `Interface` element has the <<following attributes,table-schema-fmi-ls-xcp-
 It may not contain any dot-segments (i.e. complete path segments of `.` or `..`).
 It is resolved to an absolute URI using a base URI that depends on the relevant FMU target, as defined in <<Structure of the FMU Archive>>.
 
+|`types`
+|
+| List of `CoSimulation`, `ModelExchange`, `ScheduledExecution`
+| Optional attribute to restrict the applicability of the interface being defined to certain FMU interface types.
+The value is provided as a list of interface type names to which this interface applies.
+If the attribute is not provided, the interface applies to all available FMU interface types.
+
 |`description`
 |
 | String
