@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (fmi-ls-xcp)</h1>
 <div class="details">
-<span id="revnumber">version dbd3251,</span>
-<span id="revdate">2024-06-20</span>
+<span id="revnumber">version e55e930,</span>
+<span id="revdate">2024-07-01</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -1306,6 +1306,9 @@ In this case, analogous to the use of an internal XCP slave, the importer or an 
 <li>
 <p>If the FMU contains target-specific binaries <em>and</em> target-specific source code for the same platform, the corresponding A2L files cannot be assigned uniquely.
 Therefore, this constellation is not applicable to this layered standard and the FMU exporter must decide between source code and binary files for this platform.</p>
+</li>
+<li>
+<p>If the manifest attribute <code>supportsDirectMemoryAccessViaA2L</code> is set to <code>true</code> and an external XCP service is used, the importer must not instantiate the FMU more than once because a variable in the A2L file has only one associated memory address.</p>
 </li>
 </ul>
 </div>
