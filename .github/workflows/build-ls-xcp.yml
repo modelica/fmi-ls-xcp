@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+    - run: pwd
+    - run: ls -al
     - name: Validate examples
       run: python lint.py
 
