@@ -512,16 +512,16 @@ Since an XCP slave is implemented inside the FMU, the FMU is responsible for sta
 *Using FMI 3.0*, the FMU should preferably expose its XCP configuration variables (see <<configure-external-xcp-service-settings>>) as `structuralParameters` and start the XCP service during the first invocation of `fmi3ExitConfigurationMode` and shut it down during `fmi3Terminate`, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.
 
-If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters with role `XCPService[TCP|UDP]ListenAddress` and `XCPService[TCP|UDP]Port`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
+If the simulator puts the FMU in `Configuration Mode` and sets the structural parameters with role `XCPService{TCP|UDP}ListenAddress` and `XCPService{TCP|UDP}Port`, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.
 
-If the value of structural parameter with role `XCPService[TCP|UDP]Enable` is `true`, the XCP slave must be responsive for XCP commands on the corresponding channel (TCP/UDP) after leaving `Configuration Mode`.
+If the value of structural parameter with role `XCPService{TCP|UDP}Enable` is `true`, the XCP slave must be responsive for XCP commands on the corresponding channel (TCP/UDP) after leaving `Configuration Mode`.
 Thus, it is possible for the XCP master to perform calibration during the `Instantiated` state, for example, to set parameters before entering `Initialization Mode`.
 Note that reading values of calculated variables, which depend on an initialization function, is only possible after entering the `Initialized` super state with `fmi3ExitInitializationMode`.
 
-If the variable with role `XCPService[TCP|UDP]Enable` is `false`, the internal XCP service must not be started with TCP/UDP, the network resources must not be used and no XCP service actions must be performed by the FMU on this channel during simulation.
+If the variable with role `XCPService{TCP|UDP}Enable` is `false`, the internal XCP service must not be started with TCP/UDP, the network resources must not be used and no XCP service actions must be performed by the FMU on this channel during simulation.
 If both parameters are `false` the XCP service must not be started at all.
 
-If `Configuration Mode` was not entered and the value of variable with role `XCPService[TCP|UDP]Enable` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
+If `Configuration Mode` was not entered and the value of variable with role `XCPService{TCP|UDP}Enable` is `true`, the FMU must start the XCP service in `fmi3EnterInitializationMode` at the latest.
 In this case, it is not possible to perform calibration before `Initialization Mode` is entered or to configure the XCP connection settings.
 
 If the importer re-enters `Configuration Mode` and reconfigures the parameters it is up to the FMU if it reacts to the parameter change or not.
@@ -530,7 +530,7 @@ If the importer re-enters `Configuration Mode` and reconfigures the parameters i
 The importer is responsible for calling `fmi2SetupExperiment` at least once and setting the parameters before `fmi2SetupExperiment` is called.
 
 If the FMU does not expose its XCP configuration variables as `structuralParameters` using FMI 3.0, or as `parameters` using FMI 2.0, the importer will not have control over whether the internal XCP service should be started.
-In this case, the default value of the `start` attribute of the variable with role `XCPService[TCP|UDP]Enable`, if it exists, determines if the XCP service is started.
+In this case, the default value of the `start` attribute of the variable with role `XCPService{TCP|UDP}Enable`, if it exists, determines if the XCP service is started.
 If no variable of this role exists, then the XCP service is always started.
 
 _[Note that it is not possible to manually change the `start` value for any variable in the `modelDescription.xml` file to change the behavior of the internal XCP service._
