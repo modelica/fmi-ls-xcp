@@ -9,11 +9,20 @@ on:
     branches: [ main ]
 
 jobs:
+  lint-examples:
+    name: Validate examples
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Validate examples
+      run: python lint.py
+
   build-ls-xcp:
     name: Build Layered Standard XCP
-
     runs-on: ubuntu-20.04
-
     steps:
     - name: checkout
       uses: actions/checkout@v3
