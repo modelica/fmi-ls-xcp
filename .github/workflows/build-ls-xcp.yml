@@ -21,8 +21,6 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: python -m pip install lxml
-    - run: pwd
-    - run: ls -al
     - name: Validate examples
       run: python lint.py
 
