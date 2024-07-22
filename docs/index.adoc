@@ -151,7 +151,7 @@ It is resolved to an absolute URI using a base URI that depends on the relevant 
 
 |`types`
 |
-| List of `CoSimulation`, `ModelExchange`, `ScheduledExecution`
+| List of `CoSimulation`, `ModelExchange`, `ScheduledExecution`, separated by a whitespace character
 | Optional attribute to restrict the applicability of the interface being defined to certain FMU interface types.
 The value is provided as a list of interface type names to which this interface applies.
 If the attribute is not provided, the interface applies to all available FMU interface types.
