@@ -13,6 +13,8 @@ jobs:
     name: Validate examples
     runs-on: ubuntu-20.04
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
