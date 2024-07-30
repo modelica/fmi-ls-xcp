@@ -4,7 +4,7 @@
 	<xs:annotation>
 		<xs:documentation>
 Copyright(c) 2023-2024 Modelica Association Project FMI.
-             All rights reserved.
+			 All rights reserved.
 
 This file is licensed by the copyright holders under the 2-Clause BSD License
 (https://opensource.org/licenses/BSD-2-Clause):
@@ -32,7 +32,7 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
-        </xs:documentation>
+		</xs:documentation>
 	</xs:annotation>
 	<xs:element name="fmiLayeredStandardManifest">
 		<xs:complexType>
@@ -99,16 +99,16 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 							</xs:simpleType>
 						</xs:attribute>
 						<xs:attribute name="definition" type="xs:anyURI" use="required">
-						    <xs:annotation>
-						    	<xs:documentation xml:lang="en">
-						    		This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L
-						    		definition file for this interface. It may not contain any dot-segments (i.e. complete path segments
-						    		of `.` or `..`). It is resolved to an absolute URI using a base URI as follows:
-						    		For any source FMU implementation this is resolved against the manifest file as the base URI,
-						    		for binary FMU implementations this is resolved against the corresponding target sub-directory
-						    		of the layered standard `extra` directory as the base URI.
-						    	</xs:documentation>
-						    </xs:annotation>
+							<xs:annotation>
+								<xs:documentation xml:lang="en">
+									This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L
+									definition file for this interface. It may not contain any dot-segments (i.e., complete path segments
+									of `.` or `..`). It is resolved to an absolute URI using a base URI as follows:
+									For any source FMU implementation this is resolved against the manifest file as the base URI,
+									for binary FMU implementations this is resolved against the corresponding target sub-directory
+									of the layered standard `extra` directory as the base URI.
+								</xs:documentation>
+							</xs:annotation>
 						</xs:attribute>
 						<xs:attribute name="containsXCPService" type="xs:boolean" default="false">
 							<xs:annotation>

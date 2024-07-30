@@ -78,7 +78,7 @@ There are alternative implementations depending on the use case and data availab
    `fmi3IntermediateUpdateCallback` calls or the clocks mechanism could be used to synchronize DAQ lists.
    For further details see <<External XCP Service>>.
 
-It is also possible for an FMU to have integrated XCP service(s) and allow memory access for an external XCP service.
+It is also possible for an FMU to have integrated XCP services and to allow memory access for an external XCP service.
 
 The importer might also use the A2L address, type, layout and scaling information to use direct memory access into the virtual ECU.
 As this approach does not use the standardized XCP protocol it is not further described in this layered standard.
@@ -146,7 +146,7 @@ Each `Interface` element has the <<table-schema-fmi-ls-xcp-interface-attributes,
 |
 | Relative URI
 | This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L variable description file for this interface.
-It may not contain any dot-segments (i.e. complete path segments of `.` or `..`).
+It may not contain any dot-segments (i.e., complete path segments of `.` or `..`).
 It is resolved to an absolute URI using a base URI that depends on the relevant FMU target, as defined in <<Structure of the FMU Archive>>.
 
 |`types`
@@ -407,7 +407,7 @@ Enable XCP over TCP:: Determines whether the TCP instance of the XCP service pro
 |Type                 |`Boolean` 
 |Example Start Value  |`true`
 |Requirement Type     |Should be supplied, if the FMU provides an XCP service using TCP.
-|If not present       |Defaults to `true`, i.e. if the XCP slave supports TCP it will be started.
+|If not present       |Defaults to `true`, i.e., if the XCP slave supports TCP it will be started.
 |===
 
 TCP listen port number:: TCP port number where the XCP slave listens for XCP protocol commands.
@@ -427,7 +427,7 @@ TCP listen IP address:: IP address where the XCP slave listens for XCP protocol 
 |===
 |Role                 |`XCPServiceTCPListenAddress`
 |Type                 |`String` 
-|Example Start Value  |`0.0.0.0`.
+|Example Start Value  |`0.0.0.0`
 |Requirement Type     |Should be supplied, if the FMU provides an XCP service using TCP.
 |If not present       |Defaults to the protocol data values found in the relevant A2L file.
 |===
@@ -440,7 +440,7 @@ Enable XCP over UDP:: Determines whether the UDP instance of the XCP service pro
 |Type                 |`Boolean` 
 |Example Start Value  |`false`
 |Requirement Type     |Should be supplied, if the FMU provides an XCP service using UDP.
-|If not present       |Defaults to `true`, i.e. if the XCP slave supports UDP it will be started.
+|If not present       |Defaults to `true`, i.e., if the XCP slave supports UDP it will be started.
 |===
 
 UDP listen port number:: UDP port number where the XCP slave listens for XCP protocol commands.
@@ -460,7 +460,7 @@ UDP listen IP address:: IP address where the XCP slave listens for XCP protocol 
 |===
 |Capability Attribute |`XCPServiceUDPListenAddress`
 |Type                 |`String` 
-|Example Start Value  |`0.0.0.0`.
+|Example Start Value  |`0.0.0.0`
 |Requirement Type     |Should be supplied, if the FMU provides an XCP service using UDP.
 |If not present       |Defaults to the protocol data values found in the relevant A2L file.
 |===
