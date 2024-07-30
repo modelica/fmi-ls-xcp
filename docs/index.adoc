@@ -258,6 +258,7 @@ extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
 
 The `<definition1.a2l>` and `<definition2.a2l>` above are the relative URI references of the corresponding `definition` attributes of `Interface` elements.
 The resultant absolute URI to the variable description file results from resolving the relative URI against the following base URI:
+
 * For a source code FMU target the base URI is the URI of the manifest file.
 * For a binary FMU target the base URI is the URI that results by replacing the file name part of the URI of the manifest file with a directory path component with the given target name of the relevant FMI version.
 
