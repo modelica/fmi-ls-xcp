@@ -2,9 +2,30 @@
 <fmiLayeredStandardManifest
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardXcpManifest.xsd"
-	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
-	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
-	fmi-ls:fmi-ls-version="1.0.0-rc.4"
-	fmi-ls:fmi-ls-description="Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."
-	containsXcpService="true"
-	supportsDirectMemoryAccessViaA2L="true"/>
+    xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
+    fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
+    fmi-ls:fmi-ls-version="1.0.0-rc.4"
+    fmi-ls:fmi-ls-description="Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.">
+    <Interface definition="vECU1.a2l" description="First embedded XCP service for internal vECU 1, supports both TCP/UDP with full control"
+        containsXCPService="true">
+        <Variable name="XCP.vECU1.TCP.Enable" role="XCPServiceTCPEnable"/>
+        <Variable name="XCP.vECU1.TCP.Port" role="XCPServiceTCPPort"/>
+        <Variable name="XCP.vECU1.TCP.ListenAddress" role="XCPServiceTCPListenAddress"/>
+        <Variable name="XCP.vECU1.UDP.Enable" role="XCPServiceUDPEnable"/>
+        <Variable name="XCP.vECU1.UDP.Port" role="XCPServiceUDPPort"/>
+        <Variable name="XCP.vECU1.UDP.ListenAddress" role="XCPServiceUDPListenAddress"/>
+    </Interface>
+    <Interface definition="vECU2.a2l" description="Second embedded XCP service for internal vECU 2, TCP only, limited control"
+        containsXCPService="true">
+        <Variable name="XCP.vECU2.TCP.Enable" role="XCPServiceTCPEnable"/>
+    </Interface>
+    <Interface definition="vECU3Mem.a2l" description="Internal vECU 3 only via direct memory access"
+        supportsDirectMemoryAccess="true"/>
+    <Interface definition="vECU4Both.a2l" description="Internal vECU 4 with dual XCP and direct memory access, no control over XCP"
+        containsXCPService="true"
+        supportsDirectMemoryAccess="true"/>
+    <Interface definition="vME.a2l" types="ModelExchange" description="Applicable definition solely for ModelExchange"
+        supportsDirectMemoryAccess="true"/>
+    <Interface definition="vCSSE.a2l" types="CoSimulation ScheduledExecution" description="Applicable definition for CS and SE"
+        supportsDirectMemoryAccess="true"/>
+</fmiLayeredStandardManifest>
