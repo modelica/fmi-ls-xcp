@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (fmi-ls-xcp)</h1>
 <div class="details">
-<span id="revnumber">version e55e930,</span>
-<span id="revdate">2024-07-01</span>
+<span id="revnumber">version 86b55db,</span>
+<span id="revdate">2024-08-13</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -723,20 +723,20 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The FMU implements an XCP slave which provides access to measurement and calibration variables of the virtual ECU and handles the communication protocol with the XCP master in the MCD tool.
-The necessary information for an MCD tool is given in a description file which follows the <a href="https://www.asam.net/standards/detail/mcd-2-mc/">ASAM MCD-2 MC</a> standard (aka A2L, also <a href="#ASAP2">[ASAP2]</a>) and customarily carries the file extension <code>.a2l</code>.
+<p>The FMU implements one or more XCP slaves which provide access to measurement and calibration variables of the virtual ECU and handles the communication protocol with the XCP master in the MCD tool.
+The necessary information for an MCD tool is given in one or more variable description files which follow the <a href="https://www.asam.net/standards/detail/mcd-2-mc/">ASAM MCD-2 MC</a> standard (aka A2L, also <a href="#ASAP2">[ASAP2]</a>) and customarily carry the file extension <code>.a2l</code>.
 For further details see <a href="#_fmu_with_integrated_xcp_service">Section 4</a>.</p>
 </li>
 <li>
 <p>An external XCP slave implementation accesses the memory of the virtual ECU to expose the XCP protocol to the MCD tool.
-In this case, the importer needs to provide such an XCP slave implementation using the A2L description file.
+In this case, the importer needs to provide such an XCP slave implementation using the A2L variable description file(s) provided by the FMU.
 <code>fmi3IntermediateUpdateCallback</code> calls or the clocks mechanism could be used to synchronize DAQ lists.
 For further details see <a href="#_external_xcp_service">Section 5</a>.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>It is also possible for an FMU to have an integrated XCP service and allow memory access for an external XCP service.</p>
+<p>It is also possible for an FMU to have integrated XCP services and to allow memory access for an external XCP service.</p>
 </div>
 <div class="paragraph">
 <p>The importer might also use the A2L address, type, layout and scaling information to use direct memory access into the virtual ECU.
@@ -744,7 +744,7 @@ As this approach does not use the standardized XCP protocol it is not further de
 </div>
 <div class="paragraph">
 <p>This layered standard will have no effect on the FMU interface, nor the C-API behavior.
-If the XCP slave is implemented inside the FMU, it is recommended that it runs in its own thread and leaves the rest of the operation of the FMU unaffected.</p>
+If an XCP slave is implemented inside the FMU, it is recommended that it runs in its own thread and leaves the rest of the operation of the FMU unaffected.</p>
 </div>
 <div class="paragraph">
 <p>The A2L/XCP standards allow to measure and calibrate variables synchronously to different types of events.
@@ -755,7 +755,7 @@ The background thread must always be responsive to the XCP master within the def
 Refer to the A2L/XCP standards for more information.</p>
 </div>
 <div class="paragraph">
-<p>The XCP/A2L approach can not only be used for virtual ECUs, but also for plant models, if the FMU exporter generates an appropriate A2L file.</p>
+<p>The XCP/A2L approach can not only be used for virtual ECUs, but also for plant models, if the FMU exporter generates appropriate A2L files.</p>
 </div>
 </div>
 </div>
@@ -764,11 +764,11 @@ Refer to the A2L/XCP standards for more information.</p>
 <h2 id="common-concepts">2. Layered Standard Manifest File</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This layered standard defines additional capability flags in the layered standard manifest file.
-<a href="#table-schema-fmi-ls-xcp-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
+<p>This layered standard defines additional elements that carry relevant interface definitions and capability flags in the layered standard manifest file.
+<a href="#table-schema-fmi-ls-xcp-attributes">Table 1</a> shows the attributes of the root element of <code>fmi-ls-manifest.xml</code>.</p>
 </div>
 <table id="table-schema-fmi-ls-xcp-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Attribute Details.</caption>
+<caption class="title">Table 1. Root Element Attribute Details.</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -802,25 +802,120 @@ Refer to the A2L/XCP standards for more information.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String with a brief description of the layered standard that is suitable for display to users.</p></td>
 </tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The root element must contain at least one, and can contain more than one <code>Interface</code> elements.
+Each such element specifies one set of interface information for calibration using one underlying variable description file (A2L).
+Multiple elements might be provided if there are different XCP slaves embedded in the FMU, or there are other reasons why multiple A2L variable description files that apply in parallel have to be provided.</p>
+</div>
+<div class="paragraph">
+<p>Each <code>Interface</code> element has the <a href="#table-schema-fmi-ls-xcp-interface-attributes">following attributes</a>:</p>
+</div>
+<table id="table-schema-fmi-ls-xcp-interface-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Interface Element Attribute Details.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>containsXcpService</code></p></td>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Namespace</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>definition</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relative URI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L variable description file for this interface.
+It may not contain any dot segments, that is, complete path segments consiting only of <code>.</code> or <code>..</code>.
+It is resolved to an absolute URI using a base URI that depends on the relevant FMU target, as defined in <a href="#_structure_of_the_fmu_archive">Section 3.1</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>types</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of <code>CoSimulation</code>, <code>ModelExchange</code>, <code>ScheduledExecution</code>, separated by a whitespace character</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional attribute to restrict the applicability of the interface being defined to certain FMU interface types.
+The value is provided as a list of interface type names to which this interface applies.
+If the attribute is not provided, the interface applies to all available FMU interface types.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional human-readable description of the interface being defined.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>containsXCPService</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> or <code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the FMU provides its own XCP slave implementation.
-See <a href="#_fmu_with_integrated_xcp_service">Section 4</a>.</p></td>
+See <a href="#_fmu_with_integrated_xcp_service">Section 4</a>.
+Defaults to <code>false</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>supportsDirectMemoryAccessViaA2L</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>supportsDirectMemoryAccess</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> or <code>false</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the FMU allows direct memory access from the outside via its A2L file.
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, the FMU allows direct memory access from the outside via the information provided in its variable description file.
 In most cases this mechanism will be used by an external XCP service provided by the importer.
-See <a href="#_external_xcp_service">Section 5</a>.</p></td>
+See <a href="#_external_xcp_service">Section 5</a>.
+Defaults to <code>false</code>.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The FMU must set at least one of the attributes <code>containsXcpService</code> or <code>supportsDirectMemoryAccessViaA2L</code> to <code>true</code> to comply with this layered standard.</p>
+<p>The attribute <code>definition</code> is required, all other attributes of <code>Interface</code> are optional.
+The FMU must provide a valid <code>definition</code> attribute and must set at least one of the attributes <code>containsXCPService</code> or <code>supportsDirectMemoryAccess</code> to <code>true</code> to comply with this layered standard.</p>
+</div>
+<div class="paragraph">
+<p>Additionally the <code>Interface</code> element can contain one or more <code>Variable</code> elements, which assign relevant roles to existing FMU variables.</p>
+</div>
+<div class="paragraph">
+<p>Each <code>Variable</code> element has the <a href="#table-schema-fmi-ls-xcp-variable-attributes">following attributes</a>:</p>
+</div>
+<table id="table-schema-fmi-ls-xcp-variable-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Variable Element Attribute Details.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Namespace</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Valid variable name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of a variable defined in the <code>modelDescription.xml</code> of the FMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Valid role enum value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role of the variable. Must be a valid role as defined in <a href="#configure-internal-xcp-service-settings">Section 4.1</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Each <code>Variable</code> entry assigns a role to an existing variable.
+No variable shall occur in more than one <code>Variable</code> entry.
+No role shall occur in more than one <code>Variable</code> entry of one <code>Interface</code>, but can occur again in <code>Variable</code> entries of a different <code>Interface</code>.
+The set of allowed roles and their meaning is defined <a href="#configure-internal-xcp-service-settings">Section 4.1</a>.</p>
 </div>
 <div class="paragraph">
 <p>An example of a manifest file for this layered standard is shown below:</p>
@@ -831,12 +926,33 @@ See <a href="#_external_xcp_service">Section 5</a>.</p></td>
 &lt;fmiLayeredStandardManifest
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardXcpManifest.xsd"
-	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
-	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
-	fmi-ls:fmi-ls-version="1.0.0-rc.4"
-	fmi-ls:fmi-ls-description="Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."
-	containsXcpService="true"
-	supportsDirectMemoryAccessViaA2L="true"/&gt;</code></pre>
+    xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
+    fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
+    fmi-ls:fmi-ls-version="1.0.0-rc.4"
+    fmi-ls:fmi-ls-description="Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."&gt;
+    &lt;Interface definition="vECU1.a2l" description="First embedded XCP service for internal vECU 1, supports both TCP/UDP with full control"
+        containsXCPService="true"&gt;
+        &lt;Variable name="XCP.vECU1.TCP.Enable" role="XCPServiceTCPEnable"/&gt;
+        &lt;Variable name="XCP.vECU1.TCP.Port" role="XCPServiceTCPPort"/&gt;
+        &lt;Variable name="XCP.vECU1.TCP.ListenAddress" role="XCPServiceTCPListenAddress"/&gt;
+        &lt;Variable name="XCP.vECU1.UDP.Enable" role="XCPServiceUDPEnable"/&gt;
+        &lt;Variable name="XCP.vECU1.UDP.Port" role="XCPServiceUDPPort"/&gt;
+        &lt;Variable name="XCP.vECU1.UDP.ListenAddress" role="XCPServiceUDPListenAddress"/&gt;
+    &lt;/Interface&gt;
+    &lt;Interface definition="vECU2.a2l" description="Second embedded XCP service for internal vECU 2, TCP only, limited control"
+        containsXCPService="true"&gt;
+        &lt;Variable name="XCP.vECU2.TCP.Enable" role="XCPServiceTCPEnable"/&gt;
+    &lt;/Interface&gt;
+    &lt;Interface definition="vECU3Mem.a2l" description="Internal vECU 3 only via direct memory access"
+        supportsDirectMemoryAccess="true"/&gt;
+    &lt;Interface definition="vECU4Both.a2l" description="Internal vECU 4 with dual XCP and direct memory access, no control over XCP"
+        containsXCPService="true"
+        supportsDirectMemoryAccess="true"/&gt;
+    &lt;Interface definition="vME.a2l" types="ModelExchange" description="Applicable definition solely for ModelExchange"
+        supportsDirectMemoryAccess="true"/&gt;
+    &lt;Interface definition="vCSSE.a2l" types="CoSimulation ScheduledExecution" description="Applicable definition for CS and SE"
+        supportsDirectMemoryAccess="true"/&gt;
+&lt;/fmiLayeredStandardManifest&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -852,7 +968,7 @@ The definitions that are specific to the particular implementation types are def
 <div class="sect2">
 <h3 id="_structure_of_the_fmu_archive">3.1. Structure of the FMU Archive</h3>
 <div class="paragraph">
-<p>A2L description files and other files needed for XCP support are placed in <code>/extra/org.fmi-standard.fmi-ls-xcp</code>.
+<p>The manifest file, any A2L variable description files and other files needed for XCP support are placed in <code>/extra/org.fmi-standard.fmi-ls-xcp</code>.
 <em>[This allows these files to be added and modified after the FMU has been created without affecting any checksums.]</em>
 The directory structure is analogous to the <code>binaries</code> directory structure, specific to the FMI version.
 The structure for an FMI 3.0 FMU is shown below.
@@ -864,16 +980,40 @@ Details are described in the following sections.</p>
    fmi-ls-xcp.{txt|html}           // Informal description how to use XCP/A2L for this FMU (optional).
 extra/org.fmi-standard.fmi-ls-xcp  // Contains files related to XCP/A2L
    fmi-ls-manifest.xml             // The layered standard manifest file
-   &lt;modelIdentifier&gt;.a2l           // Variable description of a source code FMU (optional)
+   &lt;definition1.a2l&gt;               // Variable description of a source code FMU (optional)
+   &lt;definition2.a2l&gt;               // Variable description of a source code FMU (optional)
+   ...
    x86_64-windows
-      &lt;modelIdentifier&gt;.a2l        // Variable description for Windows on Intel 64-bit (optional)
+      &lt;definition1.a2l&gt;            // Variable description for Windows on Intel 64-bit (optional)
+      &lt;definition2.a2l&gt;            // Variable description for Windows on Intel 64-bit (optional)
+      ...
    x86-linux
-      &lt;modelIdentifier&gt;.a2l        // Variable description for Linux on Intel 32-bit (optional)
+      &lt;definition1.a2l&gt;            // Variable description for Linux on Intel 32-bit (optional)
+      ...
    aarch32-linux
-      &lt;modelIdentifier&gt;.a2l        // Variable description for Linux on ARM 32-bit (optional)
+      &lt;definition1.a2l&gt;            // Variable description for Linux on ARM 32-bit (optional)
+      ...
    x86_64-darwin
-      &lt;modelIdentifier&gt;.a2l        // Variable description for macOS (optional)</pre>
+      &lt;definition1.a2l&gt;            // Variable description for macOS (optional)
+      ...</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The <code>&lt;definition1.a2l&gt;</code> and <code>&lt;definition2.a2l&gt;</code> above are the relative URI references of the corresponding <code>definition</code> attributes of <code>Interface</code> elements.
+The resultant absolute URI to the variable description file results from resolving the relative URI against the following base URI:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For a source code FMU target the base URI is the URI of the manifest file.</p>
+</li>
+<li>
+<p>For a binary FMU target the base URI is the URI that results by replacing the file name part of the URI of the manifest file with a directory path component with the given target name of the relevant FMI version.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If multiple <code>Interface</code> elements are present in the manifest, then multiple A2L variable description files will be present at each level of the directory structure, as defined by their <code>definition</code> attribute values.</p>
 </div>
 </div>
 <div class="sect2">
@@ -901,8 +1041,10 @@ The standard also describes how the variable values are converted into human-rea
 </div>
 <div class="paragraph">
 <p>The A2L description depends on the FMU binary, for example, regarding memory addresses, and byte order.
-If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below <code>/extra/org.fmi-standard.fmi-ls-xcp</code> following the same scheme as in the <code>binaries</code> directory, see <a href="#_structure_of_the_fmu_archive">Section 3.1</a>.
-It is highly advisable that all A2L files in the FMU use the same XCP configuration, i.e., the same protocol (TCP/UDP), the same ports, and so on.</p>
+If an FMU archive contains multiple binaries for different platforms, the associated A2L files are placed into separate subdirectories below <code>/extra/org.fmi-standard.fmi-ls-xcp</code> following the same scheme as in the <code>binaries</code> directory, see <a href="#_structure_of_the_fmu_archive">Section 3.1</a>.</p>
+</div>
+<div class="paragraph">
+<p>All A2L files in the FMU should use the same XCP configuration, including the same protocol (TCP/UDP), ports, etc.</p>
 </div>
 <div class="paragraph">
 <p>Note that the A2L files placed under the <code>extra</code> directory are not accessible to the FMU at runtime.
@@ -911,9 +1053,6 @@ Any files that shall be accessible to the FMU at runtime must (also) be placed i
 <div class="paragraph">
 <p>A2L files may have a considerable size.
 If size is a concern, it may be decided to supply just a single platform and A2L file with an FMU.</p>
-</div>
-<div class="paragraph">
-<p>The root name of the A2L file shall be identical to the model identifier and is case sensitive, i.e., a variable description named <code>&lt;modelIdentifier&gt;.a2l</code> is associated with an FMU binary named <code>&lt;modelIdentifier&gt;.{dll|so}</code>.</p>
 </div>
 <div class="paragraph">
 <p>All format versions of the A2L standard are allowed and it is the responsibility of the MCD tool to handle each format version correctly.</p>
@@ -933,8 +1072,10 @@ See <a href="#address-resolution-internal">Section 4.3</a> and <a href="#address
 Parts of the <code>IF_DATA XCP</code> description depend on the machine where the FMU binary is executed, for example, the IP address and port.</p>
 </div>
 <div class="paragraph">
-<p>The default IP address assigned by the FMU exporter should be <code>localhost</code>, i.e., <code>127.0.0.1</code>, which fits in many cases.
-The requirement for the port number is, that it must be unique on the machine where the FMU binary is executed.
+<p>The default IP address assigned by the FMU exporter should be a <code>localhost</code> IP address, that is one of the loopback interface IP addresses (<code>127.0.0.1</code> for IPv4 or <code>::1</code> for IPv6), as this is the most fitting choice in many cases.</p>
+</div>
+<div class="paragraph">
+<p>The requirement for the port number is, that it must be unique on the machine where the FMU binary is executed.
 Typically, a certain range of ports is reserved for this purpose.
 The FMU importer is responsible for checking if any conflicts of the defined IP addresses and port numbers occur in the context of the simulated system.</p>
 </div>
@@ -979,7 +1120,7 @@ This standard expressly does not restrict the relationship between both sets of 
 <em>The A2L file might publish a much larger set of variables and parameters that the user can selectively choose to measure or calibrate.</em></p>
 </div>
 <div class="paragraph">
-<p><em>From the viewpoint of an MCD tool, the details of the variable access are transparent, i.e., this information is encapsulated in the A2L file.]</em></p>
+<p><em>The details of the variable access are transparent from the viewpoint of an MCD tool, as this information is encapsulated in the A2L file.]</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -1007,7 +1148,7 @@ On the other hand, plant models offering XCP access for parameter calibration ma
 The following sections describe how to configure and handle the internal XCP slave.</p>
 </div>
 <div class="paragraph">
-<p>The FMU states that it contains an internal XCP slave implementation with the <code>containsXcpService</code> attribute in the <code>fmi-ls-manifest.xml</code> file.</p>
+<p>The FMU states that it contains an internal XCP slave implementation with the <code>containsXCPService</code> attribute in the <code>fmi-ls-manifest.xml</code> file.</p>
 </div>
 <div class="paragraph">
 <p><em>[<a href="#XCP-Communication-via-IP-Stack">Figure 1</a> shows a typical design where the XCP slave (in the FMU) communicates with the XCP master (in the MCD tool) using a separate network channel, e.g., the IP stack of the host OS.</em>
@@ -1046,63 +1187,213 @@ The following sections describe how to configure and handle the internal XCP sla
 </div>
 <div class="paragraph">
 <p>Besides the listen port number, the user may also want to change or restrict the listen IP address, which is the IP address of the network interface to which the socket of the XCP service is bound and where it is listening for XCP client commands.
-In most cases, the listen IP address will be set to <code>INADDR_ANY</code>, i.e., <code>0.0.0.0</code>, allowing connections from any available network interface.
-However, it is possible to restrict the XCP service to, e.g., only allow local connections by setting the listen IP address to <code>127.0.0.1</code>.</p>
+In many cases, the listen IP address will be set to <code>INADDR_ANY</code> (<code>0.0.0.0</code> for IPv4, <code>::</code> for IPv6), allowing connections from any available network interface.
+However, it is possible to restrict the XCP service to listen only on a single interface.
+This is commonly done with the loopback addresses (<code>127.0.0.1</code> for IPv4 and <code>::1</code> for IPv6), to only allow local connections.</p>
 </div>
 <div class="paragraph">
 <p>Furthermore, it is likely valuable for the user to have the possibility to deactivate the internal XCP service to avoid certain problems with the environment, e.g., with anti-virus software or firewalls or when running the FMU in a container.
 The importer might also want to use an external XCP service even when an internal XCP service is available.</p>
 </div>
 <div class="paragraph">
-<p>Therefore, if the XCP slave is embedded in the virtual ECU, the FMU should expose the following variables with pre-defined names in the <code>modelDescription.xml</code> file, which are used to configure the embedded XCP slave (see <a href="#starting-internal-xcp-service">Section 4.2</a>):</p>
+<p>Therefore, if the XCP slave is embedded in the virtual ECU, the FMU should expose the following configuration capabilities as variables in the <code>modelDescription.xml</code> file, which are used to configure the embedded XCP slave (see <a href="#starting-internal-xcp-service">Section 4.2</a>).
+The variable that is provided for a capability is identified by providing a <code>Variable</code> element in the relevant <code>Interface</code> element of the manifest file, with the name of the variable and its role as the corresponding attribute values.</p>
 </div>
-<div id="figure-xcp-configuration-parameters" class="listingblock">
-<div class="title">XCP Configuration Variables</div>
-<div class="content">
-<pre>   org.fmi_standard.fmi_ls_xcp.EnableXcpOnTcpIp
-        Description:         "Determines whether the TCP instance of the XCP service provided
-                              by the FMU shall be started."
-        Type:                Boolean
-        Example Start Value: "true"
-        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
-        If not present:      Defaults to true, i.e. if the XCP slave supports TCP it will be started.
-
-   org.fmi_standard.fmi_ls_xcp.EnableXcpOnUdpIp
-        Description:         "Determines whether the UDP instance of the XCP service provided
-                              by the FMU shall be started."
-        Type:                Boolean
-        Example Start Value: "false"
-        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
-        If not present:      Defaults to true, i.e. if the XCP slave supports UDP it will be started.
-
-   org.fmi_standard.fmi_ls_xcp.TcpListenPortNumber
-        Description:         "TCP port number where the XCP slave listens for XCP protocol commands."
-        Type:                UInt16/Integer
-        Example Start Value: &lt;in an agreed range of ports, e.g., 32768 to 39999&gt;
-        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
-        If not present:      Defaults to the protocol data values found in the relevant A2L file.
-
-   org.fmi_standard.fmi_ls_xcp.UdpListenPortNumber
-        Description:         "UDP port number where the XCP slave listens for XCP protocol commands."
-        Type:                UInt16/Integer
-        Example Start Value: &lt;in an agreed range of ports, e.g., 32768 to 39999&gt;
-        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
-        If not present:      Defaults to the protocol data values found in the relevant A2L file.
-
-   org.fmi_standard.fmi_ls_xcp.TcpListenIpAddress
-        Description:         "TCP IP address where the XCP slave listens for XCP protocol commands."
-        Type:                String
-        Example Start Value: "0.0.0.0"
-        Requirement Type:    Should be supplied, if the FMU provides an XCP service using TCP
-        If not present:      Defaults to the protocol data values found in the relevant A2L file.
-
-   org.fmi_standard.fmi_ls_xcp.UdpListenIpAddress
-        Description:         "UDP IP address where the XCP slave listens for XCP protocol commands."
-        Type:                String
-        Example Start Value: "0.0.0.0"
-        Requirement Type:    Should be supplied, if the FMU provides an XCP service using UDP
-        If not present:      Defaults to the protocol data values found in the relevant A2L file.</pre>
-</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Enable XCP over TCP</dt>
+<dd>
+<p>Determines whether the TCP instance of the XCP service provided by the FMU shall be started.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Role</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceTCPEnable</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Example Start Value</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Requirement Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be supplied, if the FMU provides an XCP service using TCP.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">If not present</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to <code>true</code>, so if the XCP slave supports TCP, it will be started.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">TCP listen port number</dt>
+<dd>
+<p>TCP port number where the XCP slave listens for XCP protocol commands.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Role</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceTCPPort</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UInt16</code> / <code>Integer</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Example Start Value</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In an agreed range of ports, e.g., <code>32768</code> to <code>39999</code>.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Requirement Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be supplied, if the FMU provides an XCP service using TCP.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">If not present</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to the protocol data values found in the relevant A2L file.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">TCP listen IP address</dt>
+<dd>
+<p>IP address where the XCP slave listens for XCP protocol commands over TCP.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Role</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceTCPListenAddress</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Example Start Value</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0.0.0.0</code> or <code>::0</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Requirement Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be supplied, if the FMU provides an XCP service using TCP.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">If not present</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to the protocol data values found in the relevant A2L file.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">Enable XCP over UDP</dt>
+<dd>
+<p>Determines whether the UDP instance of the XCP service provided by the FMU shall be started.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Role</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceUDPEnable</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Example Start Value</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Requirement Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be supplied, if the FMU provides an XCP service using UDP.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">If not present</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to <code>true</code>, so if the XCP slave supports UDP, it will be started.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">UDP listen port number</dt>
+<dd>
+<p>UDP port number where the XCP slave listens for XCP protocol commands.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Role</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceUDPPort</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UInt16</code> / <code>Integer</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Example Start Value</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In an agreed range of ports, e.g., <code>32768</code> to <code>39999</code>.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Requirement Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be supplied, if the FMU provides an XCP service using UDP.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">If not present</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to the protocol data values found in the relevant A2L file.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">UDP listen IP address</dt>
+<dd>
+<p>IP address where the XCP slave listens for XCP protocol commands over UDP.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Capability Attribute</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceUDPListenAddress</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Example Start Value</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0.0.0.0</code> or <code>::0</code></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Requirement Type</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be supplied, if the FMU provides an XCP service using UDP.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">If not present</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to the protocol data values found in the relevant A2L file.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>All variables that are defined must be defined as scalars with one of the following <code>causality</code>/<code>variability</code> combinations:</p>
@@ -1112,7 +1403,7 @@ The importer might also want to use an external XCP service even when an interna
 <li>
 <p><strong>fixed structuralParameter (FMI 3.0 only):</strong>
 If the FMU defines the variables as <code>structuralParameters</code>, the XCP configuration can be changed during <code>Configuration Mode</code>.
-When the XCP service is started in <code>fmi3ExitConfigurationMode</code>, it is configured and running before the simulation starts, i.e., before <code>Initialization Mode</code> is entered.
+When the XCP service is started in <code>fmi3ExitConfigurationMode</code>, it is configured and running before the simulation starts, specifically before <code>Initialization Mode</code> is entered.
 For FMI 3.0, this is the most flexible variant and should be preferred over the other variants.</p>
 </li>
 <li>
@@ -1151,11 +1442,11 @@ The FMU shall only provide the corresponding variables for the protocols it supp
 </div>
 <div class="paragraph">
 <p>Without knowing the concrete XCP slave implementation the importer cannot know if the different protocols can be used in parallel or only exclusively.
-In case the XCP service is not multi-session capable and both of the variables <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> are set to <code>true</code>, the FMU must return an error and provide a meaningful error message when exiting <code>Configuration Mode</code>.
+In case the XCP service is not multi-session capable and both of the variables with role <code>XCPServiceTCPEnable</code> and <code>XCPServiceUDPEnable</code> are set to <code>true</code>, the FMU must return an error and provide a meaningful error message when exiting <code>Configuration Mode</code>.
 This information may also be provided in the <code>documentation</code> directory inside the FMU.</p>
 </div>
 <div class="paragraph">
-<p>The importer of an FMU is responsible for keeping all occurrences of the port number consistent, i.e., in both the FMU configuration and in the A2L file.</p>
+<p>The importer of an FMU is responsible for keeping all occurrences of the port number consistent, including both the FMU configuration and the A2L file that is presented to the MCD tool.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1164,23 +1455,23 @@ This information may also be provided in the <code>documentation</code> director
 <p>Since an XCP slave is implemented inside the FMU, the FMU is responsible for starting and stopping the internal XCP service.</p>
 </div>
 <div class="paragraph">
-<p><strong>Using FMI 3.0</strong>, the FMU should preferably expose its XCP configuration variables (see <a href="#figure-xcp-configuration-parameters">XCP Configuration Variables</a>) as <code>structuralParameters</code> and start the XCP service during the first invocation of <code>fmi3ExitConfigurationMode</code> and shut it down during <code>fmi3Terminate</code>, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
+<p><strong>Using FMI 3.0</strong>, the FMU should preferably expose its XCP configuration variables (see <a href="#configure-external-xcp-service-settings">Section 5.1</a>) as <code>structuralParameters</code> and start the XCP service during the first invocation of <code>fmi3ExitConfigurationMode</code> and shut it down during <code>fmi3Terminate</code>, if the FMU has no explicit power-up signal to simplify user interactions between simulator and MCD tool.
 If the FMU contains a virtual ECU with power-up control (K15), all built-in OS and Basic Software services (including XCP) should follow the normal power-up protocol.</p>
 </div>
 <div class="paragraph">
-<p>If the simulator puts the FMU in <code>Configuration Mode</code> and sets the structural parameters <code>org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenIpAddress</code> and <code>org.fmi_standard.fmi_ls_xcp.[Tcp|Udp]ListenPortNumber</code>, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.</p>
+<p>If the simulator puts the FMU in <code>Configuration Mode</code> and sets the structural parameters with role <code>XCPService{TCP|UDP}ListenAddress</code> and <code>XCPService{TCP|UDP}Port</code>, the XCP slave shall use those parameters to set up the communication connection for the XCP protocol.</p>
 </div>
 <div class="paragraph">
-<p>If the value of structural parameter <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> is <code>true</code>, the XCP slave must be responsive for XCP commands on the corresponding channel (TCP/UDP) after leaving <code>Configuration Mode</code>.
+<p>If the value of structural parameter with role <code>XCPService{TCP|UDP}Enable</code> is <code>true</code>, the XCP slave must be responsive for XCP commands on the corresponding channel (TCP/UDP) after leaving <code>Configuration Mode</code>.
 Thus, it is possible for the XCP master to perform calibration during the <code>Instantiated</code> state, for example, to set parameters before entering <code>Initialization Mode</code>.
 Note that reading values of calculated variables, which depend on an initialization function, is only possible after entering the <code>Initialized</code> super state with <code>fmi3ExitInitializationMode</code>.</p>
 </div>
 <div class="paragraph">
-<p>If <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> is <code>false</code>, the internal XCP service must not be started with TCP/UDP, the network resources must not be used and no XCP service actions must be performed by the FMU on this channel during simulation.
+<p>If the variable with role <code>XCPService{TCP|UDP}Enable</code> is <code>false</code>, the internal XCP service must not be started with TCP/UDP, the network resources must not be used and no XCP service actions must be performed by the FMU on this channel during simulation.
 If both parameters are <code>false</code> the XCP service must not be started at all.</p>
 </div>
 <div class="paragraph">
-<p>If <code>Configuration Mode</code> was not entered and the value of variable <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> is <code>true</code>, the FMU must start the XCP service in <code>fmi3EnterInitializationMode</code> at the latest.
+<p>If <code>Configuration Mode</code> was not entered and the value of variable with role <code>XCPService{TCP|UDP}Enable</code> is <code>true</code>, the FMU must start the XCP service in <code>fmi3EnterInitializationMode</code> at the latest.
 In this case, it is not possible to perform calibration before <code>Initialization Mode</code> is entered or to configure the XCP connection settings.</p>
 </div>
 <div class="paragraph">
@@ -1192,10 +1483,11 @@ The importer is responsible for calling <code>fmi2SetupExperiment</code> at leas
 </div>
 <div class="paragraph">
 <p>If the FMU does not expose its XCP configuration variables as <code>structuralParameters</code> using FMI 3.0, or as <code>parameters</code> using FMI 2.0, the importer will not have control over whether the internal XCP service should be started.
-In this case, the default value of the <code>start</code> attribute of variable <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> determines if the XCP service is started.</p>
+In this case, the default value of the <code>start</code> attribute of the variable with role <code>XCPService{TCP|UDP}Enable</code>, if it exists, determines if the XCP service is started.
+If no variable of this role exists, then the XCP service is always started.</p>
 </div>
 <div class="paragraph">
-<p><em>[Note that it is not possible to manually change the <code>start</code> value for <code>org.fmi_standard.fmi_ls_xcp.EnableXcpOn[Tcp|Udp]Ip</code> in the <code>modelDescription.xml</code> file to change the behavior of the internal XCP service.</em>
+<p><em>[Note that it is not possible to manually change the <code>start</code> value for any variable in the <code>modelDescription.xml</code> file to change the behavior of the internal XCP service.</em>
 <em>The <code>start</code> value merely reflects the default behavior coded into the FMU.]</em></p>
 </div>
 </div>
@@ -1205,18 +1497,18 @@ In this case, the default value of the <code>start</code> attribute of variable 
 <p>Dependent on the FMU format and the XCP slave implementation inside the FMU, dealing with memory addresses of variables in the A2L file differs.</p>
 </div>
 <div class="paragraph">
-<p>If the FMU is in binary format, i.e., it is shipped with a shared library, the FMU exporter must provide values for the ECU addresses inside the A2L file and the XCP slave inside the FMU is responsible for resolving the physical addresses from the address field values.
+<p>If the FMU is in binary format, that is, it is shipped with a shared library, the FMU exporter must provide values for the ECU addresses inside the A2L file, and the XCP slave inside the FMU is responsible for resolving the physical addresses from the address field values.
 <em>[These address field values can be either real addresses or fixed target-independent indices that are used by the XCP slave implementation for getting variables during runtime.]</em></p>
 </div>
 <div class="paragraph">
-<p>If the FMU is only shipped with source code, it is not possible to determine the memory addresses before building the binary, i.e., real addresses cannot be provided by the exporter in the A2L file.
+<p>If the FMU is only shipped with source code, the memory addresses cannot be determined before building the binary, so the exporter cannot provide real addresses in the A2L file.
 In this case the address field values in the A2L file must be either fixed target-independent indices, which allow the FMU to resolve the addresses at runtime, or the A2L file only contains linker symbol links (<code>SYMBOL_LINK</code>).
 In the latter case, the importer or an external A2L tool is responsible for determining the actual variable addresses from the symbol links.
 These addresses must be relative to the base address of the built FMU binary.
 Refer to the <a href="https://www.asam.net/standards/detail/mcd-2-mc/">ASAM MCD-2 MC</a> standard for more information on symbol links and automatic address update.</p>
 </div>
 <div class="paragraph">
-<p>If the FMU exporter does not use real (offset) addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute <code>supportsDirectMemoryAccessViaA2L</code> in the <code>fmi-ls-manifest.xml</code> file must be set to <code>false</code> (see <a href="#address-resolution-external">Section 5.3</a>).</p>
+<p>If the FMU exporter does not use real (offset) addresses in the A2L file in the binary FMU case, or does not provide symbol links in the source code FMU case, attribute <code>supportsDirectMemoryAccess</code> in the <code>fmi-ls-manifest.xml</code> file must be set to <code>false</code> (see <a href="#address-resolution-external">Section 5.3</a>).</p>
 </div>
 </div>
 </div>
@@ -1225,11 +1517,11 @@ Refer to the <a href="https://www.asam.net/standards/detail/mcd-2-mc/">ASAM MCD-
 <h2 id="_external_xcp_service">5. External XCP Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An FMU might support XCP but does not bring along its own XCP slave implementation (attribute <code>containsXcpService = false</code> in the <code>fmi-ls-manifest.xml</code> file).
+<p>An FMU might support XCP but does not bring along its own XCP slave implementation (attribute <code>containsXCPService = false</code> in the corresponding <code>Interface</code> element of the <code>fmi-ls-manifest.xml</code> file).
 In this case the FMU importer must provide its own implementation of an XCP slave.</p>
 </div>
 <div class="paragraph">
-<p>It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute <code>supportsDirectMemoryAccessViaA2L = true</code>).
+<p>It is also possible that the FMU does contain an internal XCP slave implementation but additionally allows the importer to access the memory of the virtual ECU with an external XCP service (attribute <code>supportsDirectMemoryAccess = true</code>).
 In this case it is the choice of the importer whether to use the FMU internal XCP slave or its own implementation.
 See <a href="#starting-internal-xcp-service">Section 4.2</a> on how to deactivate the internal XCP service.</p>
 </div>
@@ -1318,7 +1610,8 @@ Therefore, this constellation is not applicable to this layered standard and the
 <div class="ulist">
 <ul>
 <li>
-<p>Normally only variables in the memory segments owned by the main FMU binary <code>&lt;modelIdendifier&gt;.{dll|so}</code> are accessible by the XCP service, i.e., variables defined in source code modules and in statically linked libraries.
+<p>Normally only variables in the memory segments owned by the main FMU binary <code>&lt;modelIdendifier&gt;.{dll|so}</code> are accessible by the XCP service.
+This usually encompasses variables defined in source code modules and in statically linked libraries.
 Accessing variables in the memory of indirectly loaded dynamic libraries requires a special implementation which is out-of-scope for this layered standard.</p>
 </li>
 </ul>
