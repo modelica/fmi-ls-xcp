@@ -350,8 +350,6 @@ On the other hand, plant models offering XCP access for parameter calibration ma
 
 It is therefore necessary to synchronize XCP variable access (read and write) with the state of the FMU.
 _[For instance, time is not necessarily increasing monotonically in Model Exchange, and variable values might change within an fmi3DoStep call due to Intermediate Variable Access in Co-Simulation._
-
-_This means that some kind of buffering is necessary._
 _Appropriate care must be taken when to serve XCP master requests to ensure simulation and measurement integrity.]_
 
 == FMU with Integrated XCP Service
