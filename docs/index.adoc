@@ -349,7 +349,7 @@ If the FMU contains controller code, numeric stability or energy preservation la
 On the other hand, plant models offering XCP access for parameter calibration may introduce surprising numerical effects in solvers that might require proper handling, like resetting solvers with every XCP write action.
 
 It is therefore necessary to synchronize XCP variable access (read and write) with the state of the FMU.
-_[For instance is time not linear in Model Exchange and Intermediate Variable Access might also introduce surprising measurements in Co-Simulation._
+_[For instance, time is not necessarily increasing monotonically in Model Exchange, and variable values might change within an fmi3DoStep call due to Intermediate Variable Access in Co-Simulation._
 _Appropriate care must be taken when to serve XCP master requests to ensure simulation and measurement integrity.]_
 
 == FMU with Integrated XCP Service
