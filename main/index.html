@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (fmi-ls-xcp)</h1>
 <div class="details">
-<span id="revnumber">version 86b55db,</span>
-<span id="revdate">2024-08-13</span>
+<span id="revnumber">version d6e19ec,</span>
+<span id="revdate">2024-08-29</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -1134,7 +1134,7 @@ On the other hand, plant models offering XCP access for parameter calibration ma
 </div>
 <div class="paragraph">
 <p>It is therefore necessary to synchronize XCP variable access (read and write) with the state of the FMU.
-<em>[For instance is time not linear in Model Exchange and Intermediate Variable Access might also introduce surprising measurements in Co-Simulation.</em>
+<em>[For instance, time is not necessarily increasing monotonically in Model Exchange, and variable values might change within an fmi3DoStep call due to Intermediate Variable Access in Co-Simulation.</em>
 <em>Appropriate care must be taken when to serve XCP master requests to ensure simulation and measurement integrity.]</em></p>
 </div>
 </div>
