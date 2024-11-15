@@ -33,7 +33,7 @@ If you are interested in the FMI Layered Standard for XCP, the [FMI-LS-BUS] coul
 The [FMI-LS-BUS] specifies an FMI extension for using network communication (e.g. CAN, Ethernet, LIN, FlexRay) within FMUs.
 
 [FMI]: https://fmi-standard.org/
-[FMI-LS-BUS]: https://fmi-standard.org/
+[FMI-LS-BUS]: https://github.com/modelica/fmi-ls-bus
 [githubspec]: docs/index.adoc
 [spec]: https://modelica.github.io/fmi-ls-xcp/main/
 [2-Clause BSD License]: https://opensource.org/licenses/BSD-2-Clause
