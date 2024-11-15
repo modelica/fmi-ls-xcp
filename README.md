@@ -1,4 +1,4 @@
-# FMI Layered Standard for XCP (fmi-ls-xcp)
+# FMI Layered Standard for XCP (FMI-LS-XCP)
 
 [![Build Specification](https://github.com/modelica/fmi-ls-xcp/actions/workflows/build-ls-xcp.yml/badge.svg)](https://github.com/modelica/fmi-ls-xcp/actions/workflows/build-ls-xcp.yml)
 
