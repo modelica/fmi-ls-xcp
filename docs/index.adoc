@@ -1,4 +1,4 @@
-= FMI Layered Standard for XCP (fmi-ls-xcp)
+= FMI Layered Standard for XCP (FMI-LS-XCP)
 :sectnums:
 :sectnumlevels: 5
 :toc: left
