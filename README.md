@@ -17,15 +17,23 @@ The [FMI Layered Standard for XCP (fmi-ls-xcp)][spec] is currently maintained on
 the [FMI][] standard.
 
 ## Repository Structure
+
 - `docs` -- Sources of the specification document
 - `schema` -- XSD schema for this FMI Layered
 
 ## Copyright and License
+
 Code and documentation copyright (C) 2023-2024 The Modelica Association Project FMI.
 Code released under the [2-Clause BSD License].
 Docs released under [Attribution-ShareAlike 4.0 International].
 
+## Other FMI Layered Standards
+
+If you are interested in the FMI Layered Standard for XCP, the [FMI-LS-BUS] could also be relevant to you.
+The [FMI-LS-BUS] specifies an FMI extension for using network communication (e.g. CAN, Ethernet, LIN, FlexRay) within FMUs.
+
 [FMI]: https://fmi-standard.org/
+[FMI-LS-BUS]: https://fmi-standard.org/
 [githubspec]: docs/index.adoc
 [spec]: https://modelica.github.io/fmi-ls-xcp/main/
 [2-Clause BSD License]: https://opensource.org/licenses/BSD-2-Clause
