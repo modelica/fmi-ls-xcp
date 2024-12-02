@@ -459,7 +459,7 @@ UDP listen IP address:: IP address where the XCP slave listens for XCP protocol 
 +
 [cols="1h,4"]
 |===
-|Capability Attribute |`XCPServiceUDPListenAddress`
+|Role                 |`XCPServiceUDPListenAddress`
 |Type                 |`String` 
 |Example Start Value  |`0.0.0.0` or `::0`
 |Requirement Type     |Should be supplied, if the FMU provides an XCP service using UDP.
