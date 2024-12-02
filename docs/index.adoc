@@ -209,7 +209,7 @@ Each `Variable` element has the <<table-schema-fmi-ls-xcp-variable-attributes,fo
 Each `Variable` entry assigns a role to an existing variable.
 No variable shall occur in more than one `Variable` entry.
 No role shall occur in more than one `Variable` entry of one `Interface`, but can occur again in `Variable` entries of a different `Interface`.
-The set of allowed roles and their meaning is defined <<configure-internal-xcp-service-settings>>.
+The set of allowed roles and their meaning is defined in <<configure-internal-xcp-service-settings>>.
 
 An example of a manifest file for this layered standard is shown below:
 
