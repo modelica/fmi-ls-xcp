@@ -104,7 +104,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 									This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L
 									definition file for this interface. It may not contain any dot-segments (i.e., complete path segments
 									of `.` or `..`). It is resolved to an absolute URI using a base URI as follows:
-									For any source FMU implementation this is resolved against the manifest file as the base URI,
+									For any source FMU implementation this is resolved against the directory of the manifest file as the base URI,
 									for binary FMU implementations this is resolved against the corresponding target sub-directory
 									of the layered standard `extra` directory as the base URI.
 								</xs:documentation>
