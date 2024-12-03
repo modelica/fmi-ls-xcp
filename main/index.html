@@ -587,7 +587,7 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>FMI Layered Standard for XCP (FMI-LS-XCP)</h1>
 <div class="details">
-<span id="revnumber">version 996e7cf,</span>
+<span id="revnumber">version 0bf5810,</span>
 <span id="revdate">2024-12-03</span>
 </div>
 <div id="toc" class="toc2">
@@ -666,7 +666,7 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <h3 id="_intent_of_this_document">1.1. Intent of this Document</h3>
 <div class="paragraph">
 <p>FMI 3.0 was extended also with virtual Electronic Control Units (virtual ECUs) in mind.
-Engineers can measure into ECUs using the XCP protocol and A2L variable descriptions:</p>
+Engineers can measure into ECUs using the XCP protocol <a href="#XCP15">[XCP15]</a> and A2L variable descriptions <a href="#ASAP2">[ASAP2]</a>:</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -748,7 +748,7 @@ If an XCP slave is implemented inside the FMU, it is recommended that it runs in
 </div>
 <div class="paragraph">
 <p>The A2L/XCP standards allow to measure and calibrate variables synchronously to different types of events.
-These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (aka measurement raster).
+These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (also referred to as "measurement raster" in the XCP standard <a href="#XCP15">[XCP15]</a>).
 The XCP service must be invoked with the defined event channel number in the thread which is executed for an event.
 Calibration and communication with the XCP master is typically performed in a background thread.
 The background thread must always be responsive to the XCP master within the defined communication timeout.
@@ -793,7 +793,7 @@ Refer to the A2L/XCP standards for more information.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-version</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1.0.0-rc.5</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1.0.0</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Version of the layered standard. This layered standard uses semantic versioning, as defined in <a href="#PW13">[PW13]</a>.</p></td>
 </tr>
 <tr>
@@ -834,7 +834,7 @@ Multiple elements might be provided if there are different XCP slaves embedded i
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Relative URI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L variable description file for this interface.
-It may not contain any dot segments, that is, complete path segments consiting only of <code>.</code> or <code>..</code>.
+It may not contain any dot segments, that is, complete path segments consisting only of <code>.</code> or <code>..</code>.
 It is resolved to an absolute URI using a base URI that depends on the relevant FMU target, as defined in <a href="#_structure_of_the_fmu_archive">Section 3.1</a>.</p></td>
 </tr>
 <tr>
@@ -915,7 +915,7 @@ The FMU must provide a valid <code>definition</code> attribute and must set at l
 <p>Each <code>Variable</code> entry assigns a role to an existing variable.
 No variable shall occur in more than one <code>Variable</code> entry.
 No role shall occur in more than one <code>Variable</code> entry of one <code>Interface</code>, but can occur again in <code>Variable</code> entries of a different <code>Interface</code>.
-The set of allowed roles and their meaning is defined <a href="#configure-internal-xcp-service-settings">Section 4.1</a>.</p>
+The set of allowed roles and their meaning is defined in <a href="#configure-internal-xcp-service-settings">Section 4.1</a>.</p>
 </div>
 <div class="paragraph">
 <p>An example of a manifest file for this layered standard is shown below:</p>
@@ -928,7 +928,7 @@ The set of allowed roles and their meaning is defined <a href="#configure-intern
     xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardXcpManifest.xsd"
     xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
     fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-xcp"
-    fmi-ls:fmi-ls-version="1.0.0-rc.5"
+    fmi-ls:fmi-ls-version="1.0.0"
     fmi-ls:fmi-ls-description="Layered standard based on FMI 2.0 and FMI 3.0 for describing and implementing XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files."&gt;
     &lt;Interface definition="vECU1.a2l" description="First embedded XCP service for internal vECU 1, supports both TCP/UDP with full control"
         containsXCPService="true"&gt;
@@ -1371,7 +1371,7 @@ The variable that is provided for a capability is identified by providing a <cod
 </colgroup>
 <tbody>
 <tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">Capability Attribute</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Role</p></th>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>XCPServiceUDPListenAddress</code></p></td>
 </tr>
 <tr>
@@ -1666,13 +1666,16 @@ Accessing variables in the memory of indirectly loaded dynamic libraries require
 <div class="ulist bibliography">
 <ul class="bibliography">
 <li>
+<p><a id="ASAP2"></a>[ASAP2] ASAM MCD-2 MC: ECU Measurement and Calibration Data Exchange Format. Version 1.7.1. <a href="https://www.asam.net/standards/detail/mcd-2-mc/" class="bare">https://www.asam.net/standards/detail/mcd-2-mc/</a></p>
+</li>
+<li>
 <p><a id="PW13"></a>[PW13] Preston-Werner, T. (2013): <strong>Semantic Versioning 2.0.0</strong>.  <a href="https://semver.org/spec/v2.0.0.html" class="bare">https://semver.org/spec/v2.0.0.html</a></p>
 </li>
 <li>
-<p><a id="ASAP2"></a>[ASAP2] ASAM MCD-2 MC. <a href="https://www.asam.net/standards/detail/mcd-2-mc/" class="bare">https://www.asam.net/standards/detail/mcd-2-mc/</a></p>
+<p><a id="RFC2119"></a>[RFC2119] RFC 2119. <a href="https://tools.ietf.org/html/rfc2119" class="bare">https://tools.ietf.org/html/rfc2119</a></p>
 </li>
 <li>
-<p><a id="RFC2119"></a>[RFC2119] RFC 2119. <a href="https://tools.ietf.org/html/rfc2119" class="bare">https://tools.ietf.org/html/rfc2119</a></p>
+<p><a id="XCP15"></a>[XCP15] ASAM MCD-1 XCP: Universal Measurement and Calibration Protocol. Version 1.5.0. <a href="https://www.asam.net/standards/detail/mcd-1-xcp/" class="bare">https://www.asam.net/standards/detail/mcd-1-xcp/</a></p>
 </li>
 </ul>
 </div>
