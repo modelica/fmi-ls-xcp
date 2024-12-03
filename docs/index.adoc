@@ -146,7 +146,7 @@ Each `Interface` element has the <<table-schema-fmi-ls-xcp-interface-attributes,
 |
 | Relative URI
 | This attribute must be a relative reference to a URI (formerly called a relative URI) to the A2L variable description file for this interface.
-It may not contain any dot segments, that is, complete path segments consiting only of `.` or `..`.
+It may not contain any dot segments, that is, complete path segments consisting only of `.` or `..`.
 It is resolved to an absolute URI using a base URI that depends on the relevant FMU target, as defined in <<Structure of the FMU Archive>>.
 
 |`types`
