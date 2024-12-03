@@ -87,7 +87,7 @@ This layered standard will have no effect on the FMU interface, nor the C-API be
 If an XCP slave is implemented inside the FMU, it is recommended that it runs in its own thread and leaves the rest of the operation of the FMU unaffected.
 
 The A2L/XCP standards allow to measure and calibrate variables synchronously to different types of events.
-These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (aka measurement raster).
+These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (also referred to as "measurement raster" in the XCP standard).
 The XCP service must be invoked with the defined event channel number in the thread which is executed for an event.
 Calibration and communication with the XCP master is typically performed in a background thread.
 The background thread must always be responsive to the XCP master within the defined communication timeout.
