@@ -36,7 +36,7 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 === Intent of this Document
 
 FMI 3.0 was extended also with virtual Electronic Control Units (virtual ECUs) in mind.
-Engineers can measure into ECUs using the XCP protocol and A2L variable descriptions:
+Engineers can measure into ECUs using the XCP protocol <<XCP15>> and A2L variable descriptions <<ASAP2>>:
 
 [quote, ASAM e.V., https://www.asam.net/standards/detail/mcd-1-xcp]
 ____
@@ -87,7 +87,7 @@ This layered standard will have no effect on the FMU interface, nor the C-API be
 If an XCP slave is implemented inside the FMU, it is recommended that it runs in its own thread and leaves the rest of the operation of the FMU unaffected.
 
 The A2L/XCP standards allow to measure and calibrate variables synchronously to different types of events.
-These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (also referred to as "measurement raster" in the XCP standard).
+These so called event channels are either time-based, angular-based, or non-deterministic, and are identified by a unique event channel number (also referred to as "measurement raster" in the XCP standard <<XCP15>>).
 The XCP service must be invoked with the defined event channel number in the thread which is executed for an event.
 Calibration and communication with the XCP master is typically performed in a background thread.
 The background thread must always be responsive to the XCP master within the defined communication timeout.
@@ -642,6 +642,7 @@ Contributions to this layered standard to the FMI standard are covered by the ht
 [bibliography]
 == References
 
+- [[[ASAP2]]] ASAM MCD-2 MC: ECU Measurement and Calibration Data Exchange Format. Version 1.7.1. https://www.asam.net/standards/detail/mcd-2-mc/
 - [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
-- [[[ASAP2]]] ASAM MCD-2 MC. https://www.asam.net/standards/detail/mcd-2-mc/
 - [[[RFC2119]]] RFC 2119. https://tools.ietf.org/html/rfc2119
+- [[[XCP15]]] ASAM MCD-1 XCP: Universal Measurement and Calibration Protocol. Version 1.5.0. https://www.asam.net/standards/detail/mcd-1-xcp/
