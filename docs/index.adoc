@@ -11,8 +11,8 @@
 :source-highlighter: highlightjs
 :nofooter:
 :favicon: images/favicon.ico
-:revdate: unreleased
-:revnumber: 1.0.0-rc.5
+:revdate: 2024-12-03
+:revnumber: 1.0.0
 :icons: font
 
 Based on FMI 2.0 and FMI 3.0, this layered standard defines how to describe and implement XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.
@@ -117,7 +117,7 @@ This layered standard defines additional elements that carry relevant interface 
 
 |`fmi-ls-version`
 | `\http://fmi-standard.org/fmi-ls-manifest`
-| `1.0.0-rc.5`
+| `1.0.0`
 | Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
 
 |`fmi-ls-description`
