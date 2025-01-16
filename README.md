@@ -18,21 +18,16 @@ the [FMI][] standard.
 
 ## News
 
-Looking forward to our joint presentation and demo "FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs" from the FMI Project at the coming ASAM International Conference, 2024 in Munich.
-You can meet us also at the Modelica Association booth there!
+Dive into our latest video ["FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs"](https://www.youtube.com/watch?v=KzzKRa3jORs).
+Discover how the cutting-edge FMI 3.0 standard and the layered standards based on it are revolutionizing the world of Software-in-the-Loop (SiL) simulations.
 
-We will present three new layered standards for simulating virtual ECUs with FMI 3.0:
+During the presentation the three new layered standards for simulating virtual ECUs with FMI 3.0 are introduced:
 
 - FMI-LS-XCP for measurement & calibration with XCP
 - FMI-LS-BUS for simulation of network communication with CAN, CAN FD CAN XL, FlexRay, Ethernet, LIN
 - FMI-LS-STRUCT for structured entities like lookup tables
 
-A demo from tool vendors (Akkodis, Altair, AVL, Bosch, dSPACE, PMSF, SYNOPSYS) illustrates the interoperability of these layered standards.
-
-![AIC Announcemet Speakers FMI](landingpage/AIC_Announcemet_Speaker_Single_FMI.jpg)
-
-Looking forward to meet you in Munich!
-More information on the conference: <https://www.asam.net/conferences-events/detail/asam-international-conference-2024/>
+After this a demo from different SiL tool vendors (Akkodis, Altair, AVL, Bosch, dSPACE, PMSF, SYNOPSYS) illustrates the interoperability of these layered standards.
 
 ## Repository Structure
 
