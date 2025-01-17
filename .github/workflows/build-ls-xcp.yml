@@ -53,7 +53,7 @@ jobs:
         cp docs/images/favicon.ico build/images
         cp docs/images/*.svg build/images
     - name: archive layered standard XCP
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: FMI-LS-XCP
         path: build/*
