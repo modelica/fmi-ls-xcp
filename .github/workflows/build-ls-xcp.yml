@@ -11,7 +11,7 @@ on:
 jobs:
   lint-examples:
     name: Validate examples
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
 
   build-ls-xcp:
     name: Build Layered Standard XCP
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v3
