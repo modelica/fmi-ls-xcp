@@ -38,6 +38,7 @@ The following list shows importers and exporters that currently support the FMI 
 [dSPACE ConfigurationDesk](https://www.dspace.com/de/gmb/home/products/sw/impsw/configurationdesk.cfm)|Importer|Available since RLS 2025-A and supported for Binary FMUs only.
 [dSPACE SystemDesk](https://www.dspace.com/en/pub/home/products/sw/system_architecture_software/systemdesk.cfm)|Exporter|Available since RLS 2024-B, via "FMU with Integrated XCP Service".
 [dSPACE VEOS](https://www.dspace.com/en/pub/home/products/sw/simulation_software/veos.cfm)|Importer|Available since RLS 2025-A.
+[PMSF FMIBench](https://pmsf.eu/products/fmibench/)|Exporter|Available since 1.9.9.15 via "Embed XCP Server"
 
 ## Repository Structure
 
