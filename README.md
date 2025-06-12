@@ -29,6 +29,16 @@ During the presentation the three new layered standards for simulating virtual E
 
 After this a demo from different SiL tool vendors (Akkodis, Altair, AVL, Bosch, dSPACE, PMSF, SYNOPSYS) illustrates the interoperability of these layered standards.
 
+## Tools
+
+The following list shows importers and exporters that currently support the FMI Layered Standard for XCP:
+
+|Tool|Type|Remarks
+|---|---|---|
+[dSPACE ConfigurationDesk](https://www.dspace.com/de/gmb/home/products/sw/impsw/configurationdesk.cfm)|Importer|Available since RLS 2025-A and supported for Binary FMUs only.
+[dSPACE SystemDesk](https://www.dspace.com/en/pub/home/products/sw/system_architecture_software/systemdesk.cfm)|Exporter|Available since RLS 2024-B, via "FMU with Integrated XCP Service".
+[dSPACE VEOS](https://www.dspace.com/en/pub/home/products/sw/simulation_software/veos.cfm)|Importer|Available since RLS 2025-A.
+
 ## Repository Structure
 
 - `docs` -- Sources of the specification document
