@@ -38,8 +38,10 @@ The following list shows importers and exporters that currently support the FMI 
 [dSPACE ConfigurationDesk](https://www.dspace.com/de/gmb/home/products/sw/impsw/configurationdesk.cfm)|Importer|Available since RLS 2025-A and supported for Binary FMUs only.
 [dSPACE SystemDesk](https://www.dspace.com/en/pub/home/products/sw/system_architecture_software/systemdesk.cfm)|Exporter|Available since RLS 2024-B, via "FMU with Integrated XCP Service".
 [dSPACE VEOS](https://www.dspace.com/en/pub/home/products/sw/simulation_software/veos.cfm)|Importer|Available since RLS 2025-A.
-[PMSF FMIBench](https://pmsf.eu/products/fmibench/)|Exporter|Available since 1.9.9.15 via "Embed XCP Server"
-[Vector vVIRTUALtarget](https://www.vector.com/at/en/products/products-a-z/software/vvirtualtarget/)|Exporter|Available since Version 9
+[PMSF FMIBench](https://pmsf.eu/products/fmibench/)|Exporter|Available since 1.9.9.15 via "Embed XCP Server".
+[Vector vVIRTUALtarget](https://www.vector.com/at/en/products/products-a-z/software/vvirtualtarget/)|Exporter|Available since Version 9.
+[Akkodis PROVEtech:TA](https://www.provetech.de/index.php/downloads/provetech-ta)|Importer|Available since version 2025.
+[Akkodis PROVEtech:RE](https://www.provetech.de/index.php/downloads/provetech-re)|Importer|Available since version 2025.
 
 ## Repository Structure
 
