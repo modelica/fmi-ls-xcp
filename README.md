@@ -42,6 +42,9 @@ The following list shows importers and exporters that currently support the FMI 
 [Vector vVIRTUALtarget](https://www.vector.com/at/en/products/products-a-z/software/vvirtualtarget/)|Exporter|Available since Version 9
 [Akkodis PROVEtech:TA](https://www.provetech.de/index.php/downloads/provetech-ta)|Importer|Available since Version 2025
 [Akkodis PROVEtech:RE](https://www.provetech.de/index.php/downloads/provetech-re)|Importer|Available since Version 2025
+[SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Exporter|Available from Version W-2025.03
+[SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Importer|Available from Version X-2025.09
+
 
 ## Repository Structure
 
