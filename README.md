@@ -29,6 +29,22 @@ During the presentation the three new layered standards for simulating virtual E
 
 After this a demo from different SiL tool vendors (Akkodis, Altair, AVL, Bosch, dSPACE, PMSF, SYNOPSYS) illustrates the interoperability of these layered standards.
 
+## Tools
+
+The following list shows importers and exporters that currently support the FMI Layered Standard for XCP:
+
+|Tool|Type|Remarks
+|---|---|---|
+[Akkodis PROVEtech:TA](https://www.provetech.de/index.php/downloads/provetech-ta)|Importer|Available since Version 2025
+[Akkodis PROVEtech:RE](https://www.provetech.de/index.php/downloads/provetech-re)|Importer|Available since Version 2025
+[dSPACE ConfigurationDesk](https://www.dspace.com/de/gmb/home/products/sw/impsw/configurationdesk.cfm)|Importer|Available since RLS 2025-A and supported for Binary FMUs only
+[dSPACE SystemDesk](https://www.dspace.com/en/pub/home/products/sw/system_architecture_software/systemdesk.cfm)|Exporter|Available since RLS 2024-B, via "FMU with Integrated XCP Service"
+[dSPACE VEOS](https://www.dspace.com/en/pub/home/products/sw/simulation_software/veos.cfm)|Importer|Available since RLS 2025-A
+[PMSF FMIBench](https://pmsf.eu/products/fmibench/)|Exporter|Available since 1.9.9.15 via "Embed XCP Server"
+[SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Exporter|Available from Version W-2025.03
+[SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Importer|Available from Version X-2025.09
+[Vector vVIRTUALtarget](https://www.vector.com/at/en/products/products-a-z/software/vvirtualtarget/)|Exporter|Available since Version 9
+
 ## Repository Structure
 
 - `docs` -- Sources of the specification document
