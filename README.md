@@ -45,6 +45,8 @@ The following list shows importers and exporters that currently support the FMI 
 [SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Importer|Available from Version X-2025.09
 [Vector vVIRTUALtarget](https://www.vector.com/at/en/products/products-a-z/software/vvirtualtarget/)|Exporter|Available since Version 9
 
+You can add your tool by creating a pull request modifying this README.md file.
+
 ## Repository Structure
 
 - `docs` -- Sources of the specification document
