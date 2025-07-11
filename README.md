@@ -37,6 +37,7 @@ The following list shows importers and exporters that currently support the FMI 
 |---|---|---|
 [Akkodis PROVEtech:TA](https://www.provetech.de/index.php/downloads/provetech-ta)|Importer|Available since Version 2025
 [Akkodis PROVEtech:RE](https://www.provetech.de/index.php/downloads/provetech-re)|Importer|Available since Version 2025
+[AVL Maestra®](https://www.avl.com/en-de/engineering/automated-and-connected-mobility-engineering/software-and-controls-development-and-verification/software-development-toolchain)|Exporter|Available since Release 2025.2
 [dSPACE ConfigurationDesk](https://www.dspace.com/de/gmb/home/products/sw/impsw/configurationdesk.cfm)|Importer|Available since RLS 2025-A and supported for Binary FMUs only
 [dSPACE SystemDesk](https://www.dspace.com/en/pub/home/products/sw/system_architecture_software/systemdesk.cfm)|Exporter|Available since RLS 2024-B, via "FMU with Integrated XCP Service"
 [dSPACE VEOS](https://www.dspace.com/en/pub/home/products/sw/simulation_software/veos.cfm)|Importer|Available since RLS 2025-A
@@ -44,7 +45,7 @@ The following list shows importers and exporters that currently support the FMI 
 [SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Exporter|Available from Version W-2025.03
 [SYNOPSYS Silver](https://www.synopsys.com/verification/virtual-prototyping/silver.html)|Importer|Available from Version X-2025.09
 [Vector vVIRTUALtarget](https://www.vector.com/at/en/products/products-a-z/software/vvirtualtarget/)|Exporter|Available since Version 9
-[AVL Maestra®](https://www.avl.com/en-de/engineering/automated-and-connected-mobility-engineering/software-and-controls-development-and-verification/software-development-toolchain)|Exporter|Available since Release 2025.2
+
 
 You can add your tool by creating a pull request modifying this README.md file.
 
