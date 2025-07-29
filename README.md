@@ -32,7 +32,7 @@ After this a demo from different SiL tool vendors (Akkodis, Altair, AVL, Bosch, 
 ## Tools
 
 There is an increasing number of software products that already support the FMI Layered Standard for XCP.
-A list can be found at [https://fmi-standard.org/tools/](https://fmi-standard.org/tools/).
+A list can be found at [https://fmi-standard.org/tools/](https://fmi-standard.org/tools/) using the filter "XCP".
 Please feel free to contact the respective software manufacturers for detailed information about the specific support for the FMI Layered Standard for XCP.
 Does your software also support FMI-LS-XCP? Then register your software today on [https://fmi-standard.org/tools/](https://fmi-standard.org/tools/).
 
