@@ -12,7 +12,11 @@ the [FMI][] standard.
 
 ## Getting Started
 
-Dive into our video ["FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs"](https://www.youtube.com/watch?v=KzzKRa3jORs).
+Our publications and presentations may also be of interest to you:
+
+- [Beyond FMI - Towards New Applications with Layered Standards]
+
+or dive into our video ["FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs"](https://www.youtube.com/watch?v=KzzKRa3jORs).
 Discover how the cutting-edge FMI 3.0 standard and the layered standards based on it are revolutionizing the world of Software-in-the-Loop (SiL) simulations.
 
 During the presentation the three new layered standards for simulating virtual ECUs with FMI 3.0 are introduced:
@@ -52,3 +56,4 @@ The [FMI-LS-BUS] specifies an FMI extension for using network communication (e.g
 [spec]: https://modelica.github.io/fmi-ls-xcp/main/
 [2-Clause BSD License]: https://opensource.org/licenses/BSD-2-Clause
 [Attribution-ShareAlike 4.0 International]: https://creativecommons.org/licenses/by-sa/4.0/
+[Beyond FMI - Towards New Applications with Layered Standards]: https://ecp.ep.liu.se/index.php/modelica/article/view/947
