@@ -3,7 +3,7 @@
 [![Build Specification](https://github.com/modelica/fmi-ls-xcp/actions/workflows/build-ls-xcp.yml/badge.svg)](https://github.com/modelica/fmi-ls-xcp/actions/workflows/build-ls-xcp.yml)
 
 This repository contains the FMI Layered Standard for XCP (FMI-LS-XCP) based on the
-[Functional Mock-up Interface][FMI] 3.0 standard for the exchange of simulation models. 
+[Functional Mock-up Interface][FMI] 3.0 standard for the exchange of simulation models.
 
 The released versions can be found [here](https://github.com/modelica/fmi-ls-xcp/releases).
 
@@ -15,6 +15,7 @@ the [FMI][] standard.
 Our publications and presentations may also be of interest to you:
 
 - [Beyond FMI - Towards New Applications with Layered Standards]
+- [FMI Layered Standards in Automotive Development](https://raw.githubusercontent.com/modelica/fmi-ls-xcp/refs/heads/main/publications/FMI_LayeredStandards_in_automotive_context.pdf)
 
 or dive into our video ["FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs"](https://www.youtube.com/watch?v=KzzKRa3jORs).
 Discover how the cutting-edge FMI 3.0 standard and the layered standards based on it are revolutionizing the world of Software-in-the-Loop (SiL) simulations.
