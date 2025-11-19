@@ -28,8 +28,9 @@ jobs:
     name: Build Layered Standard XCP
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v4.1.7
+      with:
+        submodules: recursive
     - name: Generate revnumber
       run: |
         [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
