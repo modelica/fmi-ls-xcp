@@ -15,7 +15,9 @@
 :nofooter:
 :favicon: images/favicon.ico
 :icons: font
+:website-url: https://fmi-standard.org/
 :repo-url: https://github.com/modelica/fmi-ls-xcp
+:logo: FMI
 
 Based on FMI 2.0 and FMI 3.0, this layered standard defines how to describe and implement XCP support for FMUs, which can either provide an XCP service or allow direct memory access via A2L files.
 
