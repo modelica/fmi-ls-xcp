@@ -28,8 +28,9 @@ jobs:
     name: Build Layered Standard XCP
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v4.1.7
+      with:
+        submodules: recursive
     - name: Generate revnumber
       run: |
         [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
@@ -42,6 +43,9 @@ jobs:
       run: |
         mkdir -p build/schema
         mkdir -p build/images
+        mkdir -p build/theme/css
+        mkdir -p build/theme/images
+        mkdir -p build/theme/js
     - name: build layered standard XCP
       uses: avattathil/asciidoctor-action@master
       with:
@@ -50,8 +54,10 @@ jobs:
       run: |
         cp LICENSE.txt build
         cp schema/*.xsd build/schema
-        cp docs/images/favicon.ico build/images
         cp docs/images/*.svg build/images
+        cp docs/theme/css/*.css build/theme/css
+        cp docs/theme/images/*.svg build/theme/images
+        cp docs/theme/js/*.js build/theme/js
     - name: archive layered standard XCP
       uses: actions/upload-artifact@v4
       with:
