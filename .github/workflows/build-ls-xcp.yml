@@ -46,10 +46,13 @@ jobs:
         mkdir -p build/theme/css
         mkdir -p build/theme/images
         mkdir -p build/theme/js
-    - name: build layered standard XCP
-      uses: avattathil/asciidoctor-action@master
-      with:
-        program: "asciidoctor -D build --backend=html5 --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc"
+    - name: Generate HTML
+      run: |
+        docker run --rm -v $PWD:/documents/ \
+          asciidoctor/docker-asciidoctor:1.101 \
+          asciidoctor -D /documents/build -B /documents/docs -b html5 --failure-level INFO -v docs/index.adoc \
+          --attribute=revnumber=${{ env.REVNUMBER }} \
+          --attribute=revdate=$(date +%F)
     - name: Copy resources
       run: |
         cp LICENSE.txt build
